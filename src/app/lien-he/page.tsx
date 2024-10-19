@@ -1,5 +1,3 @@
 export default function page() {
-  return (
-    <div>Liên hệ</div>
-  )
+  return <div>Liên hệ</div>;
 }
