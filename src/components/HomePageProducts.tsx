@@ -30,9 +30,9 @@ export default function HomePageProducts(title: IProps) {
     },
   ];
   return (
-    <div className="w-full pb-2">
+    <div className="w-full px-2 pb-2">
       <div>
-        <p className="flex items-center bg-slate-500 px-2 py-1 text-2xl font-bold text-white">
+        <p className="mt-2 flex items-center px-2 py-1 text-xl font-bold">
           {title.title}
           <span className="ms-2">
             <StarIcon className="h-6 w-6" />

@@ -3,6 +3,7 @@ import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from 'next-themes';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ['vietnamese'], // choose subsets according to your need
@@ -29,6 +30,7 @@ export default function RootLayout({
         >
           <Header />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
