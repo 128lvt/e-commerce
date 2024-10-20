@@ -68,6 +68,8 @@ export default function Nav() {
     }`, // Loại bỏ các ký tự đặc biệt ngoài dấu gạch ngang
   }));
 
+  console.log('>>Categories: ', categories);
+
   const links: Link[] = [
     {
       name: 'Trang chủ',
@@ -91,7 +93,7 @@ export default function Nav() {
           return (
             <div
               key={link.name}
-              className={`transition ease-in-out ${path.match(link.href) ? 'border-b-2 border-white' : ''}`}
+              className={`transition ease-in-out ${path.match(link.href) ? 'border-b-2 border-[--primary]' : ''}`}
             >
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -121,32 +123,22 @@ export default function Nav() {
           <Link
             href={link.href}
             key={link.name}
-            className={path === link.href ? 'border-b-2 border-white' : ''}
+            className={
+              path === link.href ? 'border-b-2 border-[--primary]' : ''
+            }
           >
             {link.name}
           </Link>
         );
       })}
       <div className="flex max-w-sm items-center gap-1">
-        <Input
-          type="text"
-          className="border-gray-800 bg-black p-3"
-          placeholder="Tìm kiếm"
-        />
-        <Button
-          className="border-gray-800 bg-black p-3"
-          variant="outline"
-          aria-label="Tìm kiếm"
-        >
+        <Input type="text" className="p-3" placeholder="Tìm kiếm" />
+        <Button className="p-3" variant="outline" aria-label="Tìm kiếm">
           <MagnifyingGlassIcon className="h-4 w-4" />
         </Button>
       </div>
       <div className="flex items-center gap-2">
-        <Button
-          variant="outline"
-          aria-label="Giỏ hàng"
-          className="border-gray-800 bg-black p-3"
-        >
+        <Button variant="outline" aria-label="Giỏ hàng" className="p-3">
           <CiShoppingCart className="h-4 w-4" />
         </Button>
         <ModeToggle />

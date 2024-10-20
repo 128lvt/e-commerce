@@ -15,7 +15,7 @@ interface ProductProps {
 }
 export function ProductItem(Product: ProductProps) {
   return (
-    <Card className="mt-3 w-full rounded-md">
+    <Card className="mt-3 w-full rounded-md bg-[--background]">
       <CardHeader className="py-4">
         <CardTitle>{Product.name}</CardTitle>
       </CardHeader>
@@ -25,7 +25,7 @@ export function ProductItem(Product: ProductProps) {
           width={400}
           height={400}
           alt="Product"
-          className="h-[400px] w-full object-cover"
+          className="h-64 w-full object-cover"
         ></Image>
         <p className="mt-5">
           {new Intl.NumberFormat('vi-VN').format(Product.price)} VNĐ

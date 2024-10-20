@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 export function BottomCarousel() {
   return (
-    <div className="w-full p-2">
+    <div className="w-full rounded-md bg-[#295255] p-2 dark:bg-[#162623]">
       <p className="flex items-center px-2 pb-2 text-xl font-bold">
         Ưu đãi
         <span className="ms-2">
@@ -17,7 +17,7 @@ export function BottomCarousel() {
       </p>
       <Carousel className="w-full">
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {Array.from({ length: 3 }).map((_, index) => (
             <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
               <div className="">
                 <Image
@@ -25,7 +25,7 @@ export function BottomCarousel() {
                   width={1920}
                   height={1080}
                   alt="Carousel"
-                  className="h-full min-h-96 w-full rounded-sm object-cover"
+                  className="h-[10rem] w-full rounded-sm object-cover"
                 />
               </div>
             </CarouselItem>
