@@ -14,10 +14,10 @@ export default function page() {
           <Banner />
         </div>
         <div className="container mx-auto mb-2 mt-2 flex rounded-md">
-          <HomePageProducts title="Sản phẩm mới" />
+          <HomePageProducts type="New" title="Sản phẩm mới" />
         </div>
         <div className="container mx-auto mb-2 mt-2 flex rounded-md">
-          <HomePageProducts title="Sản phẩm Hot" />
+          <HomePageProducts type="Hot Sale" title="Sản phẩm Hot" />
         </div>
         <div className="container mx-auto mb-2 mt-2 flex">
           <Banner />

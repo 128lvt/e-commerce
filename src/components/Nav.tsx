@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import UserAvatar from '@/components/UserAvatar';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Badge } from '@/components/ui/badge';
 
 interface Category {
   name?: string;
@@ -132,13 +133,24 @@ export default function Nav() {
         );
       })}
       <div className="flex max-w-sm items-center gap-1">
-        <Input type="text" className="p-3" placeholder="Tìm kiếm" />
+        <Input
+          type="text"
+          className="p-3 placeholder:text-foreground placeholder:opacity-85 dark:border-gray-500 dark:placeholder:opacity-85"
+          placeholder="Tìm kiếm"
+        />
         <Button className="p-3" variant="outline" aria-label="Tìm kiếm">
           <MagnifyingGlassIcon className="h-4 w-4" />
         </Button>
       </div>
       <div className="flex items-center gap-2">
-        <Button variant="outline" aria-label="Giỏ hàng" className="p-3">
+        <Button
+          variant="outline"
+          aria-label="Giỏ hàng"
+          className="relative p-3"
+        >
+          <Badge className="absolute right-[-0.5rem] top-[-0.5rem] flex h-5 w-5 items-center justify-center rounded-full bg-purple-700 text-xs">
+            1
+          </Badge>
           <CiShoppingCart className="h-4 w-4" />
         </Button>
         <ModeToggle />

@@ -7,9 +7,10 @@ import { Product } from '../../types/Product';
 
 interface IProps {
   title: string;
+  type: string;
 }
 
-export default function HomePageProducts(title: IProps) {
+export default function HomePageProducts(page: IProps) {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
   const { data, error, isLoading } = useSWR<{ [key: string]: Product }>(
@@ -40,7 +41,7 @@ export default function HomePageProducts(title: IProps) {
     <div className="w-full rounded-md bg-[#577877] px-2 pb-2 dark:bg-[#162623]">
       <div>
         <p className="mt-2 flex items-center px-2 py-1 text-xl font-bold">
-          {title.title}
+          {page.title}
           <span className="ms-2">
             <StarIcon className="h-6 w-6" />
           </span>
@@ -52,6 +53,7 @@ export default function HomePageProducts(title: IProps) {
               name={product.name}
               price={product.price}
               image={product.image}
+              type={page.type}
             />
           ))}
         </div>
