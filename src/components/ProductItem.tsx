@@ -20,19 +20,19 @@ export function ProductItem(prop: IProps) {
   console.log(prop.image);
   return (
     <Card className="mt-3 w-full rounded-md bg-[--background] shadow-xl shadow-gray-600">
-      <div className="w-50 relative">
-        {prop.type !== 'none' && (
-          <Badge className="absolute right-[-1rem] top-[-1rem] h-10 cursor-default rounded-full bg-red-500 shadow-lg shadow-gray-500">
-            {prop.type}
-          </Badge>
-        )}
-      </div>
       <CardHeader className="py-4">
         <CardTitle className="flex items-center justify-between text-ellipsis whitespace-nowrap">
           {prop.name ? prop.name : 'Tên sản phẩm'}
         </CardTitle>
       </CardHeader>
       <CardContent>
+        <div className="w-50 relative">
+          {prop.type !== 'none' && (
+            <Badge className="absolute right-[-1rem] top-[-1rem] h-10 cursor-default rounded-full bg-red-500 shadow-lg shadow-gray-500">
+              {prop.type}
+            </Badge>
+          )}
+        </div>
         <Image
           src={prop.image ? `/products/${prop.image}` : '/default-image.jpg'}
           width={400}
