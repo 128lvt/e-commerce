@@ -69,7 +69,7 @@ export default function Nav() {
     }`, // Loại bỏ các ký tự đặc biệt ngoài dấu gạch ngang
   }));
 
-  console.log('>>Categories: ', categories);
+  console.log('>>Categories: ', categories); 
 
   const links: Link[] = [
     {

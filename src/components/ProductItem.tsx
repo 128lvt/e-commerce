@@ -17,6 +17,7 @@ interface IProps {
 }
 
 export function ProductItem(prop: IProps) {
+  console.log(prop.image);
   return (
     <Card className="mt-3 w-full rounded-md bg-[--background] shadow-xl shadow-gray-600">
       <div className="w-50 relative">
@@ -27,13 +28,13 @@ export function ProductItem(prop: IProps) {
         )}
       </div>
       <CardHeader className="py-4">
-        <CardTitle className="flex items-center justify-between">
-          {prop.name}
+        <CardTitle className="flex items-center justify-between text-ellipsis whitespace-nowrap">
+          {prop.name ? prop.name : 'Tên sản phẩm'}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <Image
-          src={`/products/${prop.image}`}
+          src={prop.image ? `/products/${prop.image}` : '/default-image.jpg'}
           width={400}
           height={400}
           alt="Product"
