@@ -16,7 +16,7 @@ export default function ProductList(Products: ProductProps) {
           <StarIcon className="h-6 w-6" />
         </span>
       </p> */}
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+      {/* <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         {products.map((product) => (
           <ProductItem
             key={product.name}
@@ -25,7 +25,7 @@ export default function ProductList(Products: ProductProps) {
             image={product.image}
           />
         ))}
-      </div>
+      </div>*/}
     </div>
   );
 }
