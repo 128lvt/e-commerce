@@ -8,7 +8,7 @@ export default function Banner() {
         width={2000}
         height={2000}
         alt="Banner"
-        className="h-full w-full rounded-md"
+        className="h-full w-full rounded-md object-cover"
       ></Image>
     </div>
   );
