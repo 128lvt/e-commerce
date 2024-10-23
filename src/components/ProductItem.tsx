@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import Image from 'next/image';
+import { CiShoppingCart, CiCircleInfo } from 'react-icons/ci';
 
 interface IProps {
   name: string;
@@ -19,7 +20,7 @@ interface IProps {
 export function ProductItem(prop: IProps) {
   console.log(prop.image);
   return (
-    <Card className="mt-3 w-full rounded-md bg-[--background] shadow-xl shadow-gray-600">
+    <Card className="mt-3 w-full rounded-md bg-[--background] shadow-sm shadow-gray-600 transition-transform duration-300 hover:border-emerald-300">
       <CardHeader className="py-4">
         <CardTitle className="flex items-center justify-between text-ellipsis whitespace-nowrap">
           {prop.name ? prop.name : 'Tên sản phẩm'}
@@ -28,7 +29,7 @@ export function ProductItem(prop: IProps) {
       <CardContent>
         <div className="w-50 relative">
           {prop.type !== 'none' && (
-            <Badge className="absolute right-[-1rem] top-[-1rem] h-10 cursor-default rounded-full bg-red-500 shadow-lg shadow-gray-500">
+            <Badge className="absolute right-[-1rem] top-[-1rem] h-10 cursor-default rounded-full bg-red-500 shadow-sm shadow-gray-500">
               {prop.type}
             </Badge>
           )}
@@ -40,13 +41,17 @@ export function ProductItem(prop: IProps) {
           alt="Product"
           className="h-64 w-full object-cover"
         ></Image>
-        <p className="mt-5">
+        <p className="mt-5 font-semibold">
           {new Intl.NumberFormat('vi-VN').format(prop.price)} VNĐ
         </p>
       </CardContent>
-      <CardFooter className="flex flex-col justify-between gap-1 px-2 pb-3 xl:flex-row">
-        <Button variant="outline">Chi tiết</Button>
-        <Button>Thêm vào giỏ hàng</Button>
+      <CardFooter className="flex justify-end gap-3 px-2 pb-3">
+        <Button className="transition-transform duration-300 hover:scale-110">
+          <CiCircleInfo className="h-4 w-4 stroke-1" />
+        </Button>
+        <Button className="transition-transform duration-300 hover:scale-110">
+          <CiShoppingCart className="h-4 w-4 stroke-1" />
+        </Button>
       </CardFooter>
     </Card>
   );

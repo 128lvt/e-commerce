@@ -69,7 +69,7 @@ export default function Nav() {
     }`, // Loại bỏ các ký tự đặc biệt ngoài dấu gạch ngang
   }));
 
-  console.log('>>Categories: ', categories); 
+  console.log('>>Categories: ', categories);
 
   const links: Link[] = [
     {
@@ -133,12 +133,12 @@ export default function Nav() {
         );
       })}
       <div className="flex max-w-sm items-center gap-1">
-        <Input
-          type="text"
-          className="p-3 placeholder:text-foreground placeholder:opacity-85 dark:border-gray-500 dark:placeholder:opacity-85"
-          placeholder="Tìm kiếm"
-        />
-        <Button className="p-3" variant="outline" aria-label="Tìm kiếm">
+        <Input type="text" className="p-3" placeholder="Tìm kiếm" />
+        <Button
+          className="bg-[--background] p-3"
+          variant="outline"
+          aria-label="Tìm kiếm"
+        >
           <MagnifyingGlassIcon className="h-4 w-4" />
         </Button>
       </div>
@@ -146,7 +146,7 @@ export default function Nav() {
         <Button
           variant="outline"
           aria-label="Giỏ hàng"
-          className="relative p-3"
+          className="relative bg-[--background] p-3"
         >
           <Badge className="absolute right-[-0.5rem] top-[-0.5rem] flex h-5 w-5 items-center justify-center rounded-full bg-purple-700 text-xs">
             1

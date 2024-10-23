@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 export function BottomCarousel() {
   return (
-    <div className="w-full rounded-md bg-[#295255] p-2 dark:bg-[#162623]">
+    <div className="w-full rounded-md">
       <p className="flex items-center px-2 pb-2 text-xl font-bold">
         Ưu đãi
         <span className="ms-2">

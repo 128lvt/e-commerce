@@ -41,7 +41,7 @@ export default function ProductCarousel() {
   const products: Product[] = Object.values(data || {});
 
   return (
-    <div className="w-full rounded-md bg-[#295255] p-2 dark:bg-[#162623]">
+    <div className="w-full rounded-md">
       <p className="flex items-center px-2 pb-2 text-xl font-bold">
         Sản phẩm bản chạy
         <span className="ms-2">

@@ -38,7 +38,7 @@ export default function HomePageProducts(page: IProps) {
   const products: Product[] = Object.values(data || {});
 
   return (
-    <div className="w-full rounded-md bg-[#577877] px-2 pb-2 dark:bg-[#162623]">
+    <div className="w-full rounded-md">
       <div>
         <p className="mt-2 flex items-center px-2 py-1 text-xl font-bold">
           {page.title}
@@ -58,7 +58,7 @@ export default function HomePageProducts(page: IProps) {
           ))}
         </div>
       </div>
-      <Button variant="outline" className="mx-auto mt-5 flex">
+      <Button className="mx-auto mt-5 flex transition-transform duration-300 hover:scale-110 hover:bg-emerald-500">
         Xem tất cả sản phẩm
       </Button>
     </div>

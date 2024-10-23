@@ -4,9 +4,9 @@ export default function Banner() {
   return (
     <div className="h-[10rem] w-full rounded-sm bg-[--primary] xl:h-[20rem]">
       <Image
-        src="/banners/1.png"
-        width={500}
-        height={500}
+        src="/banners/banner.png"
+        width={2000}
+        height={2000}
         alt="Banner"
         className="h-full w-full rounded-md"
       ></Image>
