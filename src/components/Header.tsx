@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import Nav from '@/components/Nav';
-import { ModeToggle } from '@/components/ModeToggle';
+import Link from 'next/link'
+import Nav from '@/components/Nav'
+import MobileNav from './MobileNav'
 export default function Header() {
   return (
     <header className="xl:py-12">
@@ -15,10 +15,10 @@ export default function Header() {
           <Nav />
         </div>
         {/* Mobile Nav */}
-        <div className="xl:hidden">
-          <ModeToggle />
+        <div className="py-8 xl:hidden">
+          <MobileNav />
         </div>
       </div>
     </header>
-  );
+  )
 }

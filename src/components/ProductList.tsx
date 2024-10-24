@@ -1,5 +1,4 @@
 // import { StarIcon } from '@radix-ui/react-icons';
-import { ProductItem } from '@/components/ProductItem';
 import { Product } from '../../types/Product';
 
 interface ProductProps {

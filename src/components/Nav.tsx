@@ -1,59 +1,45 @@
-'use client';
-import LogoutButton from '@/components/LogoutButton';
-import { ModeToggle } from '@/components/ModeToggle';
-import useSWR from 'swr';
+'use client'
+import { ModeToggle } from '@/components/ModeToggle'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuItem,
   DropdownMenuGroup,
   DropdownMenuContent,
-  DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { CiShoppingCart } from 'react-icons/ci';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import UserAvatar from '@/components/UserAvatar';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Badge } from '@/components/ui/badge';
-
-interface Category {
-  name?: string;
-  href?: string;
-}
+} from '@/components/ui/dropdown-menu'
+import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
+import { CiShoppingCart } from 'react-icons/ci'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Badge } from '@/components/ui/badge'
+import { Category } from '../../types/Category'
+import Profile from '@/components/Profile'
+import useFetchCategories from '@/hooks/CategoryLoader'
+import createLinks from './utils/Links'
 
 interface Link {
-  name: string;
-  href: string;
-  dropdown?: Category[];
+  name: string
+  href: string
+  dropdown?: Category[]
 }
 
 export default function Nav() {
-  const path = usePathname();
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const path = usePathname()
 
-  const { data, error, isLoading } = useSWR<{ [key: string]: Category }>(
-    'https://product-7ffbf-default-rtdb.firebaseio.com/categories.json',
-    fetcher,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  );
+  const { data, error, isLoading } = useFetchCategories()
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   if (!data) {
-    console.log('No categories available');
+    console.log('No categories available')
   }
 
   if (error) {
-    return <div>Error loading categories</div>;
+    return <div>Error loading categories</div>
   }
 
   // Chuyển dữ liệu từ fetch thành array categories
@@ -67,25 +53,9 @@ export default function Nav() {
         .replace(/\s+/g, '-') // Thay dấu cách bằng dấu gạch ngang
         .replace(/[^\w\-]+/g, '') || '/'
     }`, // Loại bỏ các ký tự đặc biệt ngoài dấu gạch ngang
-  }));
+  }))
 
-  console.log('>>Categories: ', categories);
-
-  const links: Link[] = [
-    {
-      name: 'Trang chủ',
-      href: '/',
-    },
-    {
-      name: 'Danh mục',
-      href: 'danh-muc',
-      dropdown: categories,
-    },
-    {
-      name: 'Liên hệ',
-      href: '/lien-he',
-    },
-  ];
+  const links = createLinks(categories)
 
   return (
     <>
@@ -106,7 +76,7 @@ export default function Nav() {
                       item.href && item.name ? (
                         <DropdownMenuItem
                           className="cursor-pointer"
-                          key={item.name}
+                          key={item.href}
                           asChild
                         >
                           <Link href={item.href}>{item.name}</Link>
@@ -117,20 +87,18 @@ export default function Nav() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-          );
+          )
         }
 
         return (
           <Link
             href={link.href}
-            key={link.name}
-            className={
-              path === link.href ? 'border-b-2 border-[--primary]' : ''
-            }
+            key={link.href}
+            className={`${path === link.href ? 'border-b-2 border-[--primary]' : ''} transition ease-in-out`}
           >
             {link.name}
           </Link>
-        );
+        )
       })}
       <div className="flex max-w-sm items-center gap-1">
         <Input type="text" className="p-3" placeholder="Tìm kiếm" />
@@ -154,25 +122,8 @@ export default function Nav() {
           <CiShoppingCart className="h-4 w-4" />
         </Button>
         <ModeToggle />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <span className="cursor-pointer">
-              <UserAvatar />
-            </span>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Link href="/ho-so">Hồ sơ</Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <LogoutButton />
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Profile />
       </div>
     </>
-  );
+  )
 }
