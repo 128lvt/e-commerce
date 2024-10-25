@@ -11,7 +11,7 @@ const jetBrainsMono = JetBrains_Mono({
   weight: ['400', '500', '700'], // define font weights
 })
 export const metadata: Metadata = {
-  title: 'Shop Thời Trang 6AE.',
+  title: 'Shop Thời Trang 6AE',
   description: 'Shop Thời Trang 6AE.',
 }
 

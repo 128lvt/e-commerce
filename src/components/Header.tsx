@@ -7,7 +7,7 @@ export default function Header() {
       <div className="container mx-auto flex items-center justify-between">
         <Link href="/">
           <h1 className="text-4xl font-semibold">
-            6AE Shop<span className="text-cyan-200">.</span>
+            6AE Shop<span className="text-purple-700">.</span>
           </h1>
         </Link>
         {/* Desktop Nav */}
