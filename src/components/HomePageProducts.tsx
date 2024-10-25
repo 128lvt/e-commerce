@@ -1,17 +1,16 @@
-'use client';
-import { StarIcon } from '@radix-ui/react-icons';
-import { ProductItem } from '@/components/ProductItem';
-import { Button } from '@/components/ui/button';
-import useSWR from 'swr';
-import { Product } from '../../types/Product';
+'use client'
+import { StarIcon } from '@radix-ui/react-icons'
+import { ProductItem } from '@/components/ProductItem'
+import { Button } from '@/components/ui/button'
+import useSWR from 'swr'
+import { Product } from '../../types/Product'
 
 interface IProps {
-  title: string;
-  type: string;
+  title: string
 }
 
 export default function HomePageProducts(page: IProps) {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
   const { data, error, isLoading } = useSWR<{ [key: string]: Product }>(
     'https://product-7ffbf-default-rtdb.firebaseio.com/products.json',
@@ -21,21 +20,21 @@ export default function HomePageProducts(page: IProps) {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
     },
-  );
+  )
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   if (!data) {
-    console.log('No product available');
+    console.log('No product available')
   }
 
   if (error) {
-    return <div>Error loading product</div>;
+    return <div>Error loading product</div>
   }
 
-  const products: Product[] = Object.values(data || {});
+  const products: Product[] = Object.values(data || {})
 
   return (
     <div className="w-full rounded-md">
@@ -53,7 +52,6 @@ export default function HomePageProducts(page: IProps) {
               name={product.name}
               price={product.price}
               image={product.image}
-              type={page.type}
             />
           ))}
         </div>
@@ -62,5 +60,5 @@ export default function HomePageProducts(page: IProps) {
         Xem tất cả sản phẩm
       </Button>
     </div>
-  );
+  )
 }

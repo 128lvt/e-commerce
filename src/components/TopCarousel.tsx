@@ -1,20 +1,21 @@
-'use client';
-import * as React from 'react';
-import Autoplay from 'embla-carousel-autoplay';
-import Image from 'next/image';
-import Link from 'next/link';
+'use client'
+import * as React from 'react'
+import Autoplay from 'embla-carousel-autoplay'
+import Image from 'next/image'
+import Link from 'next/link'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from '@/components/ui/carousel';
-import { PaperPlaneIcon } from '@radix-ui/react-icons';
-import ScrollingText from '@/components/ScrollingText';
+} from '@/components/ui/carousel'
+
+import { Button } from './ui/button'
+import { PaperPlaneIcon } from '@radix-ui/react-icons'
 
 export function TopCarousel() {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true }),
-  );
+  )
 
   return (
     <div className="w-full">
@@ -26,18 +27,7 @@ export function TopCarousel() {
         <CarouselContent>
           {Array.from({ length: 3 }).map((_, index) => (
             <CarouselItem key={index}>
-              <div className="relative flex items-center justify-center xl:h-[50rem]">
-                <div className="absolute top-0 flex w-[50%]">
-                  <ScrollingText />
-                </div>
-                <Link
-                  href="/"
-                  className="absolute left-0 flex h-full cursor-pointer items-center px-5"
-                >
-                  <p className="mt-32 rounded-md bg-[#295255] p-3 text-sm text-foreground text-white dark:bg-[#162623] xl:mt-52 xl:p-5 xl:text-xl">
-                    Mua sắm ngay <PaperPlaneIcon className="inline" />
-                  </p>
-                </Link>
+              <div className="relative md:h-[30rem] xl:h-[45rem]">
                 <Image
                   src={`/carousels/${index + 1}.jpg`}
                   width={1920}
@@ -46,11 +36,21 @@ export function TopCarousel() {
                   className="h-full w-full object-cover"
                   priority
                 />
+                <div className="container absolute inset-0 z-10 mx-auto flex items-center">
+                  <Link
+                    href={'/'}
+                    className="ms-8 mt-[8rem] md:ms-0 xl:ms-0 xl:mt-[10rem]"
+                  >
+                    <Button className="flex items-center rounded-2xl p-4 text-sm xl:p-6 xl:text-xl">
+                      Mua ngay <PaperPlaneIcon />
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
       </Carousel>
     </div>
-  );
+  )
 }

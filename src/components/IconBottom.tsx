@@ -1,25 +1,52 @@
-import {
-  PaperPlaneIcon,
-  RocketIcon,
-  EnvelopeOpenIcon,
-  GlobeIcon,
-} from '@radix-ui/react-icons';
+import { CiDeliveryTruck } from 'react-icons/ci'
+import { Card, CardContent, CardFooter, CardHeader } from './ui/card'
 export default function IconBottom() {
   return (
-    <div className="container mx-28 my-10 flex justify-around">
-      <div>
-        <PaperPlaneIcon className="h-10 w-10" />
-      </div>
-      <div>
-        <RocketIcon className="h-10 w-10" />
-      </div>
-
-      <div>
-        <EnvelopeOpenIcon className="h-10 w-10" />
-      </div>
-      <div>
-        <GlobeIcon className="h-10 w-10" />
+    <div className="container mx-auto mt-14 w-full">
+      <h1 className="text-center text-2xl font-semibold uppercase">
+        Tại sao nên chọn chúng tôi
+      </h1>
+      <div className="mt-5 grid grid-rows-1 gap-4 lg:grid-cols-3 xl:grid-cols-3">
+        <Card className="relative">
+          <CardHeader className="flex items-center">
+            <CiDeliveryTruck className="h-10 w-10" />
+          </CardHeader>
+          <CardContent>
+            <p className="text-center text-2xl font-bold">Giao hàng nhanh</p>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <p className="text-center text-sm">
+              Trong vòng 3 ngày kể từ khi nhận hàng
+            </p>
+          </CardFooter>
+        </Card>
+        <Card className="relative">
+          <CardHeader className="flex items-center">
+            <CiDeliveryTruck className="h-10 w-10" />
+          </CardHeader>
+          <CardContent>
+            <p className="text-center text-2xl font-bold">Giao hàng nhanh</p>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <p className="text-center text-sm">
+              Trong vòng 3 ngày kể từ khi nhận hàng
+            </p>
+          </CardFooter>
+        </Card>
+        <Card className="relative">
+          <CardHeader className="flex items-center">
+            <CiDeliveryTruck className="h-10 w-10" />
+          </CardHeader>
+          <CardContent>
+            <p className="text-center text-2xl font-bold">Giao hàng nhanh</p>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <p className="text-center text-sm">
+              Trong vòng 3 ngày kể từ khi nhận hàng
+            </p>
+          </CardFooter>
+        </Card>
       </div>
     </div>
-  );
+  )
 }

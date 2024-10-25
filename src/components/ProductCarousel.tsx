@@ -1,20 +1,20 @@
-'use client';
-import { ProductItem } from '@/components/ProductItem';
+'use client'
+import { ProductItem } from '@/components/ProductItem'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from '@/components/ui/carousel';
-import { StarIcon } from '@radix-ui/react-icons';
-import { Product } from '../../types/Product';
-import useSWR from 'swr';
-import React from 'react';
-import Autoplay from 'embla-carousel-autoplay';
+} from '@/components/ui/carousel'
+import { StarIcon } from '@radix-ui/react-icons'
+import { Product } from '../../types/Product'
+import useSWR from 'swr'
+import React from 'react'
+import Autoplay from 'embla-carousel-autoplay'
 export default function ProductCarousel() {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true }),
-  );
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  )
+  const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
   const { data, error, isLoading } = useSWR<{ [key: string]: Product }>(
     'https://product-7ffbf-default-rtdb.firebaseio.com/products.json',
@@ -24,21 +24,21 @@ export default function ProductCarousel() {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
     },
-  );
+  )
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   if (!data) {
-    console.log('No product available');
+    console.log('No product available')
   }
 
   if (error) {
-    return <div>Error loading product</div>;
+    return <div>Error loading product</div>
   }
 
-  const products: Product[] = Object.values(data || {});
+  const products: Product[] = Object.values(data || {})
 
   return (
     <div className="w-full rounded-md">
@@ -65,12 +65,11 @@ export default function ProductCarousel() {
                 name={products[index]?.name}
                 price={products[index]?.price}
                 key={index}
-                type="none"
               />
             </CarouselItem>
           ))}
         </CarouselContent>
       </Carousel>
     </div>
-  );
+  )
 }
