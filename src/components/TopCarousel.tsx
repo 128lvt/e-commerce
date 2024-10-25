@@ -41,7 +41,7 @@ export function TopCarousel() {
                     <p className="overflow-hidden text-ellipsis text-nowrap text-sm font-semibold md:text-2xl">
                       What is Lorem Ipsum?
                     </p>
-                    <p className="my-1 line-clamp-2 w-full overflow-hidden text-ellipsis text-wrap text-xs sm:my-6 md:w-[35rem] md:text-sm lg:my-10 xl:text-lg">
+                    <p className="my-4 line-clamp-2 w-full overflow-hidden text-ellipsis text-wrap text-xs sm:my-6 md:w-[35rem] md:text-sm lg:my-10 xl:text-lg">
                       Lorem Ipsum is simply dummy text of the printing and
                       typesetting industry.
                     </p>
