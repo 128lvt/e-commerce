@@ -38,17 +38,19 @@ export function TopCarousel() {
                 />
                 <div className="container absolute inset-0 z-10 mx-auto flex items-center">
                   <div className="ms-8 md:ms-0 md:mt-0 xl:ms-0">
-                    <h1 className="mb-1 overflow-hidden text-ellipsis text-nowrap text-sm font-semibold md:mb-8 md:text-2xl">
+                    <p className="overflow-hidden text-ellipsis text-nowrap text-sm font-semibold md:text-2xl">
                       What is Lorem Ipsum?
-                    </h1>
-                    <p className="line-clamp-2 w-full overflow-hidden text-ellipsis text-wrap text-xs md:w-[35rem] md:text-sm xl:text-lg">
+                    </p>
+                    <p className="my-1 line-clamp-2 w-full overflow-hidden text-ellipsis text-wrap text-xs sm:my-6 md:w-[35rem] md:text-sm lg:my-10 xl:text-lg">
                       Lorem Ipsum is simply dummy text of the printing and
                       typesetting industry.
                     </p>
 
-                    <Button className="mt-1 flex items-center rounded-2xl p-4 text-sm md:mt-10 xl:p-6 xl:text-xl">
-                      Mua ngay <PaperPlaneIcon />
-                    </Button>
+                    <Link href={''}>
+                      <Button className="rounded-2xl p-4 text-sm xl:p-6 xl:text-xl">
+                        Mua ngay <PaperPlaneIcon />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </div>
