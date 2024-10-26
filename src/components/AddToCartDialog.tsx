@@ -99,14 +99,16 @@ export function AddToCartDialog(prop: IProps) {
             </div>
           </div>
         </RadioGroup>
-        <DialogFooter className="flex items-center gap-5">
-          <p className="font-semibold">
+        <DialogFooter className="flex items-center sm:justify-between">
+          <p className="">
             <span>Giá: </span>
             {new Intl.NumberFormat('vi-VN').format(prop.price)} VNĐ
           </p>
-          <Button onClick={handleAddToCart} type="submit">
-            Thêm vào giỏ hàng
-          </Button>
+          <div>
+            <Button onClick={handleAddToCart} type="submit">
+              Thêm vào giỏ hàng
+            </Button>
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>
