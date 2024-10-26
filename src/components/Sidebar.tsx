@@ -45,7 +45,6 @@ export default function Sidebar() {
   }))
 
   const links = createLinks(categories)
-  console.table(links)
   return (
     <Sheet>
       <SheetTrigger asChild>

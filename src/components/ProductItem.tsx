@@ -7,7 +7,8 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import Image from 'next/image'
-import { CiShoppingCart, CiCircleInfo } from 'react-icons/ci'
+import { AddToCartDialog } from './AddToCartDialog'
+import { CiCircleInfo } from 'react-icons/ci'
 
 interface IProps {
   name: string
@@ -39,9 +40,11 @@ export function ProductItem(prop: IProps) {
         <Button className="transition-transform duration-300 hover:scale-110">
           <CiCircleInfo className="h-4 w-4 stroke-1" />
         </Button>
-        <Button className="transition-transform duration-300 hover:scale-110">
-          <CiShoppingCart className="h-4 w-4 stroke-1" />
-        </Button>
+        <AddToCartDialog
+          image={prop.image}
+          name={prop.name}
+          price={prop.price}
+        />
       </CardFooter>
     </Card>
   )

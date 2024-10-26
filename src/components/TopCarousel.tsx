@@ -10,7 +10,6 @@ import {
 } from '@/components/ui/carousel'
 
 import { Button } from './ui/button'
-import { PaperPlaneIcon } from '@radix-ui/react-icons'
 
 export function TopCarousel() {
   const plugin = React.useRef(
@@ -48,7 +47,7 @@ export function TopCarousel() {
 
                     <Link href={''}>
                       <Button className="rounded-2xl p-4 text-sm transition-transform duration-300 hover:scale-110 hover:bg-emerald-500 xl:p-6 xl:text-xl">
-                        Mua ngay <PaperPlaneIcon />
+                        Mua ngay
                       </Button>
                     </Link>
                   </div>

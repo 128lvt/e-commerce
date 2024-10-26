@@ -1,5 +1,5 @@
-'use client';
-import LogoutButton from '@/components/LogoutButton';
+'use client'
+import LogoutButton from '@/components/LogoutButton'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -7,9 +7,9 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu';
-import UserAvatar from '@/components/UserAvatar';
-import Link from 'next/link';
+} from '@/components/ui/dropdown-menu'
+import UserAvatar from '@/components/UserAvatar'
+import Link from 'next/link'
 
 export default function Profile() {
   return (
@@ -31,5 +31,5 @@ export default function Profile() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

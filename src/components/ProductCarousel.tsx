@@ -5,7 +5,6 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel'
-import { StarIcon } from '@radix-ui/react-icons'
 import { Product } from '../../types/Product'
 import useSWR from 'swr'
 import React from 'react'
@@ -42,11 +41,9 @@ export default function ProductCarousel() {
 
   return (
     <div className="w-full rounded-md">
-      <p className="flex items-center px-2 pb-2 text-xl font-bold">
+      <p className="flex items-center px-2 pb-2 text-sm uppercase">
         Sản phẩm bản chạy
-        <span className="ms-2">
-          <StarIcon className="h-6 w-6" />
-        </span>
+        <span className="ms-2">*</span>
       </p>
       <Carousel
         className="w-full"
