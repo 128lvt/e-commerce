@@ -5,6 +5,7 @@ import { ThemeProvider } from 'next-themes'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Progress from '@/components/Progress'
+import { Toaster } from '@/components/ui/toaster'
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ['vietnamese'], // choose subsets according to your need
@@ -32,6 +33,7 @@ export default function RootLayout({
         >
           <Header />
           {children}
+          <Toaster />
           <Footer />
         </ThemeProvider>
       </body>

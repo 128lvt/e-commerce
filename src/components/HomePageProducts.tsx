@@ -33,7 +33,18 @@ export default function HomePageProducts(page: IProps) {
     return <div>Error loading product</div>
   }
 
-  const products: Product[] = Object.values(data || {})
+  const products: Product[] = Object.values(data || {}).map((product) => ({
+    ...product,
+    variants: [
+      { size: 'S', color: 'Đỏ', stock: 15 },
+      { size: 'M', color: 'Đỏ', stock: 10 },
+      { size: 'L', color: 'Đỏ', stock: 5 },
+      { size: 'S', color: 'Xanh', stock: 20 },
+      { size: 'M', color: 'Xanh', stock: 12 },
+      { size: 'L', color: 'Xanh', stock: 8 },
+      { size: 'L', color: 'Cam', stock: 100 },
+    ], // Thêm mảng variants vào từng sản phẩm
+  }))
 
   return (
     <div className="w-full rounded-md">
@@ -49,6 +60,7 @@ export default function HomePageProducts(page: IProps) {
               name={product.name}
               price={product.price}
               image={product.image}
+              variants={product.variants}
             />
           ))}
         </div>

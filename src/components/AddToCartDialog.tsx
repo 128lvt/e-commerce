@@ -9,33 +9,53 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import Image from 'next/image'
-
 import { CiShoppingCart } from 'react-icons/ci'
-import { RadioGroup, RadioGroupItem } from './ui/radio-group'
-import { Label } from './ui/label'
+import ProductVariant from './ProductVariant'
 import { useState } from 'react'
+import { useToast } from '@/hooks/use-toast'
+
+interface IVariant {
+  size: string
+  color: string
+  stock: number
+}
 
 interface IProps {
   name: string
   price: number
   image: string
+  variants: IVariant[]
 }
 
 export function AddToCartDialog(prop: IProps) {
-  const [selectedSize, setSelectedSize] = useState('S')
-  const [selectedColor, setSelectedColor] = useState('Đen')
+  const [selectedSize, setSelectedSize] = useState<string>('')
+  const [selectedColor, setSelectedColor] = useState<string>('')
+
+  const { toast } = useToast()
 
   const handleAddToCart = () => {
-    const selectedProduct = {
+    if (!selectedSize || !selectedColor) {
+      toast({
+        description: 'Vui lòng chọn kích thước và màu sắc!',
+        variant: 'error',
+      })
+      return
+    }
+
+    const productToAdd = {
       name: prop.name,
       price: prop.price,
-      image: prop.image,
       size: selectedSize,
       color: selectedColor,
     }
-    console.log('Product added to cart:', selectedProduct)
-    // You can add functionality here to save or use `selectedProduct` as needed.
+
+    // Log thông tin sản phẩm ra console
+    console.log('Sản phẩm được thêm vào giỏ hàng:', productToAdd)
+    toast({
+      description: `Đã thêm ${productToAdd.name} vào giỏ hàng.`,
+    })
   }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -56,56 +76,19 @@ export function AddToCartDialog(prop: IProps) {
           height={400}
           alt="Product"
           className="h-64 w-full object-cover"
-        ></Image>
-        <RadioGroup
-          defaultValue={selectedSize}
-          onValueChange={setSelectedSize}
-          className="flex flex-col"
-        >
-          <p>Kích thước</p>
-          <div className="flex gap-3">
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="S" id="r1" />
-              <Label htmlFor="r1">S</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="M" id="r2" />
-              <Label htmlFor="r2">M</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="L" id="r3" />
-              <Label htmlFor="r3">L</Label>
-            </div>
-          </div>
-        </RadioGroup>
-        <RadioGroup
-          defaultValue={selectedColor}
-          onValueChange={setSelectedColor}
-          className="flex flex-col"
-        >
-          <p>Màu sắc</p>
-          <div className="flex gap-3">
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="Đen" id="r1" />
-              <Label htmlFor="r1">Đen</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="Đỏ" id="r2" />
-              <Label htmlFor="r2">Đỏ</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="Tím" id="r3" />
-              <Label htmlFor="r3">Tím</Label>
-            </div>
-          </div>
-        </RadioGroup>
+        />
+        <ProductVariant
+          variants={prop.variants}
+          onSizeChange={setSelectedSize} // Gọi hàm để cập nhật kích thước
+          onColorChange={setSelectedColor} // Gọi hàm để cập nhật màu sắc
+        />
         <DialogFooter className="flex items-center sm:justify-between">
-          <p className="">
+          <p>
             <span>Giá: </span>
             {new Intl.NumberFormat('vi-VN').format(prop.price)} VNĐ
           </p>
           <div>
-            <Button onClick={handleAddToCart} type="submit">
+            <Button type="button" onClick={handleAddToCart}>
               Thêm vào giỏ hàng
             </Button>
           </div>

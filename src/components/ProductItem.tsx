@@ -10,12 +10,18 @@ import Image from 'next/image'
 import { AddToCartDialog } from './AddToCartDialog'
 import { CiCircleInfo } from 'react-icons/ci'
 
+interface IVariant {
+  size: string
+  color: string
+  stock: number
+}
+
 interface IProps {
   name: string
   price: number
   image: string
+  variants: IVariant[]
 }
-
 export function ProductItem(prop: IProps) {
   return (
     <Card className="mt-3 w-full rounded-md bg-[--background] shadow-sm shadow-gray-600 transition-transform duration-300 hover:border-emerald-300">
@@ -44,6 +50,7 @@ export function ProductItem(prop: IProps) {
           image={prop.image}
           name={prop.name}
           price={prop.price}
+          variants={prop.variants}
         />
       </CardFooter>
     </Card>
