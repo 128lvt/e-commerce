@@ -11,7 +11,7 @@ import {
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import createLinks from './utils/Links'
-import useFetchCategories from '@/hooks/CategoryLoader'
+import useFetchCategories from '@/hooks/useCategories'
 import { Category } from '../../types/Category'
 import { usePathname } from 'next/navigation'
 

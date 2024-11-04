@@ -1,15 +1,10 @@
 import { RadioGroup, RadioGroupItem } from './ui/radio-group'
 import { Label } from './ui/label'
 import { useState } from 'react'
-
-interface IVariant {
-  size: string
-  color: string
-  stock: number
-}
+import type { ProductVariant } from '../../types/Type'
 
 interface IProps {
-  variants: IVariant[]
+  variants: ProductVariant[]
   onSizeChange: (size: string) => void
   onColorChange: (color: string) => void
 }
@@ -23,23 +18,25 @@ export default function ProductVariant(prop: IProps) {
   const sizes = [...new Set(variants.map((variant) => variant.size))]
   const colors = [...new Set(variants.map((variant) => variant.color))]
 
-  // Hàm tìm kiếm `stock` tương ứng
-  const getStock = () => {
+  // Hàm tìm kiếm `variant` được chọn
+  const getSelectedVariant = () => {
     const variant = variants.find(
       (v) => v.size === selectedSize && v.color === selectedColor,
     )
-    return variant ? variant.stock : 0
+    return variant
   }
 
   const handleSizeChange = (size: string) => {
     setSelectedSize(size)
-    prop.onSizeChange(size) // Gọi hàm từ props để cập nhật kích thước
+    prop.onSizeChange(size) // Cập nhật kích thước trong component cha
   }
 
   const handleColorChange = (color: string) => {
     setSelectedColor(color)
-    prop.onColorChange(color) // Gọi hàm từ props để cập nhật màu sắc
+    prop.onColorChange(color) // Cập nhật màu sắc trong component cha
   }
+
+  const selectedVariant = getSelectedVariant()
 
   return (
     <div>
@@ -54,7 +51,7 @@ export default function ProductVariant(prop: IProps) {
           {sizes.map((size) => (
             <div key={size} className="flex items-center space-x-2">
               <RadioGroupItem
-                value={size}
+                value={size ?? ''}
                 checked={selectedSize === size}
                 id={`size-${size}`}
               />
@@ -75,7 +72,7 @@ export default function ProductVariant(prop: IProps) {
           {colors.map((color) => (
             <div key={color} className="flex items-center space-x-2">
               <RadioGroupItem
-                value={color}
+                value={color ?? ''}
                 id={`color-${color}`}
                 checked={selectedColor === color}
               />
@@ -85,8 +82,8 @@ export default function ProductVariant(prop: IProps) {
         </div>
       </RadioGroup>
 
-      {/* Hiển thị số lượng tồn kho */}
-      <p className="mt-3">Còn: {getStock()}</p>
+      {/* Hiển thị số lượng tồn kho và ID của variant */}
+      <p className="mt-3">Còn: {selectedVariant ? selectedVariant.stock : 0}</p>
     </div>
   )
 }
