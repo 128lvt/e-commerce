@@ -1,7 +1,7 @@
 'use client'
-import useProducts from '@/hooks/useProducts'
-import type { Product } from '../../types/Type'
-import { ProductItem } from './ProductItem'
+import useProduct from '@/hooks/useProduct'
+import type { Product } from '../../../types/Type'
+import { ProductItem } from '../../components/ProductItem'
 import {
   Pagination,
   PaginationContent,
@@ -17,7 +17,7 @@ export default function ProductList() {
   const [pageIndex, setPageIndex] = useState(0)
   const [sortType, setSortType] = useState<'up' | 'down'>('down')
 
-  const { data, isLoading, error } = useProducts(pageIndex, 16)
+  const { data, isLoading, error } = useProduct(pageIndex, 16)
 
   if (isLoading) {
     return <div>Loading...</div>

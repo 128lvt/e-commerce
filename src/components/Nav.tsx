@@ -16,8 +16,9 @@ import { usePathname } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import Profile from '@/components/Profile'
 import createLinks from './utils/Links'
-import useCategories from '@/hooks/useCategories'
+import useCategory from '@/hooks/useCategory'
 import { Category } from '../../types/Type'
+import { useCart } from '@/hooks/useCart'
 
 interface Link {
   name: string
@@ -28,7 +29,9 @@ interface Link {
 export default function Nav() {
   const path = usePathname()
 
-  const { data, error, isLoading } = useCategories()
+  const { cart } = useCart()
+
+  const { data, error, isLoading } = useCategory()
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -122,7 +125,7 @@ export default function Nav() {
           className="relative rounded-md border border-input p-[0.65rem] text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground"
         >
           <Badge className="absolute right-[-0.5rem] top-[-0.5rem] flex h-5 w-5 items-center justify-center rounded-full bg-purple-700 text-xs">
-            1
+            {cart.length}
           </Badge>
           <CiShoppingCart className="h-4 w-4" />
         </Link>

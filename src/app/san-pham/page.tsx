@@ -1,4 +1,4 @@
-import ProductList from '@/components/ProductList'
+import ProductList from '@/app/san-pham/ProductList'
 
 export default function page() {
   return (

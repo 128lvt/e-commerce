@@ -9,7 +9,7 @@ interface CartItem {
   price: number
   size: string
   color: string
-  variantId: number | null // Đặt loại là null nếu không có variantId
+  variantId: number
 }
 
 interface CartState {
@@ -19,7 +19,7 @@ interface CartState {
   loadCartFromLocalStorage: () => void
 }
 
-export const useCartStore = create<CartState>((set) => ({
+export const useCart = create<CartState>((set) => ({
   cart: [],
   addToCart: (item) => {
     set((state) => {

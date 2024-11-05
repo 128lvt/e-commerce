@@ -11,11 +11,12 @@ import {
 import Image from 'next/image'
 import { API_URL } from '../configs/apiConfig'
 import { Button } from '@/components/ui/button'
-import { useCartStore } from '@/hooks/useCartStore' // Đảm bảo bạn import đúng
+import { useCart } from '@/hooks/useCart' // Đảm bảo bạn import đúng
 import { useEffect } from 'react'
+import Link from 'next/link'
 
 export default function Cart() {
-  const { cart, loadCartFromLocalStorage, removeFromCart } = useCartStore()
+  const { cart, loadCartFromLocalStorage, removeFromCart } = useCart()
 
   useEffect(() => {
     loadCartFromLocalStorage() // Nạp giỏ hàng từ localStorage khi component được mount
@@ -36,6 +37,7 @@ export default function Cart() {
             <TableHead>Hình ảnh</TableHead>
             <TableHead>Size</TableHead>
             <TableHead>Màu</TableHead>
+            <TableHead>Số lượng</TableHead>
             <TableHead className="text-right">Giá</TableHead>
             <TableHead className="text-right">Hành động</TableHead>
           </TableRow>
@@ -55,6 +57,7 @@ export default function Cart() {
               </TableCell>
               <TableCell>{item.size}</TableCell>
               <TableCell>{item.color}</TableCell>
+              <TableCell>{1}</TableCell>
               <TableCell className="text-right">
                 {new Intl.NumberFormat('vi-VN').format(item.price)} VNĐ
               </TableCell>
@@ -66,7 +69,9 @@ export default function Cart() {
         </TableBody>
       </Table>
       <div className="container flex justify-end">
-        <Button className="bg-red-600">Thanh toán</Button>
+        <Link href="thanh-toan" className="rounded-md bg-red-600 px-5 py-3">
+          Thanh toán
+        </Link>
       </div>
     </div>
   )

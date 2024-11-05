@@ -1,7 +1,7 @@
 'use client'
 import { ProductItem } from '@/components/ProductItem'
 import { Button } from '@/components/ui/button'
-import useProducts from '../hooks/useProducts'
+import useProduct from '../hooks/useProduct'
 import { Product } from '../../types/Type'
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
 }
 
 export default function HomePageProducts(page: IProps) {
-  const { data, isLoading, error } = useProducts(page.index, 8)
+  const { data, isLoading, error } = useProduct(page.index, 8)
 
   if (isLoading) {
     return <div>Loading...</div>

@@ -5,50 +5,29 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel'
-import { Product } from '../../types/Product'
-import useSWR from 'swr'
 import React from 'react'
 import Autoplay from 'embla-carousel-autoplay'
+import { Product } from '../../types/Type'
+import useProduct from '@/hooks/useProduct'
 export default function ProductCarousel() {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true }),
   )
-  const fetcher = (url: string) => fetch(url).then((res) => res.json())
-
-  const { data, error, isLoading } = useSWR<{ [key: string]: Product }>(
-    'https://product-7ffbf-default-rtdb.firebaseio.com/products.json',
-    fetcher,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  )
+  const { data, isLoading, error } = useProduct(0, 12)
 
   if (isLoading) {
     return <div>Loading...</div>
   }
 
-  if (!data) {
-    console.log('No product available')
+  if (!data || !data.data || data.data.products.length === 0) {
+    return <div>No products available</div>
   }
 
   if (error) {
     return <div>Error loading product</div>
   }
 
-  const products: Product[] = Object.values(data || {}).map((product) => ({
-    ...product,
-    variants: [
-      { size: 'S', color: 'Đỏ', stock: 15 },
-      { size: 'M', color: 'Đỏ', stock: 10 },
-      { size: 'L', color: 'Đỏ', stock: 5 },
-      { size: 'S', color: 'Xanh', stock: 20 },
-      { size: 'M', color: 'Xanh', stock: 12 },
-      { size: 'L', color: 'Xanh', stock: 8 },
-      { size: 'L', color: 'Cam', stock: 100 },
-    ], // Thêm mảng variants vào từng sản phẩm
-  }))
+  const products: Product[] = data.data.products
 
   return (
     <div className="w-full rounded-md">
@@ -69,11 +48,13 @@ export default function ProductCarousel() {
               className="h-full w-full basis-1/2 sm:basis-1/3 md:basis-1/3 lg:basis-1/4"
             >
               <ProductItem
-                image={products[index]?.image}
+                images={products[index]?.images}
                 name={products[index]?.name}
                 price={products[index]?.price}
                 key={index}
                 variants={products[index]?.variants}
+                category={products[index]?.category}
+                id={products[index].id}
               />
             </CarouselItem>
           ))}

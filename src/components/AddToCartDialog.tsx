@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { Product } from '../../types/Type'
 import { API_URL } from '@/app/configs/apiConfig'
-import { useCartStore } from '@/hooks/useCartStore'
+import { useCart } from '@/hooks/useCart'
 import { v4 as uuidv4 } from 'uuid'
 
 export function AddToCartDialog(product: Product) {
@@ -28,7 +28,7 @@ export function AddToCartDialog(product: Product) {
   const [selectedColor, setSelectedColor] = useState<string>('')
 
   const { toast } = useToast()
-  const { addToCart, loadCartFromLocalStorage } = useCartStore()
+  const { addToCart, loadCartFromLocalStorage } = useCart()
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) {

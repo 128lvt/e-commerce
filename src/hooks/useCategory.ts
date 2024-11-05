@@ -1,20 +1,17 @@
 import useSWR from 'swr'
-import { Product } from '../../types/Type'
 import { API_URL } from '@/app/configs/apiConfig'
+import { Category } from '../../types/Type'
 
 interface ApiResponse {
   message: string
-  data: {
-    products: Product[]
-    totalPages: number
-  }
+  data: Category[]
 }
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-const useProducts = (page: number, limit: number) => {
+const useCategory = () => {
   const { data, error } = useSWR<ApiResponse>(
-    `${API_URL}/products?page=${page}&limit=${limit}`,
+    `${API_URL}/categories`,
     fetcher,
     {
       revalidateIfStale: false,
@@ -29,4 +26,4 @@ const useProducts = (page: number, limit: number) => {
   return { data: data, error, isLoading }
 }
 
-export default useProducts
+export default useCategory
