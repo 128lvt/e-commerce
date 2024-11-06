@@ -148,7 +148,7 @@ export default function FormCashout() {
         const orderDetailResponse = await createOrderDetail(
           orderId,
           orderDetail,
-        ) // Gửi từng sản phẩm
+        )
 
         if (!orderDetailResponse) {
           toast({

@@ -43,7 +43,7 @@ export function AddToCartDialog(product: Product) {
       const variant = product.variants.find(
         (v) => v.size === size && v.color === color,
       )
-      return variant ? variant.id : null // Trả về variantId hoặc null
+      return variant?.id
     }
 
     const variantId = getVariantInfo(selectedSize, selectedColor)
@@ -54,7 +54,7 @@ export function AddToCartDialog(product: Product) {
       price: product.price,
       size: selectedSize,
       color: selectedColor,
-      variantId: variantId,
+      variantId: variantId || 0,
       imageUrl: product.images[0].imageUrl,
     }
 
