@@ -11,27 +11,24 @@ import {
 import Image from 'next/image'
 import { CiShoppingCart } from 'react-icons/ci'
 import ProductVariant from './ProductVariant'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
+import { Product } from '../../types/Type'
+import { API_URL } from '@/app/configs/apiConfig'
+import { useCart } from '@/hooks/useCart'
+import { v4 as uuidv4 } from 'uuid'
 
-interface IVariant {
-  size: string
-  color: string
-  stock: number
-}
+export function AddToCartDialog(product: Product) {
+  const imageUrl =
+    product.images && product.images.length > 0
+      ? `${API_URL}/products/images/${product.images[0].imageUrl}`
+      : '/default-image.jpg'
 
-interface IProps {
-  name: string
-  price: number
-  image: string
-  variants: IVariant[]
-}
-
-export function AddToCartDialog(prop: IProps) {
   const [selectedSize, setSelectedSize] = useState<string>('')
   const [selectedColor, setSelectedColor] = useState<string>('')
 
   const { toast } = useToast()
+  const { addToCart, loadCartFromLocalStorage } = useCart()
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) {
@@ -42,12 +39,26 @@ export function AddToCartDialog(prop: IProps) {
       return
     }
 
+    const getVariantInfo = (size: string, color: string) => {
+      const variant = product.variants.find(
+        (v) => v.size === size && v.color === color,
+      )
+      return variant?.id
+    }
+
+    const variantId = getVariantInfo(selectedSize, selectedColor)
     const productToAdd = {
-      name: prop.name,
-      price: prop.price,
+      id: uuidv4(),
+      productId: product.id,
+      name: product.name,
+      price: product.price,
       size: selectedSize,
       color: selectedColor,
+      variantId: variantId || 0,
+      imageUrl: product.images[0].imageUrl,
     }
+
+    addToCart(productToAdd)
 
     // Log thông tin sản phẩm ra console
     console.log('Sản phẩm được thêm vào giỏ hàng:', productToAdd)
@@ -55,6 +66,10 @@ export function AddToCartDialog(prop: IProps) {
       description: `Đã thêm ${productToAdd.name} vào giỏ hàng.`,
     })
   }
+
+  useEffect(() => {
+    loadCartFromLocalStorage()
+  }, [loadCartFromLocalStorage]) // Đảm bảo loadCartFromLocalStorage chỉ được gọi khi component mount
 
   return (
     <Dialog>
@@ -66,26 +81,26 @@ export function AddToCartDialog(prop: IProps) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            <p>{prop.name}</p>
+            <p>{product.name}</p>
           </DialogTitle>
           <DialogDescription>Mô tả sản phẩm</DialogDescription>
         </DialogHeader>
         <Image
-          src={prop.image ? `/products/${prop.image}` : '/default-image.jpg'}
+          src={imageUrl}
           width={400}
           height={400}
           alt="Product"
           className="h-64 w-full object-cover"
         />
         <ProductVariant
-          variants={prop.variants}
+          variants={product.variants}
           onSizeChange={setSelectedSize} // Gọi hàm để cập nhật kích thước
           onColorChange={setSelectedColor} // Gọi hàm để cập nhật màu sắc
         />
         <DialogFooter className="flex items-center sm:justify-between">
           <p>
             <span>Giá: </span>
-            {new Intl.NumberFormat('vi-VN').format(prop.price)} VNĐ
+            {new Intl.NumberFormat('vi-VN').format(product.price)} VNĐ
           </p>
           <div>
             <Button type="button" onClick={handleAddToCart}>

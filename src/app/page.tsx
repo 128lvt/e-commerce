@@ -19,10 +19,10 @@ export default function page() {
           <ProductCarousel />
         </div>
         <div className="container mx-auto mb-2 mt-2 flex rounded-md">
-          <HomePageProducts title="Sản phẩm mới" />
+          <HomePageProducts index={0} title="Sản phẩm mới" />
         </div>
         <div className="container mx-auto mb-2 mt-2 flex rounded-md">
-          <HomePageProducts title="Sản đang giảm giá" />
+          <HomePageProducts index={1} title="Sản đang giảm giá" />
         </div>
         <div className="container mx-auto mb-2 mt-2 flex">
           <Banner />

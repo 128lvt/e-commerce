@@ -11,39 +11,43 @@ import {
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import createLinks from './utils/Links'
-import useFetchCategories from '@/hooks/CategoryLoader'
-import { Category } from '../../types/Category'
 import { usePathname } from 'next/navigation'
+import { Category } from '../../types/Type'
+import useCategory from '@/hooks/useCategory'
 
 export default function Sidebar() {
   const path = usePathname()
-  const { data, error, isLoading } = useFetchCategories()
+  const { data, error, isLoading } = useCategory()
 
   if (isLoading) {
     return <div>Loading...</div>
   }
 
-  if (!data) {
-    console.log('No categories available')
+  if (
+    !data ||
+    !data.data ||
+    !Array.isArray(data.data) ||
+    data.data.length === 0
+  ) {
+    return <div>No categories available</div>
   }
 
   if (error) {
     return <div>Error loading categories</div>
   }
 
-  // Chuyển dữ liệu từ fetch thành array categories
-  const categories: Category[] = Object.keys(data || {}).map((key) => ({
-    name: data?.[key]?.name, // Sử dụng toán tử an toàn khi truy cập thuộc tính
+  const categories: Category[] = data.data.map((category: Category) => ({
+    id: category.id, // Đảm bảo category có trường id
+    name: category.name, // Lấy tên danh mục từ dữ liệu
     href: `/danh-muc/${
-      data?.[key]?.name
-        ?.normalize('NFD') // Chuẩn hóa chuỗi để tách chữ và dấu
-        .replace(/[\u0300-\u036f]/g, '') // Loại bỏ dấu
-        .toLowerCase() // Chuyển thành chữ thường
-        .replace(/\s+/g, '-') // Thay dấu cách bằng dấu gạch ngang
+      category.name
+        ?.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/\s+/g, '-')
         .replace(/[^\w\-]+/g, '') || '/'
-    }`, // Loại bỏ các ký tự đặc biệt ngoài dấu gạch ngang
+    }`,
   }))
-
   const links = createLinks(categories)
   return (
     <Sheet>

@@ -1,18 +1,25 @@
-import { Category } from "../../../types/Category";
+export interface Link {
+  name?: string
+  href?: string
+}
 
- const createLinks = (categories: Category[]) => [
-    {
-      name: 'Trang chủ',
-      href: '/',
-    },
-    {
-      name: 'Danh mục',
-      href: 'danh-muc',
-      dropdown: categories,
-    },
-    {
-      name: 'Liên hệ',
-      href: '/lien-he',
-    },
-  ];
-  export default createLinks
+const createLinks = (categories: Link[]) => [
+  {
+    name: 'Trang chủ',
+    href: '/',
+  },
+  {
+    name: 'Sản phẩm',
+    href: '/san-pham',
+  },
+  {
+    name: 'Danh mục',
+    href: 'danh-muc',
+    dropdown: categories,
+  },
+  {
+    name: 'Liên hệ',
+    href: '/lien-he',
+  },
+]
+export default createLinks
