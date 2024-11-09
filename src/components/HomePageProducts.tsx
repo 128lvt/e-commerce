@@ -10,7 +10,7 @@ interface IProps {
 }
 
 export default function HomePageProducts(page: IProps) {
-  const { data, isLoading, error } = useProduct(page.index, 8)
+  const { data, isLoading, error } = useProduct()
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -26,6 +26,19 @@ export default function HomePageProducts(page: IProps) {
 
   const products: Product[] = data.data.products
 
+  const shuffleArray = (array: Product[]) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      const temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+  }
+
+  // Trộn mảng products và lấy 8 sản phẩm đầu tiên
+  shuffleArray(products)
+  const randomProducts = products.slice(0, 8)
+
   return (
     <div className="w-full rounded-md">
       <div>
@@ -34,7 +47,7 @@ export default function HomePageProducts(page: IProps) {
           <span className="ms-2">*</span>
         </p>
         <div className="grid grid-cols-2 justify-center gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {products.map((product) => (
+          {randomProducts.map((product) => (
             <ProductItem
               key={product.name}
               name={product.name}

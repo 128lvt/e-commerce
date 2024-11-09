@@ -30,8 +30,9 @@ export default function Profile() {
     })
 
     if (response.ok) {
-      document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-      setUser(null) // Cập nhật trạng thái người dùng
+      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+      window.location.reload()
+      setUser(null)
       router.push('/dang-nhap') // Chuyển hướng về trang đăng nhập
     }
   }
@@ -47,7 +48,7 @@ export default function Profile() {
         <DropdownMenuContent>
           <DropdownMenuGroup>
             <DropdownMenuItem>
-              <p>{user?.name}</p>
+              <p>{user?.fullName}</p>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Link href="/ho-so">Hồ sơ</Link>

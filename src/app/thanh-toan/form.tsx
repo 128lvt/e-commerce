@@ -18,22 +18,13 @@ import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { API_URL } from '../configs/apiConfig'
-import Cookies from 'js-cookie'
 
 export default function FormCashout() {
-  const { user, loadUserFromLocalStorage } = useUser()
-  const { cart, loadCartFromLocalStorage } = useCart()
-  const [token, setToken] = useState('')
+  const { user, loadUserFromLocalStorage, token } = useUser()
+  const { cart, loadCartFromLocalStorage, clearCart } = useCart()
+  // const [token, setToken] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
-
-  useEffect(() => {
-    const tokenFromCookie = Cookies.get('token')
-    if (tokenFromCookie) {
-      setToken(tokenFromCookie)
-    } else {
-      console.log('Token not found in cookies')
-    }
-  }, [])
 
   useEffect(() => {
     loadCartFromLocalStorage()
@@ -46,7 +37,7 @@ export default function FormCashout() {
     resolver: zodResolver(OrderSchema),
     defaultValues: {
       user_id: user?.id,
-      fullname: user?.name || '',
+      fullname: user?.fullName || '',
       email: '',
       phone_number: '',
       address: '',
@@ -60,7 +51,7 @@ export default function FormCashout() {
   useEffect(() => {
     form.reset({
       user_id: user?.id,
-      fullname: user?.name || '',
+      fullname: user?.fullName || '',
       email: '',
       phone_number: '',
       address: '',
@@ -129,6 +120,7 @@ export default function FormCashout() {
   }
 
   const onSubmit = async (values: z.infer<typeof OrderSchema>) => {
+    if (isLoading) return
     toast({
       description: `Đang gửi đơn hàng...`,
       variant: 'loading',
@@ -148,7 +140,7 @@ export default function FormCashout() {
         const orderDetailResponse = await createOrderDetail(
           orderId,
           orderDetail,
-        )
+        ) // Gửi từng sản phẩm
 
         if (!orderDetailResponse) {
           toast({
@@ -157,6 +149,9 @@ export default function FormCashout() {
           })
         }
       }
+
+      clearCart()
+      loadCartFromLocalStorage()
 
       toast({
         description: `Đơn hàng đã được tạo thành công với ID: ${orderId}`,
@@ -167,6 +162,7 @@ export default function FormCashout() {
         variant: 'error',
       })
     }
+    setIsLoading(false)
   }
 
   return (
@@ -261,7 +257,7 @@ export default function FormCashout() {
             Tổng tiền: {new Intl.NumberFormat('vi-VN').format(totalMoney)} VNĐ
           </div>
           <div className="flex justify-end">
-            <Button type="submit" className="bg-green-600">
+            <Button disabled={isLoading} type="submit" className="bg-green-600">
               Thanh toán
             </Button>
           </div>

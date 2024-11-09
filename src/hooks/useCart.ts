@@ -17,6 +17,7 @@ interface CartState {
   addToCart: (item: CartItem) => void
   removeFromCart: (id: string) => void
   loadCartFromLocalStorage: () => void
+  clearCart: () => void
 }
 
 export const useCart = create<CartState>((set) => ({
@@ -40,5 +41,9 @@ export const useCart = create<CartState>((set) => ({
     if (savedCart) {
       set({ cart: JSON.parse(savedCart) })
     }
+  },
+  clearCart: () => {
+    set({ cart: [] })
+    localStorage.removeItem('cart')
   },
 }))

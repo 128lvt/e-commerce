@@ -13,7 +13,6 @@ export function middleware(req: NextRequest) {
   return NextResponse.next()
 }
 
-// Config để áp dụng middleware cho các route cần thiết
 export const config = {
-  matcher: ['/thanh-toan/:path*'], // Đảm bảo bao phủ tất cả subpath nếu có
+  matcher: ['/thanh-toan/:path*'],
 }

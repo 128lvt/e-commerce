@@ -12,22 +12,18 @@ export async function POST(req: Request) {
     body: JSON.stringify({ phone_number, password }),
   })
 
-  const data = await backendResponse.json()
+  const res = await backendResponse.json()
 
   if (!backendResponse.ok) {
     return NextResponse.json(
-      { message: data.message || 'Đăng nhập thất bại' },
+      { message: res.message || 'Đăng nhập thất bại' },
       { status: backendResponse.status },
     )
   }
 
-  const user = {
-    id: data.data.userId,
-    name: data.data.name,
-    phoneNumber: data.data.phoneNumber,
-  }
+  const user = res.data.user
 
-  const token = data.data.token
+  const token = res.data.token
 
   const response = NextResponse.json(
     { message: 'Đăng nhập thành công', user, token },
@@ -36,7 +32,7 @@ export async function POST(req: Request) {
 
   response.headers.append(
     'Set-Cookie',
-    `token=${token}; Path=/; Max-Age=99999999999999999`,
+    `token=${token}; Path=/; Max-Age=99999999999999999;`,
   )
 
   return response

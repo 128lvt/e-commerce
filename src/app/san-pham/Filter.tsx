@@ -6,14 +6,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useProductParams } from '@/hooks/useProductParams'
 
-interface IProps {
-  onFilterChange: (type: 'up' | 'down') => void
-}
+export default function Filter() {
+  const { setParams } = useProductParams()
 
-export default function Filter({ onFilterChange }: IProps) {
-  const handleFilter = (type: 'up' | 'down') => {
-    onFilterChange(type)
+  const handleFilter = (type: string) => {
+    setParams({ sort: type })
   }
 
   return (
@@ -23,11 +22,11 @@ export default function Filter({ onFilterChange }: IProps) {
         <DropdownMenuContent>
           <DropdownMenuLabel>Giá</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => handleFilter('up')}>
+          <DropdownMenuItem onClick={() => handleFilter('asc')}>
             Từ thấp tới cao
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleFilter('down')}>
-            Từ cao tới thâp
+          <DropdownMenuItem onClick={() => handleFilter('desc')}>
+            Từ cao tới thấp
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

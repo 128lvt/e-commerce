@@ -1,6 +1,5 @@
 'use client'
 import useProduct from '@/hooks/useProduct'
-import type { Product } from '../../../types/Type'
 import { ProductItem } from '../../components/ProductItem'
 import {
   Pagination,
@@ -12,12 +11,14 @@ import {
 } from '@/components/ui/pagination'
 import { useState } from 'react'
 import Filter from './Filter'
+import { useProductParams } from '@/hooks/useProductParams'
 
 export default function ProductList() {
   const [pageIndex, setPageIndex] = useState(0)
-  const [sortType, setSortType] = useState<'up' | 'down'>('down')
+  const { setParams } = useProductParams()
+  const { data, isLoading, error } = useProduct()
 
-  const { data, isLoading, error } = useProduct(pageIndex, 16)
+  const products = data?.data.products
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -31,22 +32,13 @@ export default function ProductList() {
     return <div>Error loading product</div>
   }
 
-  const rawProducts: Product[] = data.data.products
-
-  const filterProduct = () => {
-    return [...rawProducts].sort((a, b) =>
-      sortType === 'up' ? a.price - b.price : b.price - a.price,
-    )
-  }
-
-  const products = filterProduct()
-
   const totalPages = data.data.totalPages
 
   const handlePageChange = (newPage: number) => {
     console.log(newPage)
     if (newPage >= 0 && newPage < totalPages) {
       setPageIndex(newPage)
+      setParams({ page: newPage })
     }
   }
 
@@ -68,16 +60,12 @@ export default function ProductList() {
 
   const paginationRange = getPaginationRange()
 
-  const handleFilterChange = (type: 'up' | 'down') => {
-    setSortType(type)
-  }
-
   return (
     <div className="mt-8">
-      <Filter onFilterChange={handleFilterChange} />
+      <Filter />
       <div className="w-full rounded-md">
         <div className="grid grid-cols-2 justify-center gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {products.map((product) => (
+          {products?.map((product) => (
             <ProductItem
               key={product.name}
               name={product.name}

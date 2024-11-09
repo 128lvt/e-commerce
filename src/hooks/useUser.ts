@@ -1,5 +1,14 @@
 import { create } from 'zustand'
 
+// Helper functions để mã hóa và giải mã bằng Base64
+function encodeBase64(data: string): string {
+  return btoa(data) // Mã hóa thành Base64
+}
+
+function decodeBase64(encodedData: string): string {
+  return atob(encodedData) // Giải mã từ Base64
+}
+
 interface User {
   id: number
   name: string
@@ -8,38 +17,43 @@ interface User {
 
 interface UserState {
   user: User | null
-  token: string | null // Thêm trường token
-  setUser: (user: User | null) => void
+  token: string | null
+  setUser: (user: User | null, token?: string | null) => void
   loadUserFromLocalStorage: () => void
-  loadTokenFromCookie: () => void // Thêm phương thức load token
 }
 
 const useUser = create<UserState>((set) => ({
   user: null,
-  token: null, // Khởi tạo token là null
-  setUser: (user: User | null) => set({ user }),
-  loadUserFromLocalStorage: () => {
-    // Kiểm tra nếu localStorage có user
-    const storedUser = localStorage.getItem('user')
+  token: null,
 
-    if (storedUser) {
-      // Nếu có, chuyển đổi JSON thành object và cập nhật vào state
-      const userInfo = JSON.parse(storedUser)
-      set({ user: userInfo })
+  setUser: (user, token = null) => {
+    // Cập nhật user và token trong Zustand
+    set({ user, token })
+
+    // Mã hóa user và token thành Base64 trước khi lưu vào localStorage
+    if (user) {
+      const encodedUser = encodeBase64(JSON.stringify(user))
+      localStorage.setItem('user', encodedUser)
     } else {
-      // Nếu không có, thiết lập user là null
-      set({ user: null })
+      localStorage.removeItem('user')
+    }
+
+    if (token) {
+      localStorage.setItem('token', token)
+    } else {
+      localStorage.removeItem('token')
     }
   },
-  loadTokenFromCookie: () => {
-    const cookies = document.cookie.split('; ')
-    const token = cookies.find((cookie) => cookie.startsWith('token='))
 
-    if (!token) {
-      set({ token: null })
-    } else {
-      set({ token })
-    }
+  loadUserFromLocalStorage: () => {
+    const storedUser = localStorage.getItem('user')
+    const storedToken = localStorage.getItem('token')
+
+    // Giải mã user từ Base64 khi tải lại từ localStorage
+    set({
+      user: storedUser ? JSON.parse(decodeBase64(storedUser)) : null, // Giải mã user nếu tồn tại
+      token: storedToken || null,
+    })
   },
 }))
 

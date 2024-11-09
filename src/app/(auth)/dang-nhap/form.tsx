@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation'
 import useUser from '@/hooks/useUser'
 
 export default function FormLogin() {
-  const { loadUserFromLocalStorage } = useUser() // Sử dụng loadUserFromLocalStorage
+  const { loadUserFromLocalStorage, setUser } = useUser() // Sử dụng loadUserFromLocalStorage
   const { toast } = useToast()
   const router = useRouter()
 
@@ -27,7 +27,7 @@ export default function FormLogin() {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       // Gửi yêu cầu đăng nhập tới endpoint `/api/login`
-      const response = await fetch('/api/login', {
+      const response = await fetch(`/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,8 +44,8 @@ export default function FormLogin() {
         return
       }
 
-      // Lưu thông tin người dùng vào localStorage
       localStorage.setItem('user', JSON.stringify(data.user))
+      setUser(data.user, data.token)
 
       toast({
         description: 'Đăng nhập thành công',

@@ -7,10 +7,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuContent,
 } from '@/components/ui/dropdown-menu'
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { CiShoppingCart } from 'react-icons/ci'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
@@ -19,7 +16,7 @@ import createLinks from './utils/Links'
 import useCategory from '@/hooks/useCategory'
 import { Category } from '../../types/Type'
 import { useCart } from '@/hooks/useCart'
-
+import Search from './Search'
 interface Link {
   name: string
   href: string
@@ -108,16 +105,7 @@ export default function Nav() {
           </Link>
         )
       })}
-      <div className="flex max-w-sm items-center gap-1">
-        <Input type="text" className="p-3" placeholder="Tìm kiếm" />
-        <Button
-          className="bg-[--background] p-3"
-          variant="outline"
-          aria-label="Tìm kiếm"
-        >
-          <MagnifyingGlassIcon className="h-4 w-4" />
-        </Button>
-      </div>
+      <Search />
       <div className="flex items-center gap-2">
         <Link
           href={'/gio-hang'}
