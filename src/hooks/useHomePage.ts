@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import { Product } from '../../types/Type'
-import { API_URL } from '@/app/configs/apiConfig'
+import { API_URL } from '@/configs/apiConfig'
 interface ApiResponse {
   message: string
   data: Product[]

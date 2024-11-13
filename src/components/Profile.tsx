@@ -11,7 +11,7 @@ import {
 import UserAvatar from '@/components/UserAvatar'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import useUser from '@/hooks/useUser'
+import useUser from '@/hooks/use-user'
 
 export default function Profile() {
   const { user, setUser, loadUserFromLocalStorage } = useUser()

@@ -1,6 +1,6 @@
 'use client'
 import { useCart } from '@/hooks/use-cart'
-import useUser from '@/hooks/useUser'
+import useUser from '@/hooks/use-user'
 import { useForm, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
 import { OrderDetailSchema, OrderSchema } from '../../schemas/paymentSchema'
@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
-import { API_URL } from '../configs/apiConfig'
+import { API_URL } from '../../configs/apiConfig'
 
 export default function FormCashout() {
   const { user, loadUserFromLocalStorage, token } = useUser()

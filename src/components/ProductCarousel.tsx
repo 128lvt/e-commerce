@@ -54,7 +54,7 @@ export default function ProductCarousel() {
                 key={index}
                 variants={products[index]?.variants}
                 category={products[index]?.category}
-                id={products[index].id}
+                id={products[index]?.id}
               />
             </CarouselItem>
           ))}

@@ -10,7 +10,7 @@ import Image from 'next/image'
 import { AddToCartDialog } from './AddToCartDialog'
 import { CiCircleInfo } from 'react-icons/ci'
 import { Product } from '../../types/Type'
-import { API_URL } from '@/app/configs/apiConfig'
+import { API_URL } from '@/configs/apiConfig'
 
 export function ProductItem(product: Product) {
   const imageUrl =

@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { loginSchema } from '@/schemas/loginSchema'
 import { useToast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
-import useUser from '@/hooks/useUser'
+import useUser from '@/hooks/use-user'
 
 export default function FormLogin() {
   const { loadUserFromLocalStorage, setUser } = useUser() // Sử dụng loadUserFromLocalStorage

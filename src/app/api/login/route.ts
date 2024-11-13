@@ -1,4 +1,4 @@
-import { API_URL } from '@/app/configs/apiConfig'
+import { API_URL } from '@/configs/apiConfig'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {

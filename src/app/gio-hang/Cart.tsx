@@ -9,7 +9,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import Image from 'next/image'
-import { API_URL } from '../configs/apiConfig'
+import { API_URL } from '../../configs/apiConfig'
 import { Button } from '@/components/ui/button'
 import { useEffect } from 'react'
 import Link from 'next/link'

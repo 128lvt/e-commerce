@@ -53,6 +53,12 @@ const useUser = create<UserState>((set) => ({
       token: storedToken || null,
     })
   },
+  getToken: () => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('token')
+    }
+    return null
+  },
 }))
 
 export default useUser

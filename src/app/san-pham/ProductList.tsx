@@ -60,7 +60,7 @@ export default function ProductList() {
   const paginationRange = getPaginationRange()
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 w-full">
       <div className="w-full rounded-md">
         <div className="grid grid-cols-2 justify-center gap-5 md:grid-cols-2 xl:grid-cols-4">
           {products?.map((product) => (

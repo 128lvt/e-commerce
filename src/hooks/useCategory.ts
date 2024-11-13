@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import { API_URL } from '@/app/configs/apiConfig'
+import { API_URL } from '@/configs/apiConfig'
 import { Category } from '../../types/Type'
 
 interface ApiResponse {

@@ -14,7 +14,7 @@ import ProductVariant from './ProductVariant'
 import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { Product } from '../../types/Type'
-import { API_URL } from '@/app/configs/apiConfig'
+import { API_URL } from '@/configs/apiConfig'
 import { useCart } from '@/hooks/use-cart'
 import { v4 as uuidv4 } from 'uuid'
 
