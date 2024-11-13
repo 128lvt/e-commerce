@@ -11,19 +11,25 @@ import {
 import Image from 'next/image'
 import { API_URL } from '../configs/apiConfig'
 import { Button } from '@/components/ui/button'
-import { useCart } from '@/hooks/useCart' // Đảm bảo bạn import đúng
 import { useEffect } from 'react'
 import Link from 'next/link'
+import { useCart } from '@/hooks/use-cart'
+import { Input } from '@/components/ui/input'
 
 export default function Cart() {
-  const { cart, loadCartFromLocalStorage, removeFromCart } = useCart()
+  const { cart, loadCartFromLocalStorage, updateQuantity, removeFromCart } =
+    useCart()
 
   useEffect(() => {
-    loadCartFromLocalStorage() // Nạp giỏ hàng từ localStorage khi component được mount
+    loadCartFromLocalStorage()
   }, [loadCartFromLocalStorage])
 
   console.log(cart)
-  const totalPrice = cart.reduce((total, item) => total + item.price, 0)
+
+  const totalPrice = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  )
 
   return (
     <div className="container mx-auto">
@@ -57,9 +63,29 @@ export default function Cart() {
               </TableCell>
               <TableCell>{item.size}</TableCell>
               <TableCell>{item.color}</TableCell>
-              <TableCell>{1}</TableCell>
+              <TableCell>
+                <Input
+                  type="number"
+                  value={item.quantity || 1} // Gán giá trị mặc định nếu quantity là undefined
+                  min="1"
+                  max={item.stock}
+                  className="w-20"
+                  onChange={(e) => {
+                    const newQuantity = Number(e.target.value) || 1
+                    updateQuantity(
+                      item.id,
+                      item.variantId,
+                      Math.min(Math.max(newQuantity, 1), item.stock),
+                    )
+                  }}
+                />
+              </TableCell>
+
               <TableCell className="text-right">
-                {new Intl.NumberFormat('vi-VN').format(item.price)} VNĐ
+                {new Intl.NumberFormat('vi-VN').format(
+                  item.price * item.quantity,
+                )}{' '}
+                VNĐ
               </TableCell>
               <TableCell className="text-right">
                 <Button onClick={() => removeFromCart(item.id)}>Xóa</Button>

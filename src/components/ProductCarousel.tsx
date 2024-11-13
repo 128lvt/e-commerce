@@ -13,7 +13,7 @@ export default function ProductCarousel() {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true }),
   )
-  const { data, isLoading, error } = useProduct(0, 12)
+  const { data, isLoading, error } = useProduct()
 
   if (isLoading) {
     return <div>Loading...</div>

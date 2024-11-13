@@ -3,7 +3,7 @@ export interface Link {
   href?: string
 }
 
-const createLinks = (categories: Link[]) => [
+const createLinks = () => [
   {
     name: 'Trang chủ',
     href: '/',
@@ -13,9 +13,8 @@ const createLinks = (categories: Link[]) => [
     href: '/san-pham',
   },
   {
-    name: 'Danh mục',
-    href: 'danh-muc',
-    dropdown: categories,
+    name: 'Thanh toán',
+    href: 'thanh-toan',
   },
   {
     name: 'Liên hệ',

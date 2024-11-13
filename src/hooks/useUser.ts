@@ -11,7 +11,7 @@ function decodeBase64(encodedData: string): string {
 
 interface User {
   id: number
-  name: string
+  fullName: string
   phoneNumber: string
 }
 
@@ -48,10 +48,8 @@ const useUser = create<UserState>((set) => ({
   loadUserFromLocalStorage: () => {
     const storedUser = localStorage.getItem('user')
     const storedToken = localStorage.getItem('token')
-
-    // Giải mã user từ Base64 khi tải lại từ localStorage
     set({
-      user: storedUser ? JSON.parse(decodeBase64(storedUser)) : null, // Giải mã user nếu tồn tại
+      user: storedUser ? JSON.parse(decodeBase64(storedUser)) : null,
       token: storedToken || null,
     })
   },

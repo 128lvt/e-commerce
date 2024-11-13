@@ -1,9 +1,9 @@
 'use client'
-import { useCart } from '@/hooks/useCart'
+import { useCart } from '@/hooks/use-cart'
 import useUser from '@/hooks/useUser'
 import { useForm, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
-import { OrderDetailSchema, OrderSchema } from '../schemas/paymentSchema'
+import { OrderDetailSchema, OrderSchema } from '../../schemas/paymentSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   FormControl,
@@ -22,8 +22,7 @@ import { API_URL } from '../configs/apiConfig'
 export default function FormCashout() {
   const { user, loadUserFromLocalStorage, token } = useUser()
   const { cart, loadCartFromLocalStorage, clearCart } = useCart()
-  // const [token, setToken] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading] = useState(false)
   const { toast } = useToast()
 
   useEffect(() => {
@@ -31,7 +30,10 @@ export default function FormCashout() {
     loadUserFromLocalStorage()
   }, [loadCartFromLocalStorage, loadUserFromLocalStorage])
 
-  const totalMoney = cart.reduce((total, item) => total + item.price, 0)
+  const totalMoney = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  )
 
   const form = useForm<z.infer<typeof OrderSchema>>({
     resolver: zodResolver(OrderSchema),
@@ -63,7 +65,6 @@ export default function FormCashout() {
   }, [user, totalMoney, form])
 
   const createOrder = async (values: z.infer<typeof OrderSchema>) => {
-    console.log(token)
     try {
       const response = await fetch(`${API_URL}/orders`, {
         method: 'POST',
@@ -88,35 +89,33 @@ export default function FormCashout() {
 
   const createOrderDetail = async (
     orderId: number,
-    orderDetail: z.infer<typeof OrderDetailSchema>, // Chỉ cần một đối tượng duy nhất
+    orderDetail: z.infer<typeof OrderDetailSchema>,
   ) => {
-    try {
-      // Validate và thêm order_id vào chi tiết đơn hàng
-      const validatedOrderDetail = OrderDetailSchema.parse({
-        ...orderDetail,
-        order_id: orderId,
-      })
+    const validatedOrderDetail = OrderDetailSchema.parse({
+      ...orderDetail,
+      order_id: orderId,
+    })
 
-      const response = await fetch(`${API_URL}/order_details`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(validatedOrderDetail), // Gửi đối tượng chi tiết đơn hàng
-      })
+    console.log(validatedOrderDetail)
 
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(
-          errorData.message || 'Có lỗi xảy ra khi tạo chi tiết đơn hàng.',
-        )
-      }
+    const response = await fetch(`${API_URL}/order_details`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(validatedOrderDetail),
+    })
 
-      return await response.json() // Trả về kết quả từ API
-    } catch (error) {
-      console.error('Lỗi khi tạo chi tiết đơn hàng:', error)
+    const res = await response.json()
+
+    if (!response.ok) {
+      return null
     }
+
+    // console.log(res)
+
+    return res.data
   }
 
   const onSubmit = async (values: z.infer<typeof OrderSchema>) => {
@@ -128,41 +127,43 @@ export default function FormCashout() {
 
     const orderId = await createOrder(values) // Tạo đơn hàng và lấy ID
     if (orderId) {
-      // Chuyển đổi giỏ hàng thành chi tiết đơn hàng và gửi từng sản phẩm
       const orderDetails = cart.map((item) => ({
         order_id: orderId,
         product_id: item.productId,
-        number_of_products: 1, // Có thể thay đổi số lượng theo nhu cầu
+        number_of_products: item.quantity,
         variant_id: item.variantId,
       }))
 
-      for (const orderDetail of orderDetails) {
-        const orderDetailResponse = await createOrderDetail(
-          orderId,
-          orderDetail,
-        ) // Gửi từng sản phẩm
+      try {
+        for (const orderDetail of orderDetails) {
+          const orderDetailResponse = await createOrderDetail(
+            orderId,
+            orderDetail,
+          )
 
-        if (!orderDetailResponse) {
-          toast({
-            description: `Có lỗi xảy ra khi tạo chi tiết đơn hàng cho sản phẩm ID: ${orderDetail.product_id}.`,
-            variant: 'error',
-          })
+          console.log(`ssssssssssss`, orderDetailResponse)
+
+          if (orderDetailResponse === null) {
+            throw 'Số lượng sản phẩm vượt quá số lượng trong kho.'
+          }
         }
+
+        clearCart()
+        loadCartFromLocalStorage()
+
+        toast({
+          title: 'Thành công!',
+          description: `Thanh toán thành công. [${orderId}]`,
+        })
+      } catch (error) {
+        console.log(error)
+        toast({
+          title: 'Thất bại!',
+          description: `Có lỗi xảy ra khi thanh toán. [${error}]`,
+          variant: 'error',
+        })
       }
-
-      clearCart()
-      loadCartFromLocalStorage()
-
-      toast({
-        description: `Đơn hàng đã được tạo thành công với ID: ${orderId}`,
-      })
-    } else {
-      toast({
-        description: `Có lỗi xảy ra khi tạo đơn hàng.`,
-        variant: 'error',
-      })
     }
-    setIsLoading(false)
   }
 
   return (

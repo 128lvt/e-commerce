@@ -10,45 +10,12 @@ import {
 } from '@/components/ui/sheet'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
-import createLinks from './utils/Links'
 import { usePathname } from 'next/navigation'
-import { Category } from '../../types/Type'
-import useCategory from '@/hooks/useCategory'
+import createLinks from './utils/Links'
 
 export default function Sidebar() {
+  const links = createLinks()
   const path = usePathname()
-  const { data, error, isLoading } = useCategory()
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if (
-    !data ||
-    !data.data ||
-    !Array.isArray(data.data) ||
-    data.data.length === 0
-  ) {
-    return <div>No categories available</div>
-  }
-
-  if (error) {
-    return <div>Error loading categories</div>
-  }
-
-  const categories: Category[] = data.data.map((category: Category) => ({
-    id: category.id, // Đảm bảo category có trường id
-    name: category.name, // Lấy tên danh mục từ dữ liệu
-    href: `/danh-muc/${
-      category.name
-        ?.normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w\-]+/g, '') || '/'
-    }`,
-  }))
-  const links = createLinks(categories)
   return (
     <Sheet>
       <SheetTrigger asChild>

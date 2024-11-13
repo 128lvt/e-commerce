@@ -10,7 +10,6 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination'
 import { useState } from 'react'
-import Filter from './Filter'
 import { useProductParams } from '@/hooks/useProductParams'
 
 export default function ProductList() {
@@ -61,8 +60,7 @@ export default function ProductList() {
   const paginationRange = getPaginationRange()
 
   return (
-    <div className="mt-8">
-      <Filter />
+    <div className="mt-4">
       <div className="w-full rounded-md">
         <div className="grid grid-cols-2 justify-center gap-5 md:grid-cols-2 xl:grid-cols-4">
           {products?.map((product) => (

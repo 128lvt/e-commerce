@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { Product } from '../../types/Type'
 import { API_URL } from '@/app/configs/apiConfig'
-import { useCart } from '@/hooks/useCart'
+import { useCart } from '@/hooks/use-cart'
 import { v4 as uuidv4 } from 'uuid'
 
 export function AddToCartDialog(product: Product) {
@@ -30,10 +30,18 @@ export function AddToCartDialog(product: Product) {
   const { toast } = useToast()
   const { addToCart, loadCartFromLocalStorage } = useCart()
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (variantStock: number) => {
     if (!selectedSize || !selectedColor) {
       toast({
         description: 'Vui lòng chọn kích thước và màu sắc!',
+        variant: 'error',
+      })
+      return
+    }
+
+    if (variantStock === 0) {
+      toast({
+        description: 'Sản phẩm này đã hết hàng.',
         variant: 'error',
       })
       return
@@ -47,6 +55,7 @@ export function AddToCartDialog(product: Product) {
     }
 
     const variantId = getVariantInfo(selectedSize, selectedColor)
+
     const productToAdd = {
       id: uuidv4(),
       productId: product.id,
@@ -55,7 +64,9 @@ export function AddToCartDialog(product: Product) {
       size: selectedSize,
       color: selectedColor,
       variantId: variantId || 0,
-      imageUrl: product.images[0].imageUrl,
+      imageUrl: product.images[0]?.imageUrl,
+      quantity: 1,
+      stock: variantStock,
     }
 
     addToCart(productToAdd)
@@ -103,7 +114,16 @@ export function AddToCartDialog(product: Product) {
             {new Intl.NumberFormat('vi-VN').format(product.price)} VNĐ
           </p>
           <div>
-            <Button type="button" onClick={handleAddToCart}>
+            <Button
+              type="button"
+              onClick={() =>
+                handleAddToCart(
+                  product.variants.find(
+                    (v) => v.size === selectedSize && v.color === selectedColor,
+                  )?.stock || 0,
+                )
+              }
+            >
               Thêm vào giỏ hàng
             </Button>
           </div>

@@ -1,21 +1,13 @@
 'use client'
 import { ModeToggle } from '@/components/ModeToggle'
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuItem,
-  DropdownMenuGroup,
-  DropdownMenuContent,
-} from '@/components/ui/dropdown-menu'
 import { CiShoppingCart } from 'react-icons/ci'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import Profile from '@/components/Profile'
 import createLinks from './utils/Links'
-import useCategory from '@/hooks/useCategory'
 import { Category } from '../../types/Type'
-import { useCart } from '@/hooks/useCart'
+import { useCart } from '@/hooks/use-cart'
 import Search from './Search'
 interface Link {
   name: string
@@ -28,73 +20,11 @@ export default function Nav() {
 
   const { cart } = useCart()
 
-  const { data, error, isLoading } = useCategory()
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if (
-    !data ||
-    !data.data ||
-    !Array.isArray(data.data) ||
-    data.data.length === 0
-  ) {
-    return <div>No categories available</div>
-  }
-
-  if (error) {
-    return <div>Error loading categories</div>
-  }
-
-  const categories: Category[] = data.data.map((category: Category) => ({
-    id: category.id, // Đảm bảo category có trường id
-    name: category.name, // Lấy tên danh mục từ dữ liệu
-    href: `/danh-muc/${
-      category.name
-        ?.normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w\-]+/g, '') || '/'
-    }`,
-  }))
-
-  const links = createLinks(categories)
+  const links = createLinks()
 
   return (
     <>
       {links.map((link) => {
-        if (link.name === 'Danh mục') {
-          return (
-            <div
-              key={link.name}
-              className={`transition ease-in-out ${path.match(link.href) ? 'border-b-2 border-[--primary]' : ''}`}
-            >
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <span className="cursor-pointer">{link.name}</span>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuGroup>
-                    {link.dropdown?.map((item) =>
-                      item.href && item.name ? (
-                        <DropdownMenuItem
-                          className="cursor-pointer"
-                          key={item.name} // Sử dụng item.id làm key
-                          asChild
-                        >
-                          <Link href={item.href}>{item.name}</Link>
-                        </DropdownMenuItem>
-                      ) : null,
-                    )}
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          )
-        }
-
         return (
           <Link
             href={link.href}

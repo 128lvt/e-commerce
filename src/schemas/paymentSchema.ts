@@ -29,7 +29,7 @@ const OrderSchema = z.object({
   }), // Kiểm tra shipping_method có trong danh sách đã định nghĩa
   payment_method: z.enum(['cod', 'vnpay'], {
     errorMap: () => ({ message: 'Phương thức thanh toán không hợp lệ.' }),
-  }), // Kiểm tra payment_method có trong danh sách đã định nghĩa
+  }),
 })
 
 export { OrderSchema, OrderDetailSchema }
