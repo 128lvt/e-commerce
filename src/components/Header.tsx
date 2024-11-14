@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import Nav from '@/components/Nav'
-import MobileNav from './MobileNav'
+import MobileNav from './mobile-nav'
+import Nav from './nav'
 export default function Header() {
   return (
     <header className="xl:py-12">

@@ -8,6 +8,7 @@ import { loginSchema } from '@/schemas/loginSchema'
 import { useToast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
 import useUser from '@/hooks/use-user'
+import { API_URL } from '@/configs/apiConfig'
 
 export default function FormLogin() {
   const { loadUserFromLocalStorage, setUser } = useUser() // Sử dụng loadUserFromLocalStorage
@@ -23,11 +24,11 @@ export default function FormLogin() {
     },
   })
 
-  // Hàm xử lý gửi biểu mẫu
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
+      console.log(values)
       // Gửi yêu cầu đăng nhập tới endpoint `/api/login`
-      const response = await fetch(`/api/login`, {
+      const response = await fetch(`${API_URL}/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,15 +46,15 @@ export default function FormLogin() {
       }
 
       localStorage.setItem('user', JSON.stringify(data.user))
-      setUser(data.user, data.token)
+      setUser(data.data.user, data.data.token)
 
       toast({
         description: 'Đăng nhập thành công',
       })
 
-      loadUserFromLocalStorage() // Gọi hàm loadUserFromLocalStorage để cập nhật trạng thái người dùng
+      loadUserFromLocalStorage()
 
-      router.push('/') // Điều hướng về trang chính
+      router.push('/')
     } catch (error) {
       console.error('Lỗi:', error)
       toast({

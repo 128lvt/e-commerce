@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
-import { useProductParams } from '@/hooks/useProductParams'
+import { useProductParams } from '@/hooks/use-param'
+import { useRouter } from 'next/navigation'
 
 export default function Search() {
+  const router = useRouter()
   // Lấy các tham số hiện tại từ store
   const { name, setParams } = useProductParams()
 
@@ -14,6 +16,7 @@ export default function Search() {
   const handleSearch = () => {
     // Cập nhật giá trị name trong Zustand store
     setParams({ name: searchTerm })
+    router.push('/san-pham')
   }
 
   return (
@@ -24,7 +27,7 @@ export default function Search() {
         className="p-3"
         placeholder="Tìm kiếm"
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)} // Cập nhật state khi thay đổi
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
       <Button
         className="bg-[--background] p-3"

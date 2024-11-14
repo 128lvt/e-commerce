@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from 'next-themes'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import Progress from '@/components/Progress'
 import { Toaster } from '@/components/ui/toaster'
+import Footer from '@/components/footer'
+import Progress from '@/components/progress'
+import Header from '@/components/header'
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ['vietnamese'], // choose subsets according to your need

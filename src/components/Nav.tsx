@@ -1,14 +1,14 @@
 'use client'
-import { ModeToggle } from '@/components/ModeToggle'
+import { ModeToggle } from '@/components/mode-toggle'
 import { CiShoppingCart } from 'react-icons/ci'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
-import Profile from '@/components/Profile'
+import Profile from '@/app/(auth)/profile'
 import createLinks from './utils/Links'
 import { Category } from '../../types/Type'
 import { useCart } from '@/hooks/use-cart'
-import Search from './Search'
+import Search from './search'
 interface Link {
   name: string
   href: string
@@ -17,6 +17,8 @@ interface Link {
 
 export default function Nav() {
   const path = usePathname()
+
+  console.log(path)
 
   const { cart } = useCart()
 

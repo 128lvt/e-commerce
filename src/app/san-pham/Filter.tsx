@@ -8,11 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useProductParams } from '@/hooks/useProductParams'
+import { useProductParams } from '@/hooks/use-param'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
-import useCategory from '@/hooks/useCategory'
-import { Category } from '../../../types/Type'
+import useCategory from '@/hooks/use-category'
+import { Category } from 'types/Type'
 
 export default function Filter() {
   const { setParams } = useProductParams()

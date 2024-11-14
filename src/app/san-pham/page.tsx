@@ -1,5 +1,5 @@
-import ProductList from '@/app/san-pham/ProductList'
-import Filter from './Filter'
+import ProductList from '@/app/san-pham/product-list'
+import Filter from './filter'
 
 export default function page() {
   return (

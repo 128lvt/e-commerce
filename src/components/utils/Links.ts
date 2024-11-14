@@ -14,7 +14,7 @@ const createLinks = () => [
   },
   {
     name: 'Thanh toán',
-    href: 'thanh-toan',
+    href: '/thanh-toan',
   },
   {
     name: 'Liên hệ',

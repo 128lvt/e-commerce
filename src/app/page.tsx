@@ -1,9 +1,9 @@
-import Banner from '@/components/Banner'
-import { TopCarousel } from '@/components/TopCarousel'
-import HomePageProducts from '@/components/HomePageProducts'
-import { BottomCarousel } from '@/components/BottomCarousel'
-import ProductCarousel from '@/components/ProductCarousel'
-import IconBottom from '@/components/IconBottom'
+import { TopCarousel } from '@/components/top-carousel'
+import HomePageProducts from '@/components/home-product'
+import { BottomCarousel } from '@/components/bottom-carousel'
+import ProductCarousel from '@/components/product-carousel'
+import IconBottom from '@/components/icon-bottom'
+import Banner from '@/components/banner'
 
 export default function page() {
   return (
