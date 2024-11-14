@@ -31,12 +31,12 @@ export const useCart = create<CartState>((set) => ({
       // Kiểm tra xem sản phẩm đã có trong giỏ chưa
       const existingItemIndex = state.cart.findIndex(
         (cartItem) =>
-          cartItem.id === item.id && cartItem.variantId === item.variantId,
+          cartItem.productId === item.productId &&
+          cartItem.variantId === item.variantId,
       )
 
       let updatedCart
       if (existingItemIndex !== -1) {
-        // Nếu sản phẩm đã có trong giỏ, cập nhật số lượng
         const updatedItem = {
           ...state.cart[existingItemIndex],
           quantity: Math.min(
