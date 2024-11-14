@@ -20,6 +20,7 @@ interface UserState {
   token: string | null
   setUser: (user: User | null, token?: string | null) => void
   loadUserFromLocalStorage: () => void
+  getToken: () => string | null
 }
 
 const useUser = create<UserState>((set) => ({

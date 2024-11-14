@@ -18,12 +18,15 @@ import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { API_URL } from '../../configs/apiConfig'
+import useOrder from '@/hooks/use-order'
 
 export default function FormCashout() {
   const { user, loadUserFromLocalStorage, token } = useUser()
   const { cart, loadCartFromLocalStorage, clearCart } = useCart()
   const [isLoading] = useState(false)
   const { toast } = useToast()
+
+  const { mutate } = useOrder(user?.id ?? 0, token ?? '')
 
   useEffect(() => {
     loadCartFromLocalStorage()
@@ -151,6 +154,7 @@ export default function FormCashout() {
         clearCart()
         loadCartFromLocalStorage()
 
+        mutate()
         toast({
           title: 'Thành công!',
           description: `Thanh toán thành công. [${orderId}]`,

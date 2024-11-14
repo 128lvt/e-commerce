@@ -8,7 +8,6 @@ import { loginSchema } from '@/schemas/loginSchema'
 import { useToast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
 import useUser from '@/hooks/use-user'
-import { API_URL } from '@/configs/apiConfig'
 
 export default function FormLogin() {
   const { loadUserFromLocalStorage, setUser } = useUser() // Sử dụng loadUserFromLocalStorage
@@ -28,7 +27,7 @@ export default function FormLogin() {
     try {
       console.log(values)
       // Gửi yêu cầu đăng nhập tới endpoint `/api/login`
-      const response = await fetch(`${API_URL}/users/login`, {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +45,7 @@ export default function FormLogin() {
       }
 
       localStorage.setItem('user', JSON.stringify(data.user))
-      setUser(data.data.user, data.data.token)
+      setUser(data.user, data.token)
 
       toast({
         description: 'Đăng nhập thành công',
