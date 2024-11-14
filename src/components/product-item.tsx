@@ -11,6 +11,9 @@ import { CiCircleInfo } from 'react-icons/ci'
 import { Product } from '../../types/Type'
 import { API_URL } from '@/configs/apiConfig'
 import { AddToCartDialog } from './cart-dialog'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+AOS.init()
 
 export function ProductItem(product: Product) {
   const imageUrl =
@@ -19,7 +22,10 @@ export function ProductItem(product: Product) {
       : '/default-image.jpg'
 
   return (
-    <Card className="mt-3 w-full rounded-md bg-[--background] shadow-sm shadow-gray-600 transition-transform duration-300 hover:border-emerald-300">
+    <Card
+      data-aos="fade-up"
+      className="mt-3 w-full rounded-md bg-[--background] shadow-sm shadow-gray-600 transition-transform duration-300 hover:border-emerald-300"
+    >
       <CardHeader className="py-4">
         <CardTitle className="flex items-center justify-between text-ellipsis whitespace-nowrap">
           {product.name ? product.name : 'Tên sản phẩm'}

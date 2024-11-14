@@ -1,5 +1,10 @@
+'use client'
 import { CiDeliveryTruck } from 'react-icons/ci'
 import { Card, CardContent, CardFooter, CardHeader } from './ui/card'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+AOS.init()
+
 export default function IconBottom() {
   return (
     <div className="container mx-auto mt-14 w-full">
@@ -7,7 +12,11 @@ export default function IconBottom() {
         Tại sao nên chọn chúng tôi
       </h1>
       <div className="mt-5 grid grid-rows-1 gap-4 lg:grid-cols-3 xl:grid-cols-3">
-        <Card className="relative">
+        <Card
+          data-aos="fade-right"
+          data-aos-duration="500"
+          className="relative"
+        >
           <CardHeader className="flex items-center">
             <CiDeliveryTruck className="h-10 w-10" />
           </CardHeader>
@@ -20,7 +29,7 @@ export default function IconBottom() {
             </p>
           </CardFooter>
         </Card>
-        <Card className="relative">
+        <Card data-aos="fade-up" data-aos-duration="500" className="relative">
           <CardHeader className="flex items-center">
             <CiDeliveryTruck className="h-10 w-10" />
           </CardHeader>
@@ -33,7 +42,7 @@ export default function IconBottom() {
             </p>
           </CardFooter>
         </Card>
-        <Card className="relative">
+        <Card data-aos="fade-left" data-aos-duration="500" className="relative">
           <CardHeader className="flex items-center">
             <CiDeliveryTruck className="h-10 w-10" />
           </CardHeader>
