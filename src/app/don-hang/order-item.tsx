@@ -16,13 +16,20 @@ export default function OrderItem({ order }: IProps) {
             <strong>Số điện thoại:</strong> {order?.phoneNumber}
           </p>
           <p>
+            <strong>Email:</strong> {order?.email}
+          </p>
+          <p>
             <strong>Địa chỉ:</strong> {order?.address}
           </p>
           <p>
-            <strong>Ghi chú:</strong> {order?.note}
+            <strong>Ghi chú:</strong>{' '}
+            {order?.note ? order?.note : 'Không có ghi chú'}
           </p>
           <p>
             <strong>Ngày đặt hàng:</strong> {order?.orderDate?.toLocaleString()}
+          </p>
+          <p>
+            <strong>Trạng thái:</strong> {order?.status?.toUpperCase()}
           </p>
           <p>
             <strong>Tổng tiền:</strong> {order?.totalMoney} VNĐ

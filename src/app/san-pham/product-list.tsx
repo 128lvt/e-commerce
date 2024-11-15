@@ -72,6 +72,8 @@ export default function ProductList() {
               variants={product.variants}
               category={product.category}
               id={product.id}
+              stock={product.stock}
+              description={product.description}
             />
           ))}
         </div>

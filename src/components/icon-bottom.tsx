@@ -3,9 +3,13 @@ import { CiDeliveryTruck } from 'react-icons/ci'
 import { Card, CardContent, CardFooter, CardHeader } from './ui/card'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-AOS.init()
+import { useEffect } from 'react'
 
 export default function IconBottom() {
+  useEffect(() => {
+    AOS.init()
+  })
+
   return (
     <div className="container mx-auto mt-14 w-full">
       <h1 className="text-center text-2xl font-semibold uppercase">

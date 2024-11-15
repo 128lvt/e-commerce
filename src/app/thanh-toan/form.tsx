@@ -19,6 +19,7 @@ import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { API_URL } from '../../configs/apiConfig'
 import useOrder from '@/hooks/use-order'
+import useProduct from '@/hooks/use-product'
 
 export default function FormCashout() {
   const { user, loadUserFromLocalStorage, token } = useUser()
@@ -27,6 +28,7 @@ export default function FormCashout() {
   const { toast } = useToast()
 
   const { mutate } = useOrder(user?.id ?? 0, token ?? '')
+  const { reloadProduct } = useProduct()
 
   useEffect(() => {
     loadCartFromLocalStorage()
@@ -154,6 +156,7 @@ export default function FormCashout() {
         clearCart()
         loadCartFromLocalStorage()
 
+        reloadProduct()
         mutate()
         toast({
           title: 'Thành công!',

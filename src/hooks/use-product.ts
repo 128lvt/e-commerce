@@ -1,4 +1,4 @@
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { Product } from '../../types/Type'
 import { API_URL } from '@/configs/apiConfig'
 import { useProductParams } from './use-param'
@@ -30,7 +30,15 @@ const useProduct = () => {
   // Kiểm tra trạng thái đang tải
   const isLoading = !data && !error
 
-  return { data: data, error, isLoading }
+  return {
+    data: data,
+    error,
+    isLoading,
+    reloadProduct: () =>
+      mutate(
+        `${API_URL}/products/search?page=${page}&limit=${limit}&name=${name}&categoryIds=${categoryIds}&sortOrder=${sort}`,
+      ),
+  }
 }
 
 export default useProduct

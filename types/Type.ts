@@ -36,7 +36,7 @@ export const RoleConstants = {
 export interface User extends BaseEntity {
   id: number
   fullName?: string
-  phoneNumber: string
+  email: string
   address?: string
   password: string
   active?: boolean
@@ -63,7 +63,7 @@ export class UserDetailsImpl implements UserDetails {
   }
 
   getUsername(): string {
-    return this.user.phoneNumber
+    return this.user.email
   }
 
   getAuthorities(): Array<string> {
@@ -112,8 +112,8 @@ export interface Product {
   id: number
   name: string
   price: number
-  stock?: number
-  description?: string
+  stock: number
+  description: string
   category: Category
   variants: ProductVariant[]
   images: ProductImage[]

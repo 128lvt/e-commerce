@@ -7,6 +7,7 @@ interface IProps {
   variants: ProductVariant[]
   onSizeChange: (size: string) => void
   onColorChange: (color: string) => void
+  stock: number
 }
 
 export function ProductVariant(prop: IProps) {
@@ -83,7 +84,9 @@ export function ProductVariant(prop: IProps) {
       </RadioGroup>
 
       {/* Hiển thị số lượng tồn kho và ID của variant */}
-      <p className="mt-3">Còn: {selectedVariant ? selectedVariant.stock : 0}</p>
+      <p className="mt-3">
+        Còn: {selectedVariant ? selectedVariant.stock : 0} / {prop.stock}
+      </p>
     </div>
   )
 }

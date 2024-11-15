@@ -13,9 +13,14 @@ import { API_URL } from '@/configs/apiConfig'
 import { AddToCartDialog } from './cart-dialog'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-AOS.init()
+import { useEffect } from 'react'
 
 export function ProductItem(product: Product) {
+  useEffect(() => {
+    AOS.init()
+  }, [])
+
+  console.log(product)
   const imageUrl =
     product.images && product.images.length > 0
       ? `${API_URL}/products/images/${product.images[0].imageUrl}`
@@ -42,12 +47,15 @@ export function ProductItem(product: Product) {
         <p className="mt-5 font-semibold">
           {new Intl.NumberFormat('vi-VN').format(product.price)} VNĐ
         </p>
+        <p>Số lượng: {product.stock}</p>
       </CardContent>
       <CardFooter className="flex justify-end gap-3 px-2 pb-3">
         <Button className="transition-transform duration-300 hover:scale-110">
           <CiCircleInfo className="h-4 w-4 stroke-1" />
         </Button>
         <AddToCartDialog
+          stock={product.stock}
+          description={product.description}
           images={product.images}
           name={product.name}
           price={product.price}

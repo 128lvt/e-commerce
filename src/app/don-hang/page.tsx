@@ -32,9 +32,7 @@ export default function Page() {
 
   return (
     <div className="container mx-auto">
-      <div className="mb-10 text-center text-2xl font-semibold">
-        Đơn hàng đã mua
-      </div>
+      <div className="mb-10 text-center text-2xl font-semibold">Đơn hàng</div>
       <OrderList orders={orders} />
     </div>
   )

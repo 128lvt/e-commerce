@@ -4,10 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { loginSchema } from '@/schemas/authSchema'
+import { registrationSchema } from '@/schemas/authSchema'
 import { useToast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
-import useUser from '@/hooks/use-user'
 import {
   Form,
   FormControl,
@@ -17,25 +16,24 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
-export default function FormLogin() {
-  const { loadUserFromLocalStorage, setUser } = useUser() // Sử dụng loadUserFromLocalStorage
+export default function FormRegister() {
   const { toast } = useToast()
   const router = useRouter()
 
   // Khởi tạo useForm với schema Zod
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof registrationSchema>>({
+    resolver: zodResolver(registrationSchema),
     defaultValues: {
+      fullname: '',
       email: '',
       password: '',
+      retype_password: '',
     },
   })
 
-  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+  const onSubmit = async (values: z.infer<typeof registrationSchema>) => {
     try {
-      console.log(values)
-      // Gửi yêu cầu đăng nhập tới endpoint `/api/login`
-      const response = await fetch('/api/login', {
+      const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,26 +44,21 @@ export default function FormLogin() {
       const data = await response.json()
       if (!response.ok) {
         toast({
-          description: `Đăng nhập thất bại: ${data.message}`,
+          description: `Đăng ký thất bại: ${data}`,
           variant: 'error',
         })
         return
       }
 
-      localStorage.setItem('user', JSON.stringify(data.user))
-      setUser(data.user, data.token)
-
       toast({
-        description: 'Đăng nhập thành công',
+        description: 'Đăng ký thành công',
       })
-
-      loadUserFromLocalStorage()
 
       router.push('/')
     } catch (error) {
       console.error('Lỗi:', error)
       toast({
-        description: 'Có lỗi xảy ra khi đăng nhập',
+        description: 'Có lỗi xảy ra khi đăng ký',
         variant: 'error',
       })
     }
@@ -73,9 +66,22 @@ export default function FormLogin() {
 
   return (
     <div className="mx-auto w-[500px]">
-      <h1 className="mb-4 text-center text-2xl font-semibold">Đăng nhập</h1>
+      <h1 className="mb-4 text-center text-2xl font-semibold">Đăng ký</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="fullname"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Họ và Tên</FormLabel>
+                <FormControl>
+                  <Input placeholder="Họ và Tên" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="email"
@@ -96,29 +102,32 @@ export default function FormLogin() {
               <FormItem>
                 <FormLabel>Mật khẩu</FormLabel>
                 <FormControl>
-                  <Input placeholder="Mật khẩu" {...field} />
+                  <Input type="password" placeholder="Mật khẩu" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className="flex justify-end gap-3">
-            <Button
-              type="button"
-              className="bg-red-600"
-              onClick={() => router.push('/quen-mat-khau')}
-            >
-              Quên mật khẩu
-            </Button>
-            <Button
-              type="button"
-              className="bg-green-600"
-              onClick={() => router.push('/dang-ky')}
-            >
-              Đăng ký
-            </Button>
+          <FormField
+            control={form.control}
+            name="retype_password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nhập lại mật khẩu</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="Nhập lại mật khẩu"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex justify-end">
             <Button type="submit" className="bg-blue-600">
-              Đăng nhập
+              Đăng ký
             </Button>
           </div>
         </form>

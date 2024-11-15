@@ -104,6 +104,7 @@ export function AddToCartDialog(product: Product) {
           className="h-64 w-full object-cover"
         />
         <ProductVariant
+          stock={product.stock}
           variants={product.variants}
           onSizeChange={setSelectedSize} // Gọi hàm để cập nhật kích thước
           onColorChange={setSelectedColor} // Gọi hàm để cập nhật màu sắc
