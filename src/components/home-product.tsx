@@ -49,6 +49,8 @@ export default function HomePageProducts(page: IProps) {
         <div className="grid grid-cols-2 justify-center gap-5 md:grid-cols-2 xl:grid-cols-4">
           {randomProducts?.map((product) => (
             <ProductItem
+              description={product.description}
+              stock={product.stock}
               key={product.id}
               name={product.name}
               price={product.price}

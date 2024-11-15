@@ -17,13 +17,20 @@ import {
 } from '@/components/ui/form'
 import { API_URL } from '@/configs/apiConfig'
 import { useState } from 'react'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Mail, Key, Lock, RefreshCw, ArrowLeft } from 'lucide-react'
 
-export default function ForgotPasswordForm() {
+export default function EnhancedForgotPasswordForm() {
   const { toast } = useToast()
   const router = useRouter()
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
-  // Khởi tạo useForm với schema Zod
   const form = useForm<z.infer<typeof forgotPasswordSchema>>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
@@ -48,7 +55,7 @@ export default function ForgotPasswordForm() {
       if (!response.ok) {
         toast({
           description: `Đổi mật khẩu thất bại: ${data}.`,
-          variant: 'error',
+          variant: 'destructive',
         })
         return
       }
@@ -62,27 +69,32 @@ export default function ForgotPasswordForm() {
       console.error('Lỗi:', error)
       toast({
         description: 'Có lỗi xảy ra khi đổi mật khẩu.',
-        variant: 'error',
+        variant: 'destructive',
       })
     }
   }
 
   const handleGetToken = async (data: z.infer<typeof forgotPasswordSchema>) => {
-    const email = data.email // Lấy email đã được validate từ form
+    const email = data.email
 
-    console.log('Email:', email)
+    if (!email) {
+      toast({
+        title: 'Lỗi',
+        description: 'Vui lòng nhập email trước khi lấy token.',
+        variant: 'destructive',
+      })
+      setIsButtonDisabled(false)
+      return
+    }
 
-    // Hiển thị toast "Đang gửi token"
     toast({
       title: 'Đang gửi token',
       description: 'Vui lòng đợi trong giây lát.',
-      variant: 'loading',
     })
 
     setIsButtonDisabled(true)
 
     try {
-      // Gửi yêu cầu API để lấy token
       const response = await fetch(
         `${API_URL}/users/token?email=${encodeURIComponent(email)}`,
         {
@@ -104,7 +116,7 @@ export default function ForgotPasswordForm() {
         toast({
           title: 'Thất bại',
           description: dataResponse.data,
-          variant: 'error',
+          variant: 'destructive',
         })
       }
     } catch (error) {
@@ -112,98 +124,144 @@ export default function ForgotPasswordForm() {
       toast({
         title: 'Lỗi',
         description: 'Đã xảy ra lỗi trong quá trình gửi token.',
-        variant: 'error',
+        variant: 'destructive',
       })
     } finally {
-      // Sau 60 giây, kích hoạt lại nút
       setTimeout(() => {
         setIsButtonDisabled(false)
-      }, 60000) // 60000ms = 60s
+      }, 60000)
     }
   }
 
   return (
-    <div className="mx-auto w-[500px]">
-      <h1 className="mb-4 text-center text-2xl font-semibold">Quên mật khẩu</h1>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <div className="flex space-x-4">
-                  <FormControl className="flex-1">
-                    <Input
-                      placeholder="Nhập email"
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    />
-                  </FormControl>
-                  <Button
-                    onClick={form.handleSubmit(handleGetToken)}
-                    disabled={isButtonDisabled}
-                    type="button"
-                    className="ml-2 bg-yellow-400 text-black hover:bg-yellow-300"
-                  >
-                    Lấy token
-                  </Button>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="token"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Token</FormLabel>
-                <FormControl>
-                  <Input placeholder="Nhập token" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Mật khẩu</FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="Mật khẩu" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="retypePassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nhập lại mật khẩu</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Nhập lại mật khẩu"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex justify-end">
-            <Button type="submit" className="bg-blue-600">
-              Xác nhận
-            </Button>
-          </div>
-        </form>
-      </Form>
+    <div className="flex items-center justify-center p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-center text-2xl font-bold">
+            Quên mật khẩu
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <div className="flex space-x-2">
+                      <FormControl className="flex-1">
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 transform text-muted-foreground" />
+                          <Input
+                            placeholder="Nhập email"
+                            {...field}
+                            className="pl-10"
+                            onChange={(e) => field.onChange(e.target.value)}
+                          />
+                        </div>
+                      </FormControl>
+                      <Button
+                        onClick={() => handleGetToken(form.getValues())}
+                        disabled={isButtonDisabled}
+                        type="button"
+                        className="bg-yellow-400 text-black hover:bg-yellow-300"
+                      >
+                        {isButtonDisabled ? (
+                          <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                          'Lấy token'
+                        )}
+                      </Button>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="token"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Token</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Key className="absolute left-3 top-1/2 -translate-y-1/2 transform text-muted-foreground" />
+                        <Input
+                          placeholder="Nhập token"
+                          {...field}
+                          className="pl-10"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Mật khẩu mới</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 transform text-muted-foreground" />
+                        <Input
+                          type="password"
+                          placeholder="Mật khẩu mới"
+                          {...field}
+                          className="pl-10"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="retypePassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nhập lại mật khẩu mới</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 transform text-muted-foreground" />
+                        <Input
+                          type="password"
+                          placeholder="Nhập lại mật khẩu mới"
+                          {...field}
+                          className="pl-10"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter>
+          <Button
+            type="submit"
+            className="w-full"
+            onClick={form.handleSubmit(onSubmit)}
+          >
+            Xác nhận
+          </Button>
+          <Button
+            variant="link"
+            className="text-sm text-muted-foreground"
+            onClick={() => router.push('/dang-nhap')}
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Quay lại trang đăng nhập
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   )
 }

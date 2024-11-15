@@ -1,5 +1,5 @@
 import { Order } from 'types/Type'
-import OrderItem from './order-item'
+import { OrderItem } from './order-item'
 
 interface IProps {
   orders?: Order[]

@@ -18,8 +18,6 @@ interface Link {
 export default function Nav() {
   const path = usePathname()
 
-  console.log(path)
-
   const { cart } = useCart()
 
   const links = createLinks()
@@ -37,7 +35,7 @@ export default function Nav() {
           </Link>
         )
       })}
-      <Search />
+      <Search padding="" />
       <div className="flex items-center gap-2">
         <Link
           href={'/gio-hang'}

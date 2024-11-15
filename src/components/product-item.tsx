@@ -1,3 +1,9 @@
+import { useEffect } from 'react'
+import Image from 'next/image'
+import { CiCircleInfo } from 'react-icons/ci'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -6,21 +12,19 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import Image from 'next/image'
-import { CiCircleInfo } from 'react-icons/ci'
+import { Badge } from '@/components/ui/badge'
+import { AddToCartDialog } from './cart-dialog'
 import { Product } from '../../types/Type'
 import { API_URL } from '@/configs/apiConfig'
-import { AddToCartDialog } from './cart-dialog'
-import AOS from 'aos'
-import 'aos/dist/aos.css'
-import { useEffect } from 'react'
 
 export function ProductItem(product: Product) {
   useEffect(() => {
-    AOS.init()
+    AOS.init({
+      duration: 800,
+      once: true,
+    })
   }, [])
 
-  console.log(product)
   const imageUrl =
     product.images && product.images.length > 0
       ? `${API_URL}/products/images/${product.images[0].imageUrl}`
@@ -29,40 +33,61 @@ export function ProductItem(product: Product) {
   return (
     <Card
       data-aos="fade-up"
-      className="mt-3 w-full rounded-md bg-[--background] shadow-sm shadow-gray-600 transition-transform duration-300 hover:border-emerald-300"
+      className="group relative mt-3 w-full overflow-hidden rounded-lg bg-card text-card-foreground shadow-lg transition-all duration-300 hover:shadow-xl"
     >
-      <CardHeader className="py-4">
-        <CardTitle className="flex items-center justify-between text-ellipsis whitespace-nowrap">
-          {product.name ? product.name : 'Tên sản phẩm'}
+      <CardHeader className="p-4">
+        <CardTitle className="line-clamp-1 text-lg font-semibold">
+          {product.name || 'Product Name'}
         </CardTitle>
+        <Badge variant="secondary" className="absolute right-2 top-3">
+          {product.category.name || 'Category'}
+        </Badge>
       </CardHeader>
-      <CardContent>
-        <Image
-          src={imageUrl}
-          width={400}
-          height={400}
-          alt="Product"
-          className="h-64 w-full object-cover"
-        ></Image>
-        <p className="mt-5 font-semibold">
-          {new Intl.NumberFormat('vi-VN').format(product.price)} VNĐ
-        </p>
-        <p>Số lượng: {product.stock}</p>
+      <CardContent className="p-0">
+        <div className="relative aspect-square overflow-hidden">
+          <Image
+            src={imageUrl}
+            alt={product.name || 'Product Image'}
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        </div>
       </CardContent>
-      <CardFooter className="flex justify-end gap-3 px-2 pb-3">
-        <Button className="transition-transform duration-300 hover:scale-110">
-          <CiCircleInfo className="h-4 w-4 stroke-1" />
-        </Button>
-        <AddToCartDialog
-          stock={product.stock}
-          description={product.description}
-          images={product.images}
-          name={product.name}
-          price={product.price}
-          category={product.category}
-          id={product.id}
-          variants={product.variants}
-        />
+      <CardFooter className="flex flex-col items-start gap-2 p-4">
+        <div className="flex w-full items-center justify-between">
+          <p className="text-xl font-bold text-primary">
+            {new Intl.NumberFormat('vi-VN', {
+              style: 'currency',
+              currency: 'VND',
+            }).format(product.price)}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            In stock: {product.stock}
+          </p>
+        </div>
+        <div className="flex w-full justify-between gap-2">
+          <Button
+            size="sm"
+            className="flex-1 bg-background transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground"
+          >
+            <CiCircleInfo className="mr-2 h-4 w-4" />
+            Chi tiết
+          </Button>
+          <AddToCartDialog
+            key={product.id}
+            stock={product.stock}
+            description={product.description}
+            images={product.images}
+            name={product.name}
+            price={product.price}
+            category={product.category}
+            id={product.id}
+            variants={product.variants}
+          ></AddToCartDialog>
+        </div>
       </CardFooter>
     </Card>
   )

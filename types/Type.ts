@@ -143,8 +143,8 @@ export interface Order {
   address?: string
   note?: string
   orderDate?: Date
-  status?: string
-  totalMoney?: number
+  status: string
+  totalMoney: number
   shippingMethod?: string
   shippingAddress?: string
   shippingDate?: Date

@@ -16,8 +16,6 @@ export default function Page() {
 
   const orders = data?.data
 
-  console.log(orders)
-
   if (isLoading) {
     return <div>Loading...</div>
   }

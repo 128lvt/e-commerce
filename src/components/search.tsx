@@ -4,7 +4,11 @@ import { Input } from './ui/input'
 import { useProductParams } from '@/hooks/use-param'
 import { useRouter } from 'next/navigation'
 
-export default function Search() {
+interface IProps {
+  padding: string
+}
+
+export default function SearchInput({ padding }: IProps) {
   const router = useRouter()
   // Lấy các tham số hiện tại từ store
   const { name, setParams } = useProductParams()
@@ -24,7 +28,7 @@ export default function Search() {
       {/* Input để người dùng nhập từ khóa tìm kiếm */}
       <Input
         type="text"
-        className="p-3"
+        className={padding}
         placeholder="Tìm kiếm"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}

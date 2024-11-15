@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss';
+import type { Config } from 'tailwindcss'
 
 const config: Config = {
   darkMode: ['class'],
@@ -10,12 +10,23 @@ const config: Config = {
   theme: {
     extend: {
       keyframes: {
+        'gradient-x': {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center',
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center',
+          },
+        },
         scroll: {
           '0%': { transform: 'translateX(100%)' },
           '100%': { transform: 'translateX(-100%)' },
         },
       },
       animation: {
+        'gradient-x': 'gradient-x 15s ease infinite',
         scroll: 'scroll 10s linear infinite',
       },
       colors: {
@@ -68,5 +79,5 @@ const config: Config = {
     },
   },
   plugins: [require('tailwindcss-animate')],
-};
-export default config;
+}
+export default config

@@ -1,5 +1,9 @@
 'use client'
+
+import { useState } from 'react'
 import useProduct from '@/hooks/use-product'
+import { useProductParams } from '@/hooks/use-param'
+import { ProductItem } from '@/components/product-item'
 import {
   Pagination,
   PaginationContent,
@@ -8,33 +12,17 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { useState } from 'react'
-import { useProductParams } from '@/hooks/use-param'
-import { ProductItem } from '@/components/product-item'
+import { Loader2 } from 'lucide-react'
 
-export default function ProductList() {
+export default function EnhancedProductListPage() {
   const [pageIndex, setPageIndex] = useState(0)
   const { setParams } = useProductParams()
-  const { data, isLoading, error } = useProduct()
+  const { data: productData, isLoading, error } = useProduct()
 
-  const products = data?.data.products
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if (!data || !data.data || data.data.products.length === 0) {
-    return <div>No products available</div>
-  }
-
-  if (error) {
-    return <div>Error loading product</div>
-  }
-
-  const totalPages = data.data.totalPages
+  const products = productData?.data.products
+  const totalPages = productData?.data.totalPages || 0
 
   const handlePageChange = (newPage: number) => {
-    console.log(newPage)
     if (newPage >= 0 && newPage < totalPages) {
       setPageIndex(newPage)
       setParams({ page: newPage })
@@ -57,57 +45,81 @@ export default function ProductList() {
     )
   }
 
-  const paginationRange = getPaginationRange()
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex h-screen items-center justify-center text-destructive">
+        Error loading products. Please try again later.
+      </div>
+    )
+  }
+
+  if (!products || products.length === 0) {
+    return (
+      <div className="flex h-screen items-center justify-center text-muted-foreground">
+        No products available
+      </div>
+    )
+  }
 
   return (
-    <div className="mt-4 w-full">
-      <div className="w-full rounded-md">
-        <div className="grid grid-cols-2 justify-center gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {products?.map((product) => (
-            <ProductItem
-              key={product.name}
-              name={product.name}
-              price={product.price}
-              images={product.images}
-              variants={product.variants}
-              category={product.category}
-              id={product.id}
-              stock={product.stock}
-              description={product.description}
-            />
-          ))}
-        </div>
-        <div className="my-8">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
+    <div className="container mx-auto px-4 py-8">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {products.map((product) => (
+          <ProductItem
+            key={product.id}
+            name={product.name}
+            price={product.price}
+            images={product.images}
+            variants={product.variants}
+            category={product.category}
+            id={product.id}
+            stock={product.stock}
+            description={product.description}
+          />
+        ))}
+      </div>
+      <div className="mt-8">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                onClick={() =>
+                  handlePageChange(pageIndex === 0 ? pageIndex : pageIndex - 1)
+                }
+              />
+            </PaginationItem>
+            {getPaginationRange().map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
                   href="#"
-                  onClick={() =>
-                    handlePageChange(pageIndex == 0 ? pageIndex : pageIndex - 1)
+                  onClick={() => handlePageChange(page - 1)}
+                  className={
+                    pageIndex === page - 1
+                      ? 'bg-primary text-primary-foreground'
+                      : ''
                   }
-                />
+                >
+                  {page}
+                </PaginationLink>
               </PaginationItem>
-              {paginationRange.map((page) => (
-                <PaginationItem key={page}>
-                  <PaginationLink
-                    href="#"
-                    onClick={() => handlePageChange(page - 1)}
-                    className={pageIndex === page - 1 ? 'text-red-600' : ''} // Đánh dấu trang hiện tại
-                  >
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
-              <PaginationItem>
-                <PaginationNext
-                  href="#"
-                  onClick={() => handlePageChange(pageIndex + 1)}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
+            ))}
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                onClick={() => handlePageChange(pageIndex + 1)}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   )

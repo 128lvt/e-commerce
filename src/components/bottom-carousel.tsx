@@ -2,9 +2,9 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from '@/components/ui/carousel';
-import { StarIcon } from '@radix-ui/react-icons';
-import Image from 'next/image';
+} from '@/components/ui/carousel'
+import { StarIcon } from '@radix-ui/react-icons'
+import Image from 'next/image'
 
 export function BottomCarousel() {
   return (
@@ -25,6 +25,7 @@ export function BottomCarousel() {
                   width={1920}
                   height={1080}
                   alt="Carousel"
+                  priority
                   className="h-[10rem] w-full rounded-sm object-cover"
                 />
               </div>
@@ -33,5 +34,5 @@ export function BottomCarousel() {
         </CarouselContent>
       </Carousel>
     </div>
-  );
+  )
 }

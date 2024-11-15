@@ -48,6 +48,8 @@ export default function ProductCarousel() {
               className="h-full w-full basis-1/2 sm:basis-1/3 md:basis-1/3 lg:basis-1/4"
             >
               <ProductItem
+                description={products[index]?.description}
+                stock={products[index]?.stock}
                 images={products[index]?.images}
                 name={products[index]?.name}
                 price={products[index]?.price}

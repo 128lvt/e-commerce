@@ -13,6 +13,10 @@ import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import useCategory from '@/hooks/use-category'
 import { Category } from 'types/Type'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { ChevronDown, FilterIcon, Search } from 'lucide-react'
+import SearchInput from '@/components/search'
 
 export default function Filter() {
   const { setParams } = useProductParams()
@@ -27,14 +31,12 @@ export default function Filter() {
   }
 
   const handleCategoryChange = (id: string) => {
-    console.log('Category selected:', id)
     setSelectedCategories((prevSelected) => {
       const isSelected = prevSelected.includes(id)
       const updated = isSelected
         ? prevSelected.filter((categoryId) => categoryId !== id)
         : [...prevSelected, id]
 
-      console.log('Updated selectedCategories:', updated)
       return updated
     })
   }
@@ -48,43 +50,66 @@ export default function Filter() {
   }, [selectedCategories, setParams])
 
   return (
-    <div className="container mx-auto flex justify-end">
-      <DropdownMenu>
-        <DropdownMenuTrigger className="rounded-md border border-gray-300 px-3 py-2">
-          Sắp xếp theo
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>Giá</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => handleFilter('asc')}>
-            Từ thấp tới cao
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleFilter('desc')}>
-            Từ cao tới thấp
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-
-          <DropdownMenuLabel>Danh mục</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {categories?.map((item: Category) => {
-            return (
-              <DropdownMenuItem
-                key={item.id}
-                className="flex items-center gap-3"
-              >
-                <Checkbox
-                  id={item.id.toString()}
-                  checked={selectedCategories.includes(item.id.toString())}
-                  onCheckedChange={() =>
-                    handleCategoryChange(item.id.toString())
-                  }
-                />
-                <Label htmlFor={item.id.toString()}>{item.name}</Label>
-              </DropdownMenuItem>
-            )
-          })}
-        </DropdownMenuContent>
-      </DropdownMenu>
+    <div className="container mx-auto px-4 py-8">
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Lọc sản phẩm</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
+              {/* <Input
+                type="search"
+                placeholder="Tìm kiếm sản phẩm..."
+                className="pl-10"
+              /> */}
+              <SearchInput padding="pl-10" />
+            </div>
+            <div className="flex items-center space-x-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button>
+                    <FilterIcon className="mr-2 h-4 w-4" />
+                    Sắp xếp
+                    <ChevronDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel>Sắp xếp theo giá</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => handleFilter('asc')}>
+                    Low to High
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleFilter('desc')}>
+                    High to Low
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel>Categories</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {categories?.map((item: Category) => (
+                    <DropdownMenuItem
+                      key={item.id}
+                      className="flex items-center space-x-2"
+                    >
+                      <Checkbox
+                        id={item.id.toString()}
+                        checked={selectedCategories.includes(
+                          item.id.toString(),
+                        )}
+                        onCheckedChange={() =>
+                          handleCategoryChange(item.id.toString())
+                        }
+                      />
+                      <Label htmlFor={item.id.toString()}>{item.name}</Label>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 'use client'
+
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -16,13 +17,20 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { LogIn, KeyRound, Mail } from 'lucide-react'
 
-export default function FormLogin() {
-  const { loadUserFromLocalStorage, setUser } = useUser() // Sử dụng loadUserFromLocalStorage
+export default function EnhancedFormLogin() {
+  const { loadUserFromLocalStorage, setUser } = useUser()
   const { toast } = useToast()
   const router = useRouter()
 
-  // Khởi tạo useForm với schema Zod
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -33,8 +41,6 @@ export default function FormLogin() {
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
-      console.log(values)
-      // Gửi yêu cầu đăng nhập tới endpoint `/api/login`
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
@@ -47,7 +53,7 @@ export default function FormLogin() {
       if (!response.ok) {
         toast({
           description: `Đăng nhập thất bại: ${data.message}`,
-          variant: 'error',
+          variant: 'destructive',
         })
         return
       }
@@ -66,63 +72,86 @@ export default function FormLogin() {
       console.error('Lỗi:', error)
       toast({
         description: 'Có lỗi xảy ra khi đăng nhập',
-        variant: 'error',
+        variant: 'destructive',
       })
     }
   }
 
   return (
-    <div className="mx-auto w-[500px]">
-      <h1 className="mb-4 text-center text-2xl font-semibold">Đăng nhập</h1>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Mật khẩu</FormLabel>
-                <FormControl>
-                  <Input placeholder="Mật khẩu" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex justify-end gap-3">
+    <Card className="mx-auto w-full max-w-md">
+      <CardHeader>
+        <CardTitle className="text-center text-2xl font-semibold">
+          Đăng nhập
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 transform text-muted-foreground" />
+                      <Input placeholder="Email" {...field} className="pl-10" />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Mật khẩu</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 transform text-muted-foreground" />
+                      <Input
+                        type="password"
+                        placeholder="Mật khẩu"
+                        {...field}
+                        className="pl-10"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button
-              type="button"
-              className="bg-red-600"
-              onClick={() => router.push('/quen-mat-khau')}
+              type="submit"
+              className="w-full bg-primary transition-colors hover:bg-primary/90"
             >
-              Quên mật khẩu
+              <LogIn className="mr-2 h-4 w-4" /> Đăng nhập
             </Button>
-            <Button
-              type="button"
-              className="bg-green-600"
-              onClick={() => router.push('/dang-ky')}
-            >
-              Đăng ký
-            </Button>
-            <Button type="submit" className="bg-blue-600">
-              Đăng nhập
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+          </form>
+        </Form>
+      </CardContent>
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="px-2 text-muted-foreground">Hoặc</span>
+        </div>
+      </div>
+      <CardFooter className="mt-6 flex justify-between">
+        <Button
+          className="w-[48%]"
+          onClick={() => router.push('/quen-mat-khau')}
+        >
+          Quên mật khẩu
+        </Button>
+        <Button className="w-[48%]" onClick={() => router.push('/dang-ky')}>
+          Đăng ký
+        </Button>
+      </CardFooter>
+    </Card>
   )
 }

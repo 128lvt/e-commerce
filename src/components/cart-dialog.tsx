@@ -1,3 +1,9 @@
+import { useState, useEffect } from 'react'
+import { useToast } from '@/hooks/use-toast'
+import { useCart } from '@/hooks/use-cart'
+import { v4 as uuidv4 } from 'uuid'
+import { Product } from '../../types/Type'
+import { API_URL } from '@/configs/apiConfig'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -8,33 +14,30 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import Image from 'next/image'
-import { CiShoppingCart } from 'react-icons/ci'
-import { useEffect, useState } from 'react'
-import { useToast } from '@/hooks/use-toast'
-import { Product } from '../../types/Type'
-import { API_URL } from '@/configs/apiConfig'
-import { useCart } from '@/hooks/use-cart'
-import { v4 as uuidv4 } from 'uuid'
 import { ProductVariant } from './product-variant'
+import { ShoppingCart, X } from 'lucide-react'
+import Image from 'next/image'
+import { Separator } from '@/components/ui/separator'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 export function AddToCartDialog(product: Product) {
+  const [selectedSize, setSelectedSize] = useState<string>('')
+  const [selectedColor, setSelectedColor] = useState<string>('')
+  const [isOpen, setIsOpen] = useState(false)
+
+  const { toast } = useToast()
+  const { addToCart, loadCartFromLocalStorage } = useCart()
+
   const imageUrl =
     product.images && product.images.length > 0
       ? `${API_URL}/products/images/${product.images[0].imageUrl}`
       : '/default-image.jpg'
 
-  const [selectedSize, setSelectedSize] = useState<string>('')
-  const [selectedColor, setSelectedColor] = useState<string>('')
-
-  const { toast } = useToast()
-  const { addToCart, loadCartFromLocalStorage } = useCart()
-
   const handleAddToCart = (variantStock: number) => {
     if (!selectedSize || !selectedColor) {
       toast({
         description: 'Vui lòng chọn kích thước và màu sắc!',
-        variant: 'error',
+        variant: 'destructive',
       })
       return
     }
@@ -42,7 +45,7 @@ export function AddToCartDialog(product: Product) {
     if (variantStock === 0) {
       toast({
         description: 'Sản phẩm này đã hết hàng.',
-        variant: 'error',
+        variant: 'destructive',
       })
       return
     }
@@ -71,63 +74,92 @@ export function AddToCartDialog(product: Product) {
 
     addToCart(productToAdd)
 
-    // Log thông tin sản phẩm ra console
-    console.log('Sản phẩm được thêm vào giỏ hàng:', productToAdd)
     toast({
       description: `Đã thêm ${productToAdd.name} vào giỏ hàng.`,
     })
+
+    setIsOpen(false)
   }
 
   useEffect(() => {
     loadCartFromLocalStorage()
-  }, [loadCartFromLocalStorage]) // Đảm bảo loadCartFromLocalStorage chỉ được gọi khi component mount
+  }, [loadCartFromLocalStorage])
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="transition-transform duration-300 hover:scale-110">
-          <CiShoppingCart className="h-4 w-4 stroke-1" />
+        <Button
+          size="sm"
+          className="flex-1 transition-all duration-300 hover:bg-primary/90"
+        >
+          <ShoppingCart className="mr-2 h-4 w-4" />
+          Thêm vào giỏ hàng
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>
-            <p>{product.name}</p>
+          <DialogTitle className="text-2xl font-bold">
+            {product.name}
           </DialogTitle>
-          <DialogDescription>Mô tả sản phẩm</DialogDescription>
+          <DialogDescription />
         </DialogHeader>
-        <Image
-          src={imageUrl}
-          width={400}
-          height={400}
-          alt="Product"
-          className="h-64 w-full object-cover"
-        />
-        <ProductVariant
-          stock={product.stock}
-          variants={product.variants}
-          onSizeChange={setSelectedSize} // Gọi hàm để cập nhật kích thước
-          onColorChange={setSelectedColor} // Gọi hàm để cập nhật màu sắc
-        />
-        <DialogFooter className="flex items-center sm:justify-between">
-          <p>
-            <span>Giá: </span>
-            {new Intl.NumberFormat('vi-VN').format(product.price)} VNĐ
-          </p>
-          <div>
-            <Button
-              type="button"
-              onClick={() =>
-                handleAddToCart(
-                  product.variants.find(
-                    (v) => v.size === selectedSize && v.color === selectedColor,
-                  )?.stock || 0,
-                )
-              }
-            >
-              Thêm vào giỏ hàng
-            </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute right-4 top-4"
+          onClick={() => setIsOpen(false)}
+        >
+          <X className="h-4 w-4" />
+        </Button>
+        <div className="relative mt-4 aspect-square overflow-hidden rounded-lg">
+          <Image
+            src={imageUrl}
+            alt={product.name}
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-all duration-300 hover:scale-105"
+          />
+        </div>
+        <ScrollArea className="mt-4 h-[200px] pr-4">
+          <div className="space-y-4">
+            <div>
+              <h4 className="mb-2 font-semibold">Thông tin sản phẩm</h4>
+              <p className="text-sm text-muted-foreground">
+                {product.description}
+              </p>
+            </div>
+            <Separator />
+            <ProductVariant
+              stock={product.stock}
+              variants={product.variants}
+              onSizeChange={setSelectedSize}
+              onColorChange={setSelectedColor}
+            />
           </div>
+        </ScrollArea>
+        <DialogFooter className="mt-6 flex items-center justify-between gap-10">
+          <div className="flex flex-col items-start">
+            <p className="text-lg font-semibold">
+              {new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+              }).format(product.price)}
+            </p>
+          </div>
+          <Button
+            onClick={() =>
+              handleAddToCart(
+                product.variants.find(
+                  (v) => v.size === selectedSize && v.color === selectedColor,
+                )?.stock || 0,
+              )
+            }
+            className="transition-all duration-300 hover:bg-primary/90"
+          >
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            Thêm vào giỏ hàng
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
