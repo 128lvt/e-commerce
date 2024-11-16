@@ -29,7 +29,7 @@ export default function Page() {
   }
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto mb-7">
       <div className="mb-10 text-center text-2xl font-semibold">Đơn hàng</div>
       <OrderList orders={orders} />
     </div>

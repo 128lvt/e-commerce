@@ -1,7 +1,9 @@
+import useUser from '@/hooks/use-user'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 export default function LogoutButton() {
+  const { setUser } = useUser()
   const router = useRouter()
 
   const handleLogout = async () => {
@@ -12,6 +14,7 @@ export default function LogoutButton() {
       })
 
       if (response.ok) {
+        setUser(null)
         router.push('/dang-nhap')
       } else {
         console.error('Đăng xuất không thành công')

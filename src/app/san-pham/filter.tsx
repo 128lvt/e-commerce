@@ -51,7 +51,7 @@ export default function Filter() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Card className="mb-8">
+      <Card className="mb-8 dark:bg-gray-900">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Lọc sản phẩm</CardTitle>
         </CardHeader>

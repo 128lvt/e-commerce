@@ -1,64 +1,57 @@
 'use client'
-import { CiDeliveryTruck } from 'react-icons/ci'
-import { Card, CardContent, CardFooter, CardHeader } from './ui/card'
-import AOS from 'aos'
-import 'aos/dist/aos.css'
-import { useEffect } from 'react'
+
+import { Card, CardContent } from '@/components/ui/card'
+import { motion } from 'framer-motion'
+import { Truck, Shield, Headphones } from 'lucide-react'
 
 export default function IconBottom() {
-  useEffect(() => {
-    AOS.init()
-  })
+  const features = [
+    {
+      icon: Truck,
+      title: 'Fast Delivery',
+      description: 'Within 3 days from order confirmation',
+    },
+    {
+      icon: Shield,
+      title: 'Secure Payments',
+      description: 'Multiple safe payment options',
+    },
+    {
+      icon: Headphones,
+      title: '24/7 Support',
+      description: 'Dedicated customer service team',
+    },
+  ]
 
   return (
-    <div className="container mx-auto mt-14 w-full">
-      <h1 className="text-center text-2xl font-semibold uppercase">
-        Tại sao nên chọn chúng tôi
-      </h1>
-      <div className="mt-5 grid grid-rows-1 gap-4 lg:grid-cols-3 xl:grid-cols-3">
-        <Card
-          data-aos="fade-right"
-          data-aos-duration="500"
-          className="relative"
-        >
-          <CardHeader className="flex items-center">
-            <CiDeliveryTruck className="h-10 w-10" />
-          </CardHeader>
-          <CardContent>
-            <p className="text-center text-2xl font-bold">Giao hàng nhanh</p>
-          </CardContent>
-          <CardFooter className="flex justify-center">
-            <p className="text-center text-sm">
-              Trong vòng 3 ngày kể từ khi nhận hàng
-            </p>
-          </CardFooter>
-        </Card>
-        <Card data-aos="fade-up" data-aos-duration="500" className="relative">
-          <CardHeader className="flex items-center">
-            <CiDeliveryTruck className="h-10 w-10" />
-          </CardHeader>
-          <CardContent>
-            <p className="text-center text-2xl font-bold">Giao hàng nhanh</p>
-          </CardContent>
-          <CardFooter className="flex justify-center">
-            <p className="text-center text-sm">
-              Trong vòng 3 ngày kể từ khi nhận hàng
-            </p>
-          </CardFooter>
-        </Card>
-        <Card data-aos="fade-left" data-aos-duration="500" className="relative">
-          <CardHeader className="flex items-center">
-            <CiDeliveryTruck className="h-10 w-10" />
-          </CardHeader>
-          <CardContent>
-            <p className="text-center text-2xl font-bold">Giao hàng nhanh</p>
-          </CardContent>
-          <CardFooter className="flex justify-center">
-            <p className="text-center text-sm">
-              Trong vòng 3 ngày kể từ khi nhận hàng
-            </p>
-          </CardFooter>
-        </Card>
+    <div className="container mx-auto mt-14 w-full px-4">
+      <motion.h2
+        className="mb-8 text-center text-3xl font-bold text-gray-800"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        Why Choose Us
+      </motion.h2>
+      <div className="grid gap-6 md:grid-cols-3">
+        {features.map((feature, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
+          >
+            <Card className="overflow-hidden">
+              <CardContent className="flex flex-col items-center p-6">
+                <feature.icon className="mb-4 h-12 w-12 text-primary" />
+                <h3 className="mb-2 text-xl font-semibold">{feature.title}</h3>
+                <p className="text-center text-sm text-gray-600">
+                  {feature.description}
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
       </div>
     </div>
   )

@@ -148,7 +148,7 @@ function OrderItem({ order }: OrderItemProps) {
           </ScrollArea>
         </div>
       </CardContent>
-      <CardFooter className="bg-muted/50">
+      <CardFooter className="bg-muted/50 pt-5">
         <div className="flex w-full items-center justify-between">
           <span className="flex items-center text-muted-foreground">
             <Truck className="mr-2 h-4 w-4" /> Đang vận chuyển

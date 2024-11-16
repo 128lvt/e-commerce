@@ -3,7 +3,7 @@ import Filter from './filter'
 
 export default function page() {
   return (
-    <div>
+    <div className="">
       <Filter />
       <div className="text-center text-2xl font-semibold">
         Danh sách sản phẩm

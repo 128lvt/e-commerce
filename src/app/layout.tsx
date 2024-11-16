@@ -8,12 +8,13 @@ import Progress from '@/components/progress'
 import Header from '@/components/header'
 
 const jetBrainsMono = JetBrains_Mono({
-  subsets: ['vietnamese'], // choose subsets according to your need
-  weight: ['400', '500', '700'], // define font weights
+  subsets: ['vietnamese'],
+  weight: ['400', '500', '700'],
 })
+
 export const metadata: Metadata = {
-  title: 'Shop Thời Trang 6AE',
-  description: 'Shop Thời Trang 6AE.',
+  title: '6AE Fashion Shop',
+  description: 'Discover the latest trends at 6AE Fashion Shop.',
 }
 
 export default function RootLayout({
@@ -23,18 +24,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className={jetBrainsMono.className}>
-        <Progress />
+      <body
+        className={`${jetBrainsMono.className} bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          {children}
+          <div className="flex min-h-screen flex-col">
+            <Progress />
+            <Header />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </div>
           <Toaster />
-          <Footer />
         </ThemeProvider>
       </body>
     </html>

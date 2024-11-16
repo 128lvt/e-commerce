@@ -1,4 +1,5 @@
 'use client'
+
 import * as React from 'react'
 import Autoplay from 'embla-carousel-autoplay'
 import Image from 'next/image'
@@ -8,49 +9,83 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel'
-
-import { Button } from './ui/button'
+import { Button } from '@/components/ui/button'
+import { motion } from 'framer-motion'
+import { ChevronRight } from 'lucide-react'
 
 export function TopCarousel() {
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true }),
+    Autoplay({ delay: 5000, stopOnInteraction: true }),
   )
 
+  const carouselItems = [
+    {
+      image: '/carousels/1.jpg',
+      title: `Discover Nature's Beauty`,
+      description:
+        'Explore breathtaking landscapes and immerse yourself in the wonders of nature.',
+      buttonText: 'Explore Now',
+      buttonLink: '/nature',
+    },
+    {
+      image: '/carousels/2.jpg',
+      title: 'Urban Adventures Await',
+      description:
+        'Experience the vibrant energy of city life with our curated urban experiences.',
+      buttonText: 'Book Adventure',
+      buttonLink: '/urban',
+    },
+    {
+      image: '/carousels/3.jpg',
+      title: 'Relax in Luxury',
+      description:
+        'Indulge in premium comfort and unwind in our exquisite accommodations.',
+      buttonText: 'Reserve Stay',
+      buttonLink: '/luxury',
+    },
+  ]
+
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden">
       <Carousel
         plugins={[plugin.current]}
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
+        className="relative"
       >
         <CarouselContent>
-          {Array.from({ length: 3 }).map((_, index) => (
+          {carouselItems.map((item, index) => (
             <CarouselItem key={index}>
-              <div className="relative md:h-[30rem] xl:h-[45rem]">
+              <div className="relative h-[30rem] md:h-[40rem] xl:h-[50rem]">
                 <Image
-                  src={`/carousels/${index + 1}.jpg`}
-                  width={1920}
-                  height={1080}
-                  alt="Carousel"
-                  className="h-full w-full object-cover"
+                  src={item.image}
+                  fill
+                  alt={item.title}
+                  className="object-cover"
                   priority
                 />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent" />
                 <div className="container absolute inset-0 z-10 mx-auto flex items-center">
-                  <div className="ms-8 md:ms-0 md:mt-0 xl:ms-0">
-                    <p className="overflow-hidden text-ellipsis text-nowrap text-sm font-semibold md:text-2xl">
-                      What is Lorem Ipsum?
-                    </p>
-                    <p className="my-4 line-clamp-2 w-full overflow-hidden text-ellipsis text-wrap text-xs sm:my-6 md:w-[35rem] md:text-sm lg:my-10 xl:text-xl">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.
-                    </p>
-
-                    <Link href={''}>
-                      <Button className="rounded-2xl p-4 text-sm transition-transform duration-300 hover:scale-110 hover:bg-emerald-500 xl:p-6 xl:text-xl">
-                        Mua ngay
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="max-w-2xl space-y-6 text-white"
+                  >
+                    <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl">
+                      {item.title}
+                    </h2>
+                    <p className="text-lg md:text-xl">{item.description}</p>
+                    <Link href={item.buttonLink}>
+                      <Button
+                        size="lg"
+                        className="group mt-5 rounded-full bg-white text-black hover:bg-white/90"
+                      >
+                        {item.buttonText}
+                        <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </Button>
                     </Link>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </CarouselItem>
