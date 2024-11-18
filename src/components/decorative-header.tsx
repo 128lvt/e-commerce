@@ -1,8 +1,22 @@
 'use client'
 import { motion } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 export function DecorativeHeader() {
+  const [positions, setPositions] = useState<{ top: string; left: string }[]>(
+    [],
+  )
+
+  useEffect(() => {
+    // Generate random positions for the sparkles
+    const newPositions = [...Array(20)].map(() => ({
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+    }))
+    setPositions(newPositions)
+  }, [])
+
   return (
     <motion.div
       className="relative overflow-hidden rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 py-16"
@@ -36,13 +50,13 @@ export function DecorativeHeader() {
         </motion.div>
       </div>
       <div className="absolute inset-0 z-0">
-        {[...Array(20)].map((_, i) => (
+        {positions.map((position, i) => (
           <motion.div
             key={i}
             className="absolute h-2 w-2 rounded-full bg-white"
             style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
+              top: position.top,
+              left: position.left,
             }}
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: [0, 1, 0], opacity: [0, 1, 0] }}

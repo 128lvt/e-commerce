@@ -44,15 +44,15 @@ export default function FormRegister() {
       const data = await response.json()
       if (!response.ok) {
         toast({
-          title: 'Đăng ký tài khoản thất bại',
-          description: data,
+          title: 'Thất bại',
+          description: data.message,
           variant: 'destructive',
         })
         return
       }
 
       toast({
-        title: 'Success',
+        title: 'Thành công',
         description: 'Đăng ký tài khoản thành công',
       })
 
@@ -60,7 +60,7 @@ export default function FormRegister() {
     } catch (error) {
       console.error('Error:', error)
       toast({
-        title: 'Error',
+        title: 'Thất bại',
         description: 'Đăng ký tài khoản thất bại',
         variant: 'destructive',
       })

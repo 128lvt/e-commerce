@@ -50,6 +50,7 @@ export default function EnhancedFormLogin() {
       })
 
       const data = await response.json()
+      console.log(data)
       if (!response.ok) {
         toast({
           description: `Đăng nhập thất bại: ${data.message}`,

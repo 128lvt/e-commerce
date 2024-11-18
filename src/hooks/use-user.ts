@@ -1,12 +1,13 @@
 import { create } from 'zustand'
 
-// Helper functions để mã hóa và giải mã bằng Base64
+// Mã hóa Unicode thành Base64
 function encodeBase64(data: string): string {
-  return btoa(data) // Mã hóa thành Base64
+  return Buffer.from(data, 'utf-8').toString('base64')
 }
 
+// Giải mã từ Base64 về Unicode
 function decodeBase64(encodedData: string): string {
-  return atob(encodedData) // Giải mã từ Base64
+  return Buffer.from(encodedData, 'base64').toString('utf-8')
 }
 
 interface User {
@@ -49,8 +50,18 @@ const useUser = create<UserState>((set) => ({
   loadUserFromLocalStorage: () => {
     const storedUser = localStorage.getItem('user')
     const storedToken = localStorage.getItem('token')
+
+    let decodedUser = null
+    if (storedUser) {
+      try {
+        decodedUser = JSON.parse(decodeBase64(storedUser))
+      } catch (e) {
+        console.error('Failed to decode user data:', e)
+      }
+    }
+
     set({
-      user: storedUser ? JSON.parse(decodeBase64(storedUser)) : null,
+      user: decodedUser,
       token: storedToken || null,
     })
   },
