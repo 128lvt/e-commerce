@@ -1,4 +1,5 @@
 'use client'
+
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -20,7 +21,6 @@ export default function FormRegister() {
   const { toast } = useToast()
   const router = useRouter()
 
-  // Khởi tạo useForm với schema Zod
   const form = useForm<z.infer<typeof registrationSchema>>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
@@ -44,94 +44,88 @@ export default function FormRegister() {
       const data = await response.json()
       if (!response.ok) {
         toast({
-          description: `Đăng ký thất bại: ${data}`,
-          variant: 'error',
+          title: 'Đăng ký tài khoản thất bại',
+          description: data,
+          variant: 'destructive',
         })
         return
       }
 
       toast({
-        description: 'Đăng ký thành công',
+        title: 'Success',
+        description: 'Đăng ký tài khoản thành công',
       })
 
       router.push('/')
     } catch (error) {
-      console.error('Lỗi:', error)
+      console.error('Error:', error)
       toast({
-        description: 'Có lỗi xảy ra khi đăng ký',
-        variant: 'error',
+        title: 'Error',
+        description: 'Đăng ký tài khoản thất bại',
+        variant: 'destructive',
       })
     }
   }
 
   return (
-    <div className="mx-auto w-[500px]">
-      <h1 className="mb-4 text-center text-2xl font-semibold">Đăng ký</h1>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="fullname"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Họ và Tên</FormLabel>
-                <FormControl>
-                  <Input placeholder="Họ và Tên" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Mật khẩu</FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="Mật khẩu" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="retype_password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nhập lại mật khẩu</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Nhập lại mật khẩu"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex justify-end">
-            <Button type="submit" className="bg-blue-600">
-              Đăng ký
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="fullname"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Họ và Tên</FormLabel>
+              <FormControl>
+                <Input placeholder="Họ và Tên" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Email" type="email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Mật khẩu</FormLabel>
+              <FormControl>
+                <Input placeholder="********" type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="retype_password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nhập lại mật khẩu</FormLabel>
+              <FormControl>
+                <Input placeholder="********" type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full">
+          Đăng ký tài khoản
+        </Button>
+      </form>
+    </Form>
   )
 }

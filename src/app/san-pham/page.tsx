@@ -1,15 +1,18 @@
 import ProductList from '@/app/san-pham/product-list'
 import Filter from './filter'
+import { Breadcrumb } from '@/components/breadcumb'
 
-export default function page() {
+export default function Page() {
+  const breadcrumbItems = [{ label: 'Sản phẩm', href: '/san-pham' }]
+
   return (
-    <div className="">
-      <Filter />
-      <div className="text-center text-2xl font-semibold">
-        Danh sách sản phẩm
-      </div>
-      <div className="container mx-auto flex">
-        <ProductList />
+    <div>
+      <Breadcrumb items={breadcrumbItems} />
+      <div className="container mx-auto px-4">
+        <Filter />
+        <div>
+          <ProductList />
+        </div>
       </div>
     </div>
   )

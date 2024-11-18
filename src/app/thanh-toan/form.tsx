@@ -32,7 +32,7 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ShoppingCart, CreditCard, Loader2 } from 'lucide-react'
 
-export default function EnhancedFormCashout() {
+export default function FormCashout() {
   const { user, loadUserFromLocalStorage, token } = useUser()
   const { cart, loadCartFromLocalStorage, clearCart } = useCart()
   const [isLoading, setIsLoading] = useState(false)

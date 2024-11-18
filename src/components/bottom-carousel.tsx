@@ -63,6 +63,7 @@ export function BottomCarousel() {
                         width={600}
                         height={400}
                         alt={offer.title}
+                        priority
                         className="h-48 w-full object-cover"
                       />
                       <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-40 p-4">

@@ -3,10 +3,12 @@ import useOrder from '@/hooks/use-order'
 import useUser from '@/hooks/use-user'
 import { useEffect } from 'react'
 import OrderList from './order-list'
+import { Breadcrumb } from '@/components/breadcumb'
 
 export default function Page() {
   const { user, loadUserFromLocalStorage } = useUser()
   const token = useUser((state) => state.getToken())
+  const breadcrumbItems = [{ label: 'Đơn hàng', href: '/don-hang' }]
 
   useEffect(() => {
     loadUserFromLocalStorage()
@@ -29,9 +31,11 @@ export default function Page() {
   }
 
   return (
-    <div className="container mx-auto mb-7">
-      <div className="mb-10 text-center text-2xl font-semibold">Đơn hàng</div>
-      <OrderList orders={orders} />
+    <div>
+      <Breadcrumb items={breadcrumbItems} />
+      <div className="container mx-auto mb-7">
+        <OrderList orders={orders} />
+      </div>
     </div>
   )
 }
