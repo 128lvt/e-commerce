@@ -9,7 +9,6 @@ export function DecorativeHeader() {
   )
 
   useEffect(() => {
-    // Generate random positions for the sparkles
     const newPositions = [...Array(20)].map(() => ({
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
@@ -31,7 +30,7 @@ export function DecorativeHeader() {
           animate={{ y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          Welcome to 6AE Fashion
+          Chào mứng bạn đến với 6AE Fashion
         </motion.h1>
         <motion.p
           className="mb-8 text-xl text-gray-600"
@@ -39,7 +38,7 @@ export function DecorativeHeader() {
           animate={{ y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          Discover Your Unique Style
+          Cửa hàng thời trang phong cách
         </motion.p>
         <motion.div
           initial={{ scale: 0 }}

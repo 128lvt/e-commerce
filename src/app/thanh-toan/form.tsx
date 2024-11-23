@@ -31,6 +31,8 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ShoppingCart, CreditCard, Loader2 } from 'lucide-react'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 export default function FormCashout() {
   const { user, loadUserFromLocalStorage, token } = useUser()
@@ -39,6 +41,7 @@ export default function FormCashout() {
   const { toast } = useToast()
   const { mutate } = useOrder(user?.id ?? 0, token ?? '')
   const { reloadProduct } = useProduct()
+  const router = useRouter()
 
   useEffect(() => {
     loadCartFromLocalStorage()
@@ -164,6 +167,9 @@ export default function FormCashout() {
           title: 'Thành công!',
           description: `Thanh toán thành công. [${orderId}]`,
         })
+
+        // Redirect to the order details page
+        router.push(`/don-hang/${orderId}`)
       }
     } catch (error) {
       toast({
@@ -188,94 +194,129 @@ export default function FormCashout() {
         <CardContent>
           <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <ScrollArea className="h-[400px] pr-4">
-                <FormField
-                  control={form.control}
-                  name="fullname"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Họ và Tên</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Nhập họ và tên"
-                          {...field}
-                          readOnly
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Đây là tên hiển thị công khai của bạn.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Nhập email" {...field} />
-                      </FormControl>
-                      <FormDescription>
-                        Nhập địa chỉ email của bạn.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="phone_number"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Số Điện Thoại</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Nhập số điện thoại" {...field} />
-                      </FormControl>
-                      <FormDescription>
-                        Nhập số điện thoại của bạn.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="address"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Địa Chỉ</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Nhập địa chỉ" {...field} />
-                      </FormControl>
-                      <FormDescription>
-                        Nhập địa chỉ giao hàng của bạn.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="note"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Ghi Chú</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Nhập ghi chú (nếu có)" {...field} />
-                      </FormControl>
-                      <FormDescription>
-                        Bất kỳ ghi chú nào bạn muốn thêm.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </ScrollArea>
+              {/* Cart Summary */}
+
+              {/* Existing form fields */}
+              <FormField
+                control={form.control}
+                name="fullname"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Họ và Tên</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Nhập họ và tên" {...field} readOnly />
+                    </FormControl>
+                    <FormDescription>
+                      Đây là tên hiển thị công khai của bạn.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Nhập email" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Nhập địa chỉ email của bạn.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone_number"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Số Điện Thoại</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Nhập số điện thoại" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Nhập số điện thoại của bạn.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Địa Chỉ</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Nhập địa chỉ" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Nhập địa chỉ giao hàng của bạn.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="note"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Ghi Chú</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Nhập ghi chú (nếu có)" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Bất kỳ ghi chú nào bạn muốn thêm.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </form>
           </FormProvider>
+          <ScrollArea className="h-[300px] pr-4">
+            <div className="mb-6">
+              <h3 className="mb-2 text-lg font-semibold">Giỏ hàng của bạn</h3>
+              {cart.map((item) => (
+                <div key={item.id} className="mb-2 flex items-center">
+                  <Image
+                    src={`${API_URL}/products/images/${item.imageUrl}`}
+                    alt={item.name}
+                    width={50}
+                    height={50}
+                    className="mr-2 rounded-md object-cover"
+                  />
+                  <div>
+                    <p className="font-medium">{item.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {item.size} - {item.color} x {item.quantity}
+                    </p>
+                  </div>
+                  <p className="ml-auto">
+                    {new Intl.NumberFormat('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND',
+                    }).format(item.price * item.quantity)}
+                  </p>
+                </div>
+              ))}
+              <Separator className="my-2" />
+              <div className="flex justify-between">
+                <p className="font-semibold">Tổng cộng:</p>
+                <p className="font-semibold">
+                  {new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND',
+                  }).format(totalMoney)}
+                </p>
+              </div>
+            </div>
+          </ScrollArea>
         </CardContent>
         <Separator className="my-4" />
         <CardFooter className="flex flex-col items-center justify-between sm:flex-row">

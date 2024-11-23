@@ -24,7 +24,7 @@ export default function Page() {
           <p className="mb-4 text-gray-600">
             Hãy tham khảo một sản phẩm trên trang sản phãm.
           </p>
-          <Link href="/products" passHref>
+          <Link href="/san-pham" passHref>
             <Button className="flex items-center">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Continue Shopping

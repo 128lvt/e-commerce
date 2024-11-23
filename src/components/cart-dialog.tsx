@@ -86,82 +86,84 @@ export function AddToCartDialog(product: Product) {
   }, [loadCartFromLocalStorage])
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button
-          size="sm"
-          className="flex-1 transition-all duration-300 hover:bg-primary/90"
-        >
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          Thêm vào giỏ hàng
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">
-            {product.name}
-          </DialogTitle>
-          <DialogDescription />
-        </DialogHeader>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute right-4 top-4"
-          onClick={() => setIsOpen(false)}
-        >
-          <X className="h-4 w-4" />
-        </Button>
-        <div className="relative mt-4 aspect-square overflow-hidden rounded-lg">
-          <Image
-            src={imageUrl}
-            alt={product.name}
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-all duration-300 hover:scale-105"
-          />
-        </div>
-        <ScrollArea className="mt-4 h-[200px] pr-4">
-          <div className="space-y-4">
-            <div>
-              <h4 className="mb-2 font-semibold">Thông tin sản phẩm</h4>
-              <p className="text-sm text-muted-foreground">
-                {product.description}
-              </p>
-            </div>
-            <Separator />
-            <ProductVariant
-              stock={product.stock}
-              variants={product.variants}
-              onSizeChange={setSelectedSize}
-              onColorChange={setSelectedColor}
-            />
-          </div>
-        </ScrollArea>
-        <DialogFooter className="mt-6 flex items-center justify-between gap-10">
-          <div className="flex flex-col items-start">
-            <p className="text-lg font-semibold">
-              {new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-              }).format(product.price)}
-            </p>
-          </div>
+    <div className="w-full text-white hover:bg-violet-700 sm:w-auto">
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogTrigger asChild>
           <Button
-            onClick={() =>
-              handleAddToCart(
-                product.variants.find(
-                  (v) => v.size === selectedSize && v.color === selectedColor,
-                )?.stock || 0,
-              )
-            }
-            className="transition-all duration-300 hover:bg-primary/90"
+            size="sm"
+            className="flex-1 transition-all duration-300 hover:bg-primary/90"
           >
             <ShoppingCart className="mr-2 h-4 w-4" />
             Thêm vào giỏ hàng
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold">
+              {product.name}
+            </DialogTitle>
+            <DialogDescription />
+          </DialogHeader>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-4 top-4"
+            onClick={() => setIsOpen(false)}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <div className="relative mt-4 aspect-square overflow-hidden rounded-lg">
+            <Image
+              src={imageUrl}
+              alt={product.name}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-all duration-300 hover:scale-105"
+            />
+          </div>
+          <ScrollArea className="mt-4 h-[200px] pr-4">
+            <div className="space-y-4">
+              <div>
+                <h4 className="mb-2 font-semibold">Thông tin sản phẩm</h4>
+                <p className="text-sm text-muted-foreground">
+                  {product.description}
+                </p>
+              </div>
+              <Separator />
+              <ProductVariant
+                stock={product.stock}
+                variants={product.variants}
+                onSizeChange={setSelectedSize}
+                onColorChange={setSelectedColor}
+              />
+            </div>
+          </ScrollArea>
+          <DialogFooter className="mt-6 flex items-center justify-between gap-10">
+            <div className="flex flex-col items-start">
+              <p className="text-lg font-semibold">
+                {new Intl.NumberFormat('vi-VN', {
+                  style: 'currency',
+                  currency: 'VND',
+                }).format(product.price)}
+              </p>
+            </div>
+            <Button
+              onClick={() =>
+                handleAddToCart(
+                  product.variants.find(
+                    (v) => v.size === selectedSize && v.color === selectedColor,
+                  )?.stock || 0,
+                )
+              }
+              className="transition-all duration-300 hover:bg-primary/90"
+            >
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              Thêm vào giỏ hàng
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
   )
 }

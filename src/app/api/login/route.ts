@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
   response.headers.append(
     'Set-Cookie',
-    `token=${token}; Path=/; Max-Age=99999999999999999;`,
+    `token=${token}; Path=/; Max-Age=${99999999999999999}; HttpOnly; SameSite=Strict; Secure`,
   )
 
   return response

@@ -16,16 +16,16 @@ import { Tag } from 'lucide-react'
 
 export function BottomCarousel() {
   const offers = [
-    { image: '/carousels/1.jpg', title: 'Summer Sale', discount: '30% OFF' },
+    { image: '/carousels/1.jpg', title: 'Đón Xuân', discount: 'Giảm 30%' },
     {
       image: '/carousels/2.jpg',
-      title: 'New Arrivals',
-      discount: 'Free Shipping',
+      title: 'Sản phẩm mới',
+      discount: 'Miễn phí vận chuyển',
     },
     {
       image: '/carousels/3.jpg',
-      title: 'Clearance',
-      discount: 'Up to 50% OFF',
+      title: 'Thanh lí',
+      discount: 'Lên tới 50%',
     },
   ]
 
@@ -37,7 +37,7 @@ export function BottomCarousel() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-2xl font-bold text-gray-800">Special Offers</h2>
+        <h2 className="text-2xl font-bold text-gray-800">Ưu đãi đặc biệt</h2>
         <Tag className="h-6 w-6 text-primary" />
       </motion.div>
       <Carousel

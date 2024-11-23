@@ -1,10 +1,8 @@
+import { Button } from '@/components/ui/button'
 import useUser from '@/hooks/use-user'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export default function LogoutButton() {
   const { setUser } = useUser()
-  const router = useRouter()
 
   const handleLogout = async () => {
     try {
@@ -13,9 +11,12 @@ export default function LogoutButton() {
         method: 'POST',
       })
 
+      setUser(null)
+      setTimeout(() => {
+        window.location.href = '/dang-nhap'
+      }, 1000)
+
       if (response.ok) {
-        setUser(null)
-        router.push('/dang-nhap')
       } else {
         console.error('Đăng xuất không thành công')
       }
@@ -23,9 +24,5 @@ export default function LogoutButton() {
       console.error('Có lỗi xảy ra khi đăng xuất:', error)
     }
   }
-  return (
-    <Link href="" onClick={handleLogout}>
-      Đăng xuất
-    </Link>
-  )
+  return <Button onClick={handleLogout}>Đăng xuất</Button>
 }

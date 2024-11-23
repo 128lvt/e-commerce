@@ -68,7 +68,10 @@ export default function EnhancedFormLogin() {
 
       loadUserFromLocalStorage()
 
-      router.push('/')
+      // Set a timeout to reload and redirect after 3 seconds
+      setTimeout(() => {
+        window.location.href = '/'
+      }, 2000)
     } catch (error) {
       console.error('Lỗi:', error)
       toast({

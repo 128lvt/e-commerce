@@ -1,5 +1,4 @@
 import { TopCarousel } from '@/components/top-carousel'
-import HomePageProducts from '@/components/home-product'
 import { BottomCarousel } from '@/components/bottom-carousel'
 import ProductCarousel from '@/components/product-carousel'
 import IconBottom from '@/components/icon-bottom'
@@ -19,13 +18,13 @@ export default function HomePage() {
           <ProductCarousel />
         </section>
 
-        <section className="mb-12">
+        {/* <section className="mb-12">
           <HomePageProducts index={0} title="New Arrivals" />
         </section>
 
         <section className="mb-12">
           <HomePageProducts index={1} title="Sale Items" />
-        </section>
+        </section> */}
 
         <section className="mb-12">
           <BottomCarousel />

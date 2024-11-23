@@ -39,7 +39,7 @@ export default function ProductCarousel() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Sản phẩm bán chạy
+        Sản phẩm nổi bật
         <Sparkles className="ml-2 h-6 w-6 text-yellow-500" />
       </motion.h2>
       <Carousel
