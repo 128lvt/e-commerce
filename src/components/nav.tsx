@@ -4,11 +4,11 @@ import { CiShoppingCart } from 'react-icons/ci'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
-import Profile from '@/app/(auth)/profile'
 import createLinks from './utils/Links'
 import { Category } from '../../types/Type'
 import { useCart } from '@/hooks/use-cart'
 import Search from './search'
+import Profile from '@/app/(user)/(auth)/profile'
 interface Link {
   name: string
   href: string

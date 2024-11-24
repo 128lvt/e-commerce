@@ -1,11 +1,6 @@
 import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import { ThemeProvider } from 'next-themes'
-import { Toaster } from '@/components/ui/toaster'
-import Footer from '@/components/footer'
-import Progress from '@/components/progress'
-import Header from '@/components/header'
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ['vietnamese'],
@@ -24,24 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body
-        className={`${jetBrainsMono.className} bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="flex min-h-screen flex-col">
-            <Progress />
-            <Header />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-          </div>
-          <Toaster />
-        </ThemeProvider>
-      </body>
+      <body className={jetBrainsMono.className}>{children}</body>
     </html>
   )
 }

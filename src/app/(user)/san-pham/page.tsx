@@ -1,4 +1,4 @@
-import ProductList from '@/app/san-pham/product-list'
+import ProductList from '@/app/(user)/san-pham/product-list'
 import Filter from './filter'
 import { Breadcrumb } from '@/components/breadcumb'
 

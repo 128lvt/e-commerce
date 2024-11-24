@@ -1,5 +1,5 @@
+import Profile from '@/app/(user)/(auth)/profile'
 import { ModeToggle } from './mode-toggle'
-import Profile from '../app/(auth)/profile'
 import Sidebar from './sidebar'
 
 export default function MobileNav() {

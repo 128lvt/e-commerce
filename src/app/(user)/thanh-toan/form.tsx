@@ -9,8 +9,8 @@ import useUser from '@/hooks/use-user'
 import useOrder from '@/hooks/use-order'
 import useProduct from '@/hooks/use-product'
 import { useToast } from '@/hooks/use-toast'
-import { API_URL } from '../../configs/apiConfig'
-import { OrderSchema, OrderDetailSchema } from '../../schemas/paymentSchema'
+import { API_URL } from '../../../configs/apiConfig'
+import { OrderSchema, OrderDetailSchema } from '../../../schemas/paymentSchema'
 import {
   FormControl,
   FormDescription,

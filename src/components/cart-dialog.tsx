@@ -86,7 +86,7 @@ export function AddToCartDialog(product: Product) {
   }, [loadCartFromLocalStorage])
 
   return (
-    <div className="w-full text-white hover:bg-violet-700 sm:w-auto">
+    <div className="w-full text-white sm:w-auto">
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button
@@ -122,14 +122,8 @@ export function AddToCartDialog(product: Product) {
               className="object-cover transition-all duration-300 hover:scale-105"
             />
           </div>
-          <ScrollArea className="mt-4 h-[200px] pr-4">
+          <div className="mt-4 pr-4">
             <div className="space-y-4">
-              <div>
-                <h4 className="mb-2 font-semibold">Thông tin sản phẩm</h4>
-                <p className="text-sm text-muted-foreground">
-                  {product.description}
-                </p>
-              </div>
               <Separator />
               <ProductVariant
                 stock={product.stock}
@@ -138,7 +132,7 @@ export function AddToCartDialog(product: Product) {
                 onColorChange={setSelectedColor}
               />
             </div>
-          </ScrollArea>
+          </div>
           <DialogFooter className="mt-6 flex items-center justify-between gap-10">
             <div className="flex flex-col items-start">
               <p className="text-lg font-semibold">
