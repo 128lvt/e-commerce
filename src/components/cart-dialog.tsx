@@ -18,7 +18,6 @@ import { ProductVariant } from './product-variant'
 import { ShoppingCart, X } from 'lucide-react'
 import Image from 'next/image'
 import { Separator } from '@/components/ui/separator'
-import { ScrollArea } from '@/components/ui/scroll-area'
 
 export function AddToCartDialog(product: Product) {
   const [selectedSize, setSelectedSize] = useState<string>('')

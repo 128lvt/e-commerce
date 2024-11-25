@@ -1,4 +1,4 @@
-import { VariantForm } from '@/app/san-pham/size-color/[id]/form'
+import { VariantForm } from '@/app/(admin)/admin/san-pham/size-color/[id]/form'
 import {
   Dialog,
   DialogContent,

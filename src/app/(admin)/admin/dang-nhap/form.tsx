@@ -6,7 +6,6 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/hooks/use-toast'
-import { useRouter } from 'next/navigation'
 import useUser from '@/hooks/use-user'
 import {
   Form,
@@ -23,7 +22,6 @@ import { loginSchema } from '@/schemas/loginSchema'
 export default function EnhancedFormLogin() {
   const { loadUserFromLocalStorage, setUser } = useUser()
   const { toast } = useToast()
-  const router = useRouter()
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -61,7 +59,10 @@ export default function EnhancedFormLogin() {
 
       loadUserFromLocalStorage()
 
-      router.push('/')
+      // Set a timeout to reload and redirect after 3 seconds
+      setTimeout(() => {
+        window.location.href = '/admin'
+      }, 3000)
     } catch (error) {
       console.error('Lỗi:', error)
       toast({

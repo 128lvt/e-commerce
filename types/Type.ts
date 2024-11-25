@@ -125,6 +125,7 @@ export interface ProductVariant {
   size?: string
   color?: string
   stock: number
+  p_id: number
 }
 
 export interface ProductImage {

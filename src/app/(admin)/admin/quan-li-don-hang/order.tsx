@@ -41,14 +41,6 @@ import { useToast } from '@/hooks/use-toast'
 import { API_URL } from '@/configs/apiConfig'
 import useAdminOrder from '@/hooks/use-admin-order'
 
-const QRCode = dynamic(
-  () => import('qrcode.react').then((mod) => mod.QRCodeSVG),
-  {
-    ssr: false, // Optional: Disable server-side rendering if you need
-    loading: () => <p>Loading QR code...</p>, // Optional: Show loading state while the QR code is loading
-  },
-)
-
 interface OrderItemProps {
   order: Order
 }
@@ -56,7 +48,6 @@ interface OrderItemProps {
 export function OrderItem({ order }: OrderItemProps) {
   const [editMode, setEditMode] = useState(false)
   const [newStatus, setNewStatus] = useState(order.status)
-  const [showQR, setShowQR] = useState(false)
   const token = useUser((state) => state.getToken())
   const { toast } = useToast()
   const { mutate } = useAdminOrder(token ?? '')
@@ -80,19 +71,6 @@ export function OrderItem({ order }: OrderItemProps) {
       default:
         return 'bg-gray-500'
     }
-  }
-
-  const getNextStatus = (currentStatus: string): string => {
-    const statusFlow = [
-      'Chờ xác nhận',
-      'Đang xử lý',
-      'Đang giao hàng',
-      'Đã giao hàng',
-    ]
-    const currentIndex = statusFlow.indexOf(currentStatus)
-    return currentIndex < statusFlow.length - 1
-      ? statusFlow[currentIndex + 1]
-      : currentStatus
   }
 
   const updateStatus = async (orderId: number, newStatus: string) => {
@@ -261,23 +239,6 @@ export function OrderItem({ order }: OrderItemProps) {
             </div>
           </ScrollArea>
         </div>
-        {/* <div className="flex justify-center">
-          <Button onClick={() => setShowQR(!showQR)}>
-            {showQR ? 'Ẩn mã QR' : 'Hiển thị mã QR'}
-          </Button>
-        </div>
-
-        {showQR && (
-          <div className="flex flex-col items-center space-y-2">
-            <QRCode
-              value={`${API_URL}/orders/status/${order.id}?status=${getNextStatus(order.status)}`}
-              size={300}
-            />
-            <p className="text-sm text-muted-foreground">
-              Quét mã QR để cập nhật trạng thái đơn hàng
-            </p>
-          </div>
-        )} */}
       </CardContent>
       <CardFooter className="bg-muted/50">
         <div className="flex w-full items-center justify-between">

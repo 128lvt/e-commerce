@@ -3,7 +3,6 @@ import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { useProductParams } from '@/hooks/use-param'
 import debounce from 'lodash/debounce'
-import { usePathname } from 'next/navigation'
 
 interface IProps {
   padding: string
@@ -12,7 +11,6 @@ interface IProps {
 export default function SearchInput({ padding }: IProps) {
   const { name, setParams } = useProductParams()
   const [searchTerm, setSearchTerm] = useState(name)
-  const path = usePathname()
 
   const debouncedSearch = useCallback(
     debounce((term: string) => {

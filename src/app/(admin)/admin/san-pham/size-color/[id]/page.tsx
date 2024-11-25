@@ -1,10 +1,10 @@
 'use client'
 
-import { VariantDatatable } from '@/app/san-pham/size-color/[id]/variant-data-table'
 import useVariant from '@/hooks/use-product-variant'
 import { useParams } from 'next/navigation'
 import { VariantColums } from './variant-column'
 import { VariantForm } from './form'
+import { VariantDatatable } from './variant-data-table'
 
 export default function Page() {
   const params = useParams()

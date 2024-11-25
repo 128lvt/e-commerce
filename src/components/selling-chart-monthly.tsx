@@ -1,4 +1,3 @@
-// MonthlySalesChart.tsx
 import { useState } from 'react'
 import { TrendingUp, TrendingDown, Calendar } from 'lucide-react'
 import {
@@ -66,6 +65,21 @@ const defaultData: MonthlyData = {
   december: 0,
 }
 
+const vietnameseMonths: { [key: string]: string } = {
+  january: ' 1',
+  february: ' 2',
+  march: ' 3',
+  april: ' 4',
+  may: ' 5',
+  june: ' 6',
+  july: ' 7',
+  august: ' 8',
+  september: ' 9',
+  october: ' 10',
+  november: ' 11',
+  december: ' 12',
+}
+
 const MonthlySalesChart: React.FC<MonthlySalesChartProps> = ({ data = [] }) => {
   const [selectedYear, setSelectedYear] = useState<string>('2024')
 
@@ -73,16 +87,14 @@ const MonthlySalesChart: React.FC<MonthlySalesChartProps> = ({ data = [] }) => {
   const transformedData: ChartDataPoint[] = Object.entries(
     data[0] || defaultData,
   ).map(([month, sales]) => ({
-    month: month.charAt(0).toUpperCase() + month.slice(1),
+    month: vietnameseMonths[month],
     sales,
   }))
 
   // Calculate percentage change from previous month
   const currentMonth =
     transformedData[transformedData.length - 1 - 1]?.sales ?? 0
-  console.log('currentMonth', currentMonth)
   const previousMonth = transformedData[transformedData.length - 3]?.sales ?? 0
-  console.log('previousMonth', previousMonth)
   const percentageChange: number =
     previousMonth !== 0
       ? ((currentMonth - previousMonth) / previousMonth) * 100
@@ -134,7 +146,7 @@ const MonthlySalesChart: React.FC<MonthlySalesChartProps> = ({ data = [] }) => {
                     <div className="rounded-lg bg-white p-2 shadow-lg ring-1 ring-black ring-opacity-5">
                       <p className="font-medium">{label}</p>
                       <p className="text-sm text-gray-600">
-                        Sales: {payload[0].value}
+                        Bán được: {payload[0].value}
                       </p>
                     </div>
                   )

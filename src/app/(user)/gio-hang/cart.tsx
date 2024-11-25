@@ -52,7 +52,7 @@ export default function EnhancedCart() {
             </div>
           ) : (
             <ScrollArea className="h-[400px] pr-4">
-              {cart.map((item, index) => (
+              {cart.map((item) => (
                 <div key={item.id} className="flex items-center py-4">
                   <div className="mr-4 flex-shrink-0">
                     <Image
