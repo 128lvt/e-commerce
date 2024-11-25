@@ -14,13 +14,12 @@ export default function Footer() {
           <div className="space-y-4">
             <h2 className="text-3xl font-bold">6AE Shop</h2>
             <p className="text-sm text-gray-400">
-              Bringing style and quality to your everyday life. Discover the
-              latest trends and timeless classics at 6AE Shop.
+              Mang đến cho bạn những món đồ thời trang chất lượng, giá rẻ.
             </p>
           </div>
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Quick Links</h3>
+            <h3 className="text-lg font-semibold">Links</h3>
             <nav className="flex flex-col space-y-2">
               <Link
                 href="/"
@@ -51,7 +50,7 @@ export default function Footer() {
 
           {/* Contact Information */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Contact Us</h3>
+            <h3 className="text-lg font-semibold">Liên hệ với chúng tôi</h3>
             <div className="space-y-2 text-sm">
               <p className="flex items-center">
                 <Mail className="mr-2 h-4 w-4" /> info@6aeshop.com
@@ -68,9 +67,9 @@ export default function Footer() {
 
           {/* Newsletter Signup */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Stay Updated</h3>
+            <h3 className="text-lg font-semibold">Nhận thông tin</h3>
             <p className="text-sm text-gray-400">
-              Subscribe to our newsletter for the latest updates and offers.
+              Đăng ký tin mới nhất về sản phẩm và khuyến mãi.
             </p>
             <form
               className="flex space-x-2"

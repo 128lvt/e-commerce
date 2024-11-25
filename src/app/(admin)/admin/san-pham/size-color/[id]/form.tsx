@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { API_URL } from '@/configs/apiConfig'
+import useProduct from '@/hooks/use-product'
 import useVariant from '@/hooks/use-product-variant'
 import { useToast } from '@/hooks/use-toast'
 import { variantSchema } from '@/schemas/variantSchema'
@@ -37,6 +38,7 @@ export function VariantForm({
 }: IProps) {
   const token = localStorage.getItem('token')
   const { mutate } = useVariant(productId)
+  const { reloadProduct } = useProduct()
   const { toast } = useToast()
 
   // Initialize the form with default values, including the variantId if provided
@@ -88,6 +90,7 @@ export function VariantForm({
     } else {
       onClose()
       mutate()
+      reloadProduct()
       toast({
         title:
           variantId != undefined

@@ -135,7 +135,9 @@ export function DataTable<TData extends ProductId, TValue>({
                           <TableCell key={cell.id} className="p-4 text-center">
                             <Button
                               onClick={() => {
-                                router.push(`/san-pham/size-color/${productId}`)
+                                router.push(
+                                  `/admin/san-pham/size-color/${productId}`,
+                                )
                               }}
                               className="rounded bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
                             >

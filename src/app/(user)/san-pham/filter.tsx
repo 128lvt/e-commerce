@@ -63,13 +63,13 @@ export default function Filter() {
               <DropdownMenuLabel>Sắp xếp theo giá</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => handleFilter('asc')}>
-                Low to High
+                Thấp đến cao
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => handleFilter('desc')}>
-                High to Low
+                Cao đến thấp
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuLabel>Categories</DropdownMenuLabel>
+              <DropdownMenuLabel>Danh mục</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {categories?.map((item: Category) => (
                 <DropdownMenuItem

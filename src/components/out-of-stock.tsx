@@ -137,7 +137,6 @@ export function OutOfStockList({ data }: { data: OutOfStock[] }) {
         </AnimatePresence>
         {filteredProducts?.length > 5 && (
           <Button
-            variant="outline"
             className="mt-4 w-full"
             onClick={() => setIsExpanded(!isExpanded)}
           >

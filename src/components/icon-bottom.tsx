@@ -8,18 +8,18 @@ export default function IconBottom() {
   const features = [
     {
       icon: Truck,
-      title: 'Fast Delivery',
-      description: 'Within 3 days from order confirmation',
+      title: 'Giao hàng nhanh',
+      description: 'Giao hàng trong 3 ngày',
     },
     {
       icon: Shield,
-      title: 'Secure Payments',
-      description: 'Multiple safe payment options',
+      title: 'Đổi/Trả hàng miễn phí',
+      description: 'Dễ dàng đổi/trả hàng',
     },
     {
       icon: Headphones,
-      title: '24/7 Support',
-      description: 'Dedicated customer service team',
+      title: 'Hỗ trợ 24/7',
+      description: 'Chăm sóc khách hàng 24/7',
     },
   ]
 
@@ -31,7 +31,7 @@ export default function IconBottom() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Why Choose Us
+        Tại sao nên chọn chúng tôi
       </motion.h2>
       <div className="grid gap-6 md:grid-cols-3">
         {features.map((feature, index) => (
