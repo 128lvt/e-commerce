@@ -39,12 +39,12 @@ export function ProductItem(product: Product) {
       className="group relative mt-3 w-full overflow-hidden rounded-lg bg-gradient-to-br from-violet-50 to-indigo-100 text-gray-800 shadow-lg transition-all duration-300 hover:shadow-xl sm:mt-4 md:mt-5"
     >
       <CardHeader className="p-3 sm:p-4">
-        <CardTitle className="line-clamp-1 text-base font-bold text-violet-800 sm:text-lg md:text-xl">
+        <CardTitle className="line-clamp-1 text-sm font-bold text-violet-800">
           {product.name || 'Product Name'}
         </CardTitle>
         <Badge
           variant="secondary"
-          className="absolute right-2 top-2 bg-violet-200 text-xs text-violet-800 sm:right-3 sm:top-3 sm:text-sm"
+          className="absolute right-2 top-2 cursor-default bg-violet-200 text-xs text-violet-800"
         >
           {product.category.name || 'Category'}
         </Badge>
