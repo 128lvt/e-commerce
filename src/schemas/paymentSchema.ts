@@ -27,7 +27,7 @@ const OrderSchema = z.object({
   shipping_method: z.enum(['standard', 'express'], {
     errorMap: () => ({ message: 'Phương thức giao hàng không hợp lệ.' }),
   }), // Kiểm tra shipping_method có trong danh sách đã định nghĩa
-  payment_method: z.enum(['cod', 'vnpay'], {
+  payment_method: z.enum(['cod', 'momo'], {
     errorMap: () => ({ message: 'Phương thức thanh toán không hợp lệ.' }),
   }),
 })

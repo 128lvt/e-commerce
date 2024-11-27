@@ -132,49 +132,109 @@ export default function FormCashout() {
     return res.data
   }
 
+  const createMomoPayment = async (values: z.infer<typeof OrderSchema>) => {
+    try {
+      const response = await fetch(`${API_URL}/payments/momo`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(values),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.log(errorData)
+        throw new Error('Không thể tạo thanh toán MoMo.')
+      }
+
+      const data = await response.json()
+      return {
+        payUrl: data.data.payment.payUrl,
+        orderId: data.data.order.id,
+      }
+    } catch (error) {
+      console.error('Lỗi khi tạo thanh toán MoMo:', error)
+      return null
+    }
+  }
+
   const onSubmit = async (values: z.infer<typeof OrderSchema>) => {
     if (isLoading) return
     setIsLoading(true)
     toast({
-      description: 'Đang gửi đơn hàng...',
+      description: 'Đang xử lý đơn hàng...',
     })
 
     try {
-      const orderId = await createOrder(values)
-      if (orderId) {
-        const orderDetails = cart.map((item) => ({
-          order_id: orderId,
-          product_id: item.productId,
-          number_of_products: item.quantity,
-          variant_id: item.variantId,
-        }))
+      let orderId: number | undefined
 
-        for (const orderDetail of orderDetails) {
-          const orderDetailResponse = await createOrderDetail(
-            orderId,
-            orderDetail,
-          )
-          if (orderDetailResponse === null) {
-            throw new Error('Số lượng sản phẩm vượt quá số lượng trong kho.')
+      if (values.payment_method === 'cod') {
+        orderId = await createOrder(values)
+
+        if (orderId) {
+          const orderDetails = cart.map((item) => ({
+            order_id: orderId!,
+            product_id: item.productId,
+            number_of_products: item.quantity,
+            variant_id: item.variantId,
+          }))
+
+          for (const orderDetail of orderDetails) {
+            const orderDetailResponse = await createOrderDetail(
+              orderId,
+              orderDetail,
+            )
+            if (orderDetailResponse === null) {
+              throw new Error('Số lượng sản phẩm vượt quá số lượng trong kho.')
+            }
           }
         }
-
-        clearCart()
-        loadCartFromLocalStorage()
-        reloadProduct()
-        mutate()
-        toast({
-          title: 'Thành công!',
-          description: `Thanh toán thành công. [${orderId}]`,
-        })
-
-        // Redirect to the order details page
-        router.push(`/don-hang/${orderId}`)
       }
+
+      if (values.payment_method === 'momo') {
+        const response = await createMomoPayment(values)
+
+        orderId = response?.orderId
+
+        if (orderId) {
+          const orderDetails = cart.map((item) => ({
+            order_id: orderId!,
+            product_id: item.productId,
+            number_of_products: item.quantity,
+            variant_id: item.variantId,
+          }))
+
+          for (const orderDetail of orderDetails) {
+            const orderDetailResponse = await createOrderDetail(
+              orderId,
+              orderDetail,
+            )
+            if (orderDetailResponse === null) {
+              throw new Error('Số lượng sản phẩm vượt quá số lượng trong kho.')
+            }
+          }
+
+          if (response?.payUrl) {
+            window.open(response.payUrl, '_blank')
+          }
+        }
+      }
+      // Luồng COD (Thanh toán khi nhận hàng)
+      // clearCart()
+      // loadCartFromLocalStorage()
+      // reloadProduct()
+      // mutate()
+      toast({
+        title: 'Thành công!',
+        description: `Đơn hàng đã được tạo. [${orderId}]`,
+      })
+      // router.push(`/don-hang/${orderId}`)
     } catch (error) {
       toast({
         title: 'Thất bại!',
-        description: `Có lỗi xảy ra khi thanh toán. [${error instanceof Error ? error.message : String(error)}]`,
+        description: `Có lỗi xảy ra khi xử lý đơn hàng. [${error instanceof Error ? error.message : String(error)}]`,
         variant: 'destructive',
       })
     } finally {
@@ -272,6 +332,27 @@ export default function FormCashout() {
                     </FormControl>
                     <FormDescription>
                       Bất kỳ ghi chú nào bạn muốn thêm.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="payment_method"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phương thức thanh toán</FormLabel>
+                    <FormControl>
+                      <select {...field} className="w-full rounded border p-2">
+                        <option value="cod">
+                          Thanh toán khi nhận hàng (COD)
+                        </option>
+                        <option value="momo">Thanh toán qua MoMo</option>
+                      </select>
+                    </FormControl>
+                    <FormDescription>
+                      Chọn phương thức thanh toán của bạn.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

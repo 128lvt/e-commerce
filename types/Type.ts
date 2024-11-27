@@ -151,6 +151,7 @@ export interface Order {
   shippingDate?: Date
   trackingNumber?: string
   paymentMethod?: string
+  paymentStatus?: string
   active?: boolean
   orderDetails: OrderDetail[]
 }

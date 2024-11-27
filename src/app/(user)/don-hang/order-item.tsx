@@ -49,6 +49,17 @@ function OrderItem({ order }: OrderItemProps) {
     }
   }
 
+  const getPaymentStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'đã thanh toán':
+        return 'text-green-500'
+      case 'chưa thanh toán':
+        return 'text-red-500'
+      default:
+        return 'text-gray-500'
+    }
+  }
+
   return (
     <Card className="mx-auto w-full max-w-4xl">
       <CardHeader>
@@ -95,11 +106,12 @@ function OrderItem({ order }: OrderItemProps) {
             </p>
             <p className="flex items-center">
               <DollarSign className="mr-2 h-4 w-4" />{' '}
-              <strong>Tổng tiền:</strong>{' '}
-              {new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-              }).format(order.totalMoney)}
+              <strong>Trạng thái thanh toán: </strong>{' '}
+              <span
+                className={getPaymentStatusColor(order.paymentStatus as string)}
+              >
+                {order.paymentStatus}
+              </span>
             </p>
           </div>
         </div>
