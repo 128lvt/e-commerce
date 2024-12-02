@@ -88,10 +88,6 @@ const useUser = create<UserState>((set, get) => ({
 
   getRole: () => {
     if (typeof window !== 'undefined') {
-      const { user } = get()
-      if (user && user.role) {
-        return user.role
-      }
       return localStorage.getItem('role')
     }
     return null
