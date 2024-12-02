@@ -34,9 +34,9 @@ export default function Page() {
       setParams({ page: newPage })
     }
   }
-  // if (role !== null && role !== 'dev') {
-  //   router.push('/admin/')
-  // }
+  if (role !== null && role !== 'admin' && role !== 'dev') {
+    router.push('/admin/')
+  }
   const getPaginationRange = () => {
     const maxVisiblePages = 4
     let startPage = Math.max(1, pageIndex + 1 - Math.floor(maxVisiblePages / 2))

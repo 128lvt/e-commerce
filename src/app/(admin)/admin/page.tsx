@@ -37,10 +37,9 @@ export default function DashboardPage() {
   const { categoryChart } = useCategoriesChart(token ?? '')
   const { outOfStock } = useOutOfStock(token ?? '')
 
-  // if (role !== null && role !== 'admin') {
-  //   return <AccessDenied />
-  // }
-
+  if (role !== null && role !== 'admin' && role !== 'dev') {
+    return <AccessDenied />
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br py-8">
       <motion.div

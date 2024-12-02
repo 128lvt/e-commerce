@@ -23,9 +23,9 @@ export default function AdminOrderPage() {
   }
   const orders = data?.data
 
-  // if (role !== null && role !== 'admin') {
-  //   router.push('/admin/')
-  // }
+  if (role !== null && role !== 'admin' && role !== 'dev') {
+    router.push('/admin/')
+  }
 
   const filteredOrders = orders?.filter(
     (order) =>

@@ -17,7 +17,7 @@ export default function Page() {
 
   const { data, isLoading, error } = useVariant(Number(id))
 
-  if (role !== null && role !== 'admin') {
+  if (role !== null && role !== 'admin' && role !== 'dev') {
     router.push('/admin/')
   }
   return (

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 export default function Page() {
   const router = useRouter()
   const role = useUser((state) => state.getRole())
-  if (role !== null && role !== 'admin') {
+  if (role !== null && role !== 'admin' && role !== 'dev') {
     router.push('/admin/')
   }
   return (
