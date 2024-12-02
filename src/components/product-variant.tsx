@@ -14,7 +14,10 @@ interface IProps {
 export function ProductVariant(prop: IProps) {
   const { variants } = prop
 
-  const sizes = [...new Set(variants.map((variant) => variant.size))]
+  const sizes = useMemo(
+    () => [...new Set(variants.map((variant) => variant.size))],
+    [variants],
+  )
   const colors = useMemo(
     () => [...new Set(variants.map((variant) => variant.color))],
     [variants],
@@ -22,14 +25,14 @@ export function ProductVariant(prop: IProps) {
 
   const [selectedSize, setSelectedSize] = useState(sizes[0] || '')
   const [selectedColor, setSelectedColor] = useState(colors[0] || '')
+  prop.onSizeChange(sizes[0] || '')
 
   useEffect(() => {
     if (colors.length > 0) {
       setSelectedColor(colors[0] || '')
       prop.onColorChange(colors[0] || '')
-      prop.onSizeChange(sizes[0] || '')
     }
-  }, [colors, prop, prop.onColorChange, prop.onSizeChange, sizes])
+  }, [colors, prop, prop.onColorChange])
 
   const getSelectedVariant = () => {
     return variants.find(

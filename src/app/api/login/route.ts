@@ -1,5 +1,6 @@
 import { API_URL } from '@/configs/apiConfig'
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 
 export async function POST(req: Request) {
   const { email, password } = await req.json()
@@ -30,10 +31,14 @@ export async function POST(req: Request) {
     { status: 200 },
   )
 
-  response.headers.append(
-    'Set-Cookie',
-    `token=${token}; Path=/; Max-Age=${99999999999999999}; HttpOnly; SameSite=Strict; Secure`,
-  )
+  cookies().set({
+    name: 'token',
+    value: token,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 259200,
+  })
 
   return response
 }
