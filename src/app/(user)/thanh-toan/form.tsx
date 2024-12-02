@@ -32,7 +32,7 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ShoppingCart, CreditCard, Loader2 } from 'lucide-react'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 export default function FormCashout() {
   const { user, loadUserFromLocalStorage, token } = useUser()
