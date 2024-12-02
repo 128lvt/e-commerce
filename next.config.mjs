@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['bombom.id.vn','localhost'], // Thêm 'localhost' vào đây
+        domains: ['143.198.92.66','localhost'], // Thêm 'localhost' vào đây
       },
 };
 
