@@ -1,7 +1,8 @@
 import { RadioGroup, RadioGroupItem } from './ui/radio-group'
 import { Label } from './ui/label'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { ProductVariant } from '../../types/Type'
+import { useMemo } from 'react'
 
 interface IProps {
   variants: ProductVariant[]
@@ -11,30 +12,34 @@ interface IProps {
 }
 
 export function ProductVariant(prop: IProps) {
-  const [selectedSize, setSelectedSize] = useState('')
-  const [selectedColor, setSelectedColor] = useState('')
-
   const { variants } = prop
 
   const sizes = [...new Set(variants.map((variant) => variant.size))]
-  const colors = [...new Set(variants.map((variant) => variant.color))]
+  const colors = useMemo(
+    () => [...new Set(variants.map((variant) => variant.color))],
+    [variants],
+  )
 
-  // Hàm tìm kiếm `variant` được chọn
+  const [selectedSize, setSelectedSize] = useState(sizes[0] || '')
+  const [selectedColor, setSelectedColor] = useState(colors[0] || '')
+
+  useEffect(() => {
+    if (colors.length > 0) {
+      setSelectedColor(colors[0] || '')
+      prop.onColorChange(colors[0] || '')
+      prop.onSizeChange(sizes[0] || '')
+    }
+  }, [colors, prop, prop.onColorChange, prop.onSizeChange, sizes])
+
   const getSelectedVariant = () => {
-    const variant = variants.find(
+    return variants.find(
       (v) => v.size === selectedSize && v.color === selectedColor,
     )
-    return variant
   }
 
   const handleSizeChange = (size: string) => {
     setSelectedSize(size)
-    prop.onSizeChange(size) // Cập nhật kích thước trong component cha
-  }
-
-  const handleColorChange = (color: string) => {
-    setSelectedColor(color)
-    prop.onColorChange(color) // Cập nhật màu sắc trong component cha
+    prop.onSizeChange(size)
   }
 
   const selectedVariant = getSelectedVariant()
@@ -51,41 +56,20 @@ export function ProductVariant(prop: IProps) {
         <div className="flex gap-3">
           {sizes.map((size) => (
             <div key={size} className="flex items-center space-x-2">
-              <RadioGroupItem
-                value={size ?? ''}
-                checked={selectedSize === size}
-                id={`size-${size}`}
-              />
+              <RadioGroupItem value={size || ''} id={`size-${size}`} />
               <Label htmlFor={`size-${size}`}>{size}</Label>
             </div>
           ))}
         </div>
       </RadioGroup>
 
-      {/* Chọn Màu Sắc */}
-      <RadioGroup
-        value={selectedColor}
-        onValueChange={handleColorChange}
-        className="flex flex-col"
-      >
-        <p className="mt-3">Màu sắc</p>
-        <div className="flex gap-3">
-          {colors.map((color) => (
-            <div key={color} className="flex items-center space-x-2">
-              <RadioGroupItem
-                value={color ?? ''}
-                id={`color-${color}`}
-                checked={selectedColor === color}
-              />
-              <Label htmlFor={`color-${color}`}>{color}</Label>
-            </div>
-          ))}
-        </div>
-      </RadioGroup>
+      {/* Màu sắc ẩn */}
+      <input type="hidden" value={selectedColor} />
 
       {/* Hiển thị số lượng tồn kho và ID của variant */}
       <p className="mt-3">
-        Còn: {selectedVariant ? selectedVariant.stock : 0} / {prop.stock}
+        Còn: {selectedVariant ? selectedVariant.stock : prop.stock} /{' '}
+        {prop.stock}
       </p>
     </div>
   )

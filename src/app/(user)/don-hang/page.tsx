@@ -23,7 +23,7 @@ export default function Page() {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <div className="text-center">Bạn chưa có đơn hàng nào</div>
   }
 
   if (!data) {

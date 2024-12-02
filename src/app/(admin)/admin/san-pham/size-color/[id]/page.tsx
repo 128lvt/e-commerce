@@ -1,18 +1,25 @@
 'use client'
 
 import useVariant from '@/hooks/use-product-variant'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { VariantColums } from './variant-column'
 import { VariantForm } from './form'
 import { VariantDatatable } from './variant-data-table'
+import useUser from '@/hooks/use-user'
 
 export default function Page() {
+  const role = useUser((state) => state.getRole())
+  const router = useRouter()
+
   const params = useParams()
 
   const id = params.id
 
   const { data, isLoading, error } = useVariant(Number(id))
 
+  if (role !== null && role !== 'admin') {
+    router.push('/admin/')
+  }
   return (
     <div>
       {isLoading ? (

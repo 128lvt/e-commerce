@@ -14,6 +14,7 @@ interface User {
   id: number
   fullName: string
   phoneNumber: string
+  role: string
 }
 
 interface UserState {
@@ -22,9 +23,10 @@ interface UserState {
   setUser: (user: User | null, token?: string | null) => void
   loadUserFromLocalStorage: () => void
   getToken: () => string | null
+  getRole: () => string | null
 }
 
-const useUser = create<UserState>((set) => ({
+const useUser = create<UserState>((set, get) => ({
   user: null,
   token: null,
 
@@ -36,8 +38,10 @@ const useUser = create<UserState>((set) => ({
     if (user) {
       const encodedUser = encodeBase64(JSON.stringify(user))
       localStorage.setItem('user', encodedUser)
+      localStorage.setItem('role', user.role) // Lưu role vào localStorage
     } else {
       localStorage.removeItem('user')
+      localStorage.removeItem('role')
     }
 
     if (token) {
@@ -50,6 +54,7 @@ const useUser = create<UserState>((set) => ({
   loadUserFromLocalStorage: () => {
     const storedUser = localStorage.getItem('user')
     const storedToken = localStorage.getItem('token')
+    const storedRole = localStorage.getItem('role')
 
     let decodedUser = null
     if (storedUser) {
@@ -64,10 +69,27 @@ const useUser = create<UserState>((set) => ({
       user: decodedUser,
       token: storedToken || null,
     })
+
+    // Nếu không có role trong localStorage, nhưng có trong user, cập nhật localStorage
+    if (!storedRole && decodedUser?.role) {
+      localStorage.setItem('role', decodedUser.role)
+    }
   },
+
   getToken: () => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('token')
+    }
+    return null
+  },
+
+  getRole: () => {
+    if (typeof window !== 'undefined') {
+      const { user } = get()
+      if (user && user.role) {
+        return user.role
+      }
+      return localStorage.getItem('role')
     }
     return null
   },

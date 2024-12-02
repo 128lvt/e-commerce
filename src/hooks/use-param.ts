@@ -17,7 +17,7 @@ interface ProductPrams {
 
 export const useProductParams = create<ProductPrams>((set) => ({
   page: 0, // Giá trị mặc định
-  limit: 16, // Giá trị mặc định
+  limit: 8, // Giá trị mặc định
   name: '',
   categoryIds: '',
   sort: '-1',

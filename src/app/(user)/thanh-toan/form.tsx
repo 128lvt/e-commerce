@@ -32,7 +32,6 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ShoppingCart, CreditCard, Loader2 } from 'lucide-react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 
 export default function FormCashout() {
   const { user, loadUserFromLocalStorage, token } = useUser()
@@ -41,7 +40,6 @@ export default function FormCashout() {
   const { toast } = useToast()
   const { mutate } = useOrder(user?.id ?? 0, token ?? '')
   const { reloadProduct } = useProduct()
-  const router = useRouter()
 
   useEffect(() => {
     loadCartFromLocalStorage()
@@ -222,10 +220,10 @@ export default function FormCashout() {
         }
       }
       // Luồng COD (Thanh toán khi nhận hàng)
-      // clearCart()
-      // loadCartFromLocalStorage()
-      // reloadProduct()
-      // mutate()
+      clearCart()
+      loadCartFromLocalStorage()
+      reloadProduct()
+      mutate()
       toast({
         title: 'Thành công!',
         description: `Đơn hàng đã được tạo. [${orderId}]`,

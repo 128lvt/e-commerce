@@ -17,11 +17,6 @@ export function MomoCallbackHandler() {
   const { reloadProduct } = useProduct()
 
   useEffect(() => {
-    loadCartFromLocalStorage()
-    loadUserFromLocalStorage()
-  }, [loadCartFromLocalStorage, loadUserFromLocalStorage])
-
-  useEffect(() => {
     console.log(searchParams)
     const handleCallback = async () => {
       try {
@@ -48,7 +43,14 @@ export function MomoCallbackHandler() {
     }
 
     handleCallback()
-  }, [searchParams])
+  }, [
+    searchParams,
+    loadCartFromLocalStorage,
+    loadUserFromLocalStorage,
+    clearCart,
+    reloadProduct,
+    mutate,
+  ])
 
   if (error) {
     return <div className="text-red-500">Error: {error}</div>

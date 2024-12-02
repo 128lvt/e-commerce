@@ -66,7 +66,7 @@ export default function EnhancedCart() {
                   <div className="flex-grow">
                     <h3 className="font-semibold">{item.name}</h3>
                     <p className="text-sm text-muted-foreground">
-                      {item.size} - {item.color}
+                      Size: {item.size}
                     </p>
                     <div className="mt-2 flex items-center">
                       <Button

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import useProduct from '@/hooks/use-product'
 import { columns } from './column'
 import { DataTable } from './data-table'
 import Filter from './filter'
@@ -15,11 +14,16 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+import useProduct from '@/hooks/use-product'
+import useUser from '@/hooks/use-user'
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
   const [pageIndex, setPageIndex] = useState(0)
+  const role = useUser((state) => state.getRole())
   const { setParams } = useProductParams()
   const { data: productData, isLoading, error } = useProduct()
+  const router = useRouter()
 
   const products: Product[] = productData?.data.products ?? []
   const totalPages = productData?.data.totalPages || 0
@@ -30,7 +34,9 @@ export default function Page() {
       setParams({ page: newPage })
     }
   }
-
+  // if (role !== null && role !== 'dev') {
+  //   router.push('/admin/')
+  // }
   const getPaginationRange = () => {
     const maxVisiblePages = 4
     let startPage = Math.max(1, pageIndex + 1 - Math.floor(maxVisiblePages / 2))

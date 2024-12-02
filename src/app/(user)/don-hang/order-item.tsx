@@ -50,7 +50,7 @@ function OrderItem({ order }: OrderItemProps) {
   }
 
   const getPaymentStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
+    switch (status?.toLowerCase()) {
       case 'đã thanh toán':
         return 'text-green-500'
       case 'chưa thanh toán':
