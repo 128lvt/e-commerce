@@ -37,8 +37,11 @@ export default function DashboardPage() {
   const { categoryChart } = useCategoriesChart(token ?? '')
   const { outOfStock } = useOutOfStock(token ?? '')
 
-  if (role !== null && role !== 'admin' && role !== 'dev') {
+  if (!(role === 'ROLE_DEV' || role === 'ROLE_ADMIN')) {
+    console.log(`Role không hợp lệ: ${role}, chuyển hướng...`)
     return <AccessDenied />
+  } else {
+    console.log(`Role hợp lệ: ${role}`)
   }
   return (
     <div className="min-h-screen bg-gradient-to-br py-8">

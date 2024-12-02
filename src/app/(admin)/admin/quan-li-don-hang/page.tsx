@@ -23,8 +23,11 @@ export default function AdminOrderPage() {
   }
   const orders = data?.data
 
-  if (role !== null && role !== 'admin' && role !== 'dev') {
+  if (!(role === 'ROLE_DEV' || role === 'ROLE_ADMIN')) {
+    console.log(`Role không hợp lệ: ${role}, chuyển hướng...`)
     router.push('/admin/')
+  } else {
+    console.log(`Role hợp lệ: ${role}`)
   }
 
   const filteredOrders = orders?.filter(

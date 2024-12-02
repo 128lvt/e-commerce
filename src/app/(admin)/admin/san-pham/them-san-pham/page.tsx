@@ -6,8 +6,11 @@ import { useRouter } from 'next/navigation'
 export default function Page() {
   const router = useRouter()
   const role = useUser((state) => state.getRole())
-  if (role !== null && role !== 'admin' && role !== 'dev') {
+  if (!(role === 'ROLE_DEV' || role === 'ROLE_ADMIN')) {
+    console.log(`Role không hợp lệ: ${role}, chuyển hướng...`)
     router.push('/admin/')
+  } else {
+    console.log(`Role hợp lệ: ${role}`)
   }
   return (
     <div className="container mx-auto mt-20 w-[600px]">

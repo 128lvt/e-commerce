@@ -24,6 +24,8 @@ export async function POST(req: Request) {
 
   const user = res.data.user
 
+  console.log(user)
+
   const token = res.data.token
 
   const response = NextResponse.json(

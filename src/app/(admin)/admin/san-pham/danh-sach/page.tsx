@@ -21,6 +21,7 @@ import { useRouter } from 'next/navigation'
 export default function Page() {
   const [pageIndex, setPageIndex] = useState(0)
   const role = useUser((state) => state.getRole())
+  console.log(role)
   const { setParams } = useProductParams()
   const { data: productData, isLoading, error } = useProduct()
   const router = useRouter()
@@ -34,9 +35,13 @@ export default function Page() {
       setParams({ page: newPage })
     }
   }
-  if (role !== null && role !== 'admin' && role !== 'dev') {
+  if (!(role === 'ROLE_DEV' || role === 'ROLE_ADMIN')) {
+    console.log(`Role không hợp lệ: ${role}, chuyển hướng...`)
     router.push('/admin/')
+  } else {
+    console.log(`Role hợp lệ: ${role}`)
   }
+
   const getPaginationRange = () => {
     const maxVisiblePages = 4
     let startPage = Math.max(1, pageIndex + 1 - Math.floor(maxVisiblePages / 2))

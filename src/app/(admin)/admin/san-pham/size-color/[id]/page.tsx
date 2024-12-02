@@ -17,8 +17,11 @@ export default function Page() {
 
   const { data, isLoading, error } = useVariant(Number(id))
 
-  if (role !== null && role !== 'admin' && role !== 'dev') {
+  if (!(role === 'ROLE_DEV' || role === 'ROLE_ADMIN')) {
+    console.log(`Role không hợp lệ: ${role}, chuyển hướng...`)
     router.push('/admin/')
+  } else {
+    console.log(`Role hợp lệ: ${role}`)
   }
   return (
     <div>

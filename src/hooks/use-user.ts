@@ -14,7 +14,7 @@ interface User {
   id: number
   fullName: string
   phoneNumber: string
-  role: string
+  authorities: any
 }
 
 interface UserState {
@@ -34,11 +34,14 @@ const useUser = create<UserState>((set, get) => ({
     // Cập nhật user và token trong Zustand
     set({ user, token })
 
+    const role = user?.authorities?.[0]?.authority
+
     // Mã hóa user và token thành Base64 trước khi lưu vào localStorage
     if (user) {
       const encodedUser = encodeBase64(JSON.stringify(user))
+
       localStorage.setItem('user', encodedUser)
-      localStorage.setItem('role', user.role) // Lưu role vào localStorage
+      localStorage.setItem('role', role) // Lưu role vào localStorage
     } else {
       localStorage.removeItem('user')
       localStorage.removeItem('role')
