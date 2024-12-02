@@ -32,11 +32,13 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ShoppingCart, CreditCard, Loader2 } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 export default function FormCashout() {
   const { user, loadUserFromLocalStorage, token } = useUser()
   const { cart, loadCartFromLocalStorage, clearCart } = useCart()
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
   const { toast } = useToast()
   const { mutate } = useOrder(user?.id ?? 0, token ?? '')
   const { reloadProduct } = useProduct()
@@ -228,7 +230,7 @@ export default function FormCashout() {
         title: 'Thành công!',
         description: `Đơn hàng đã được tạo. [${orderId}]`,
       })
-      // router.push(`/don-hang/${orderId}`)
+      router.push(`/don-hang/${orderId}`)
     } catch (error) {
       toast({
         title: 'Thất bại!',

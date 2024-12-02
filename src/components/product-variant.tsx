@@ -11,13 +11,14 @@ interface IProps {
   stock: number
 }
 
-export function ProductVariant(prop: IProps) {
-  const { variants } = prop
+export function ProductVariant(props: IProps) {
+  const { variants } = props
 
   const sizes = useMemo(
     () => [...new Set(variants.map((variant) => variant.size))],
     [variants],
   )
+
   const colors = useMemo(
     () => [...new Set(variants.map((variant) => variant.color))],
     [variants],
@@ -25,14 +26,24 @@ export function ProductVariant(prop: IProps) {
 
   const [selectedSize, setSelectedSize] = useState(sizes[0] || '')
   const [selectedColor, setSelectedColor] = useState(colors[0] || '')
-  prop.onSizeChange(sizes[0] || '')
+
+  // Remove the immediate onSizeChange call
+
+  useEffect(() => {
+    if (sizes.length > 0) {
+      const initialSize = sizes[0] || ''
+      setSelectedSize(initialSize)
+      props.onSizeChange(initialSize)
+    }
+  }, [sizes, props.onSizeChange])
 
   useEffect(() => {
     if (colors.length > 0) {
-      setSelectedColor(colors[0] || '')
-      prop.onColorChange(colors[0] || '')
+      const initialColor = colors[0] || ''
+      setSelectedColor(initialColor)
+      props.onColorChange(initialColor)
     }
-  }, [colors, prop, prop.onColorChange])
+  }, [colors, props.onColorChange])
 
   const getSelectedVariant = () => {
     return variants.find(
@@ -42,14 +53,13 @@ export function ProductVariant(prop: IProps) {
 
   const handleSizeChange = (size: string) => {
     setSelectedSize(size)
-    prop.onSizeChange(size)
+    props.onSizeChange(size)
   }
 
   const selectedVariant = getSelectedVariant()
 
   return (
     <div>
-      {/* Chọn Kích Thước */}
       <RadioGroup
         value={selectedSize}
         onValueChange={handleSizeChange}
@@ -66,13 +76,11 @@ export function ProductVariant(prop: IProps) {
         </div>
       </RadioGroup>
 
-      {/* Màu sắc ẩn */}
       <input type="hidden" value={selectedColor} />
 
-      {/* Hiển thị số lượng tồn kho và ID của variant */}
       <p className="mt-3">
-        Còn: {selectedVariant ? selectedVariant.stock : prop.stock} /{' '}
-        {prop.stock}
+        Còn: {selectedVariant ? selectedVariant.stock : props.stock} /{' '}
+        {props.stock}
       </p>
     </div>
   )
