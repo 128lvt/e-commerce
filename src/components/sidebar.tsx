@@ -26,12 +26,12 @@ export default function Sidebar() {
       <SheetContent>
         <SheetHeader>
           <Link href="/">
-            <h1 className="text-4xl font-semibold">
+            <h1 className="text-4xl font-semibold text-white dark:text-black">
               6AE Shop<span className="text-cyan-200">.</span>
             </h1>
           </Link>
         </SheetHeader>
-        <div className="mt-10 flex flex-col items-center gap-10 py-12">
+        <div className="mt-10 flex flex-col items-center gap-10 py-12 text-white dark:text-black">
           {links.map((link) => (
             <Link
               href={link.href}

@@ -42,10 +42,7 @@ export default function ProductDetail({ params }: { params: { id: number } }) {
       </div>
     )
 
-  const handleSizeChange = (size: string) => setSelectedSize(size)
-  const handleColorChange = (color: string) => setSelectedColor(color)
-
-  const handleAddToCart = () => {
+  const handleAddToCart = (variantStock: number) => {
     if (!selectedSize || !selectedColor) {
       toast({
         description: 'Vui lòng chọn kích thước và màu sắc!',
@@ -54,17 +51,22 @@ export default function ProductDetail({ params }: { params: { id: number } }) {
       return
     }
 
-    const variant = product.variants.find(
-      (v) => v.size === selectedSize && v.color === selectedColor,
-    )
-
-    if (!variant || variant.stock === 0) {
+    if (variantStock === 0) {
       toast({
         description: 'Sản phẩm này đã hết hàng.',
         variant: 'destructive',
       })
       return
     }
+
+    const getVariantInfo = (size: string, color: string) => {
+      const variant = product.variants.find(
+        (v) => v.size === size && v.color === color,
+      )
+      return variant?.id
+    }
+
+    const variantId = getVariantInfo(selectedSize, selectedColor)
 
     const productToAdd = {
       id: uuidv4(),
@@ -73,10 +75,10 @@ export default function ProductDetail({ params }: { params: { id: number } }) {
       price: product.price,
       size: selectedSize,
       color: selectedColor,
-      variantId: variant.id,
+      variantId: variantId || 0,
       imageUrl: product.images[0]?.imageUrl,
       quantity: 1,
-      stock: variant.stock,
+      stock: variantStock,
     }
 
     addToCart(productToAdd)
@@ -114,14 +116,20 @@ export default function ProductDetail({ params }: { params: { id: number } }) {
           </p>
           <p className="text-gray-700">{product.description}</p>
           <ProductVariant
-            variants={product.variants}
-            onSizeChange={handleSizeChange}
-            onColorChange={handleColorChange}
             stock={product.stock}
+            variants={product.variants}
+            onSizeChange={setSelectedSize}
+            onColorChange={setSelectedColor}
           />
           <div className="flex space-x-4">
             <Button
-              onClick={handleAddToCart}
+              onClick={() =>
+                handleAddToCart(
+                  product.variants.find(
+                    (v) => v.size === selectedSize && v.color === selectedColor,
+                  )?.stock || 0,
+                )
+              }
               className="flex-1 bg-violet-600 text-white hover:bg-violet-700"
             >
               <ShoppingCart className="mr-2 h-5 w-5" />
