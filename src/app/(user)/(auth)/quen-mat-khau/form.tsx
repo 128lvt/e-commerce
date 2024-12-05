@@ -52,9 +52,10 @@ export default function EnhancedForgotPasswordForm() {
       })
 
       const data = await response.json()
+      console.log(data)
       if (!response.ok) {
         toast({
-          description: `Đổi mật khẩu thất bại: ${data}.`,
+          description: `Đổi mật khẩu thất bại: ${data.data}`,
           variant: 'destructive',
         })
         return
