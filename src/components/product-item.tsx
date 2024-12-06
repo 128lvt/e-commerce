@@ -61,11 +61,11 @@ export function ProductItem(product: Product) {
           />
           <div className="absolute inset-0 bg-violet-900/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         </div>
-        <div className="p-3 sm:p-4">
+        {/* <div className="p-3 sm:p-4">
           <p className="line-clamp-2 h-[3rem] text-xs text-violet-700 sm:text-sm">
             {product.description || 'No description available'}
           </p>
-        </div>
+        </div> */}
       </CardContent>
       <CardFooter className="flex flex-col items-start gap-2 p-3 sm:p-4">
         <div className="flex w-full flex-col items-start justify-between gap-1 sm:flex-row sm:items-center">
