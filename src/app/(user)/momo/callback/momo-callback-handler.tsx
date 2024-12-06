@@ -6,6 +6,7 @@ import { useCart } from '@/hooks/use-cart'
 import useProduct from '@/hooks/use-product'
 import useOrder from '@/hooks/use-order-id'
 import useUser from '@/hooks/use-user'
+import { API_URL } from '@/configs/apiConfig'
 
 export function MomoCallbackHandler() {
   const searchParams = useSearchParams()
@@ -20,7 +21,7 @@ export function MomoCallbackHandler() {
     console.log(searchParams)
     const handleCallback = async () => {
       try {
-        const apiUrl = `http://localhost:8443/api/v1/payments/momo/callback?${searchParams.toString()}`
+        const apiUrl = `${API_URL}/payments/momo/callback?${searchParams.toString()}`
         const response = await fetch(apiUrl)
 
         if (!response.ok) {
