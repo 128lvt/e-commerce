@@ -217,6 +217,7 @@ export default function FormCashout() {
           }
 
           if (response?.payUrl) {
+            console.log(response)
             window.open(response.payUrl, '_blank')
           }
         }

@@ -30,7 +30,7 @@ export function DecorativeHeader() {
           animate={{ y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          Chào mứng bạn đến với 6AE Fashion
+          Chào mừng bạn đến với 6AE Fashion
         </motion.h1>
         <motion.p
           className="mb-8 text-xl text-gray-600"
