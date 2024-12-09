@@ -32,9 +32,9 @@ export default function ProductCarousel() {
   const products: Product[] = data.data.products
 
   return (
-    <div className="w-full rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 p-6 shadow-lg">
+    <div className="w-full rounded-lg bg-[#805b45] p-6 shadow-lg">
       <motion.h2
-        className="mb-4 flex items-center justify-center text-2xl font-bold text-gray-800"
+        className="mb-4 flex items-center justify-center text-2xl font-bold text-white"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

@@ -11,7 +11,7 @@ export default function Banner() {
 
   return (
     <div className="relative h-[6rem] w-full overflow-hidden rounded-lg shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl sm:h-[8rem] md:h-[10rem] lg:h-[12rem]">
-      <div className="animate-gradient-x absolute inset-0 bg-gradient-to-br from-blue-600 via-teal-500 to-cyan-500" />
+      <div className="absolute inset-0 animate-gradient-x bg-gradient-to-br from-blue-600 via-teal-500 to-cyan-500" />
       <div className="bg-grid-white/[0.2] absolute inset-0 bg-[length:20px_20px]" />
       <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
         <h1 className="mb-1 text-xl font-bold text-white sm:text-2xl md:text-3xl lg:text-4xl">

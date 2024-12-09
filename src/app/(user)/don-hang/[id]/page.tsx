@@ -30,6 +30,8 @@ import {
 import { Order } from 'types/Type'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Badge } from '@/components/ui/badge'
+import Image from 'next/image'
+import { API_URL } from '@/configs/apiConfig'
 
 export default function OrderDetails() {
   const { id } = useParams()
@@ -155,36 +157,47 @@ export default function OrderDetails() {
             <h3 className="mb-2 flex items-center text-xl font-semibold">
               <Package className="mr-2 h-5 w-5" /> Danh sách sản phẩm
             </h3>
-            <ScrollArea className="h-[200px]">
+            <ScrollArea className="h-[300px]">
               <div className="space-y-4">
                 {order.orderDetails?.map((orderDetail) => (
                   <Card key={orderDetail.id} className="p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-1">
-                        <p className="font-semibold">
-                          {orderDetail.product.name}
-                        </p>
-                        <div className="flex items-center text-sm text-muted-foreground">
-                          <Palette className="mr-1 h-3 w-3" />{' '}
-                          {orderDetail.productVariant?.color}
-                          <Separator
-                            orientation="vertical"
-                            className="mx-2 h-4"
-                          />
-                          <Ruler className="mr-1 h-3 w-3" />{' '}
-                          {orderDetail.productVariant?.size}
+                    <div className="flex items-start space-x-4">
+                      <Image
+                        src={`${API_URL}/products/images/${orderDetail.product.images[0].imageUrl}`}
+                        alt={orderDetail.product.name}
+                        width={80}
+                        height={80}
+                        className="rounded-md object-cover"
+                      />
+                      <div className="flex-grow">
+                        <div className="flex items-start justify-between">
+                          <div className="space-y-1">
+                            <p className="font-semibold">
+                              {orderDetail.product.name}
+                            </p>
+                            <div className="flex items-center text-sm text-muted-foreground">
+                              <Palette className="mr-1 h-3 w-3" />{' '}
+                              {orderDetail.productVariant?.color}
+                              <Separator
+                                orientation="vertical"
+                                className="mx-2 h-4"
+                              />
+                              <Ruler className="mr-1 h-3 w-3" />{' '}
+                              {orderDetail.productVariant?.size}
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-medium">
+                              {new Intl.NumberFormat('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND',
+                              }).format(orderDetail.product.price)}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              x{orderDetail.numberOfProducts}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-medium">
-                          {new Intl.NumberFormat('vi-VN', {
-                            style: 'currency',
-                            currency: 'VND',
-                          }).format(orderDetail.product.price)}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          x{orderDetail.numberOfProducts}
-                        </p>
                       </div>
                     </div>
                   </Card>

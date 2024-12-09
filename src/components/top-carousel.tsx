@@ -20,7 +20,7 @@ export function TopCarousel() {
 
   const carouselItems = [
     {
-      image: '/carousels/1.jpg',
+      image: '/carousels/1.png',
       title: `Discover Nature's Beauty`,
       description:
         'Explore breathtaking landscapes and immerse yourself in the wonders of nature.',
@@ -28,7 +28,7 @@ export function TopCarousel() {
       buttonLink: '/nature',
     },
     {
-      image: '/carousels/2.jpg',
+      image: '/carousels/2.png',
       title: 'Urban Adventures Await',
       description:
         'Experience the vibrant energy of city life with our curated urban experiences.',
@@ -36,7 +36,7 @@ export function TopCarousel() {
       buttonLink: '/urban',
     },
     {
-      image: '/carousels/3.jpg',
+      image: '/carousels/3.png',
       title: 'Relax in Luxury',
       description:
         'Indulge in premium comfort and unwind in our exquisite accommodations.',
@@ -70,7 +70,7 @@ export function TopCarousel() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="max-w-2xl space-y-6 text-white"
+                    className="max-w-2xl space-y-6 text-[#eda57a]"
                   >
                     <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl">
                       {item.title}

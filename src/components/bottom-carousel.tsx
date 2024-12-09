@@ -16,21 +16,21 @@ import { Tag } from 'lucide-react'
 
 export function BottomCarousel() {
   const offers = [
-    { image: '/carousels/1.jpg', title: 'Đón Xuân', discount: 'Giảm 30%' },
+    { image: '/carousels/1.png', title: 'Đón Xuân', discount: 'Giảm 30%' },
     {
-      image: '/carousels/2.jpg',
+      image: '/carousels/2.png',
       title: 'Sản phẩm mới',
       discount: 'Miễn phí vận chuyển',
     },
     {
-      image: '/carousels/3.jpg',
+      image: '/carousels/3.png',
       title: 'Thanh lí',
       discount: 'Lên tới 50%',
     },
   ]
 
   return (
-    <div className="w-full rounded-lg bg-gradient-to-r from-blue-100 to-green-100 p-6 shadow-lg">
+    <div className="w-full rounded-lg bg-[#dbb198] p-6 shadow-lg">
       <motion.div
         className="mb-4 flex items-center justify-between"
         initial={{ opacity: 0, y: -20 }}
