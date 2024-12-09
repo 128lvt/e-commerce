@@ -30,14 +30,14 @@ export function BottomCarousel() {
   ]
 
   return (
-    <div className="w-full rounded-lg bg-[#dbb198] p-6 shadow-lg">
+    <div className="w-full rounded-lg bg-[#b88b70] p-6 shadow-lg">
       <motion.div
         className="mb-4 flex items-center justify-between"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-2xl font-bold text-gray-800">Ưu đãi đặc biệt</h2>
+        <h2 className="text-2xl font-bold text-white">Ưu đãi đặc biệt</h2>
         <Tag className="h-6 w-6 text-primary" />
       </motion.div>
       <Carousel
