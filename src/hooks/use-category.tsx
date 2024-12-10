@@ -1,4 +1,4 @@
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { API_URL } from '@/configs/apiConfig'
 import { Category } from 'types/Type'
 
@@ -23,7 +23,12 @@ const useCategory = () => {
   // Kiểm tra trạng thái đang tải
   const isLoading = !data && !error
 
-  return { data: data, error, isLoading }
+  return {
+    data: data,
+    error,
+    isLoading,
+    mutate: () => mutate(`${API_URL}/categories`),
+  }
 }
 
 export default useCategory

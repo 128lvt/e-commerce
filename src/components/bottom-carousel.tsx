@@ -16,9 +16,9 @@ import { Tag } from 'lucide-react'
 
 export function BottomCarousel() {
   const offers = [
-    { image: '/carousels/1.png', title: 'Đón Xuân', discount: 'Giảm 30%' },
+    { image: '/carousels/2.png', title: 'Đón Xuân', discount: 'Giảm 30%' },
     {
-      image: '/carousels/2.png',
+      image: '/carousels/1.png',
       title: 'Sản phẩm mới',
       discount: 'Miễn phí vận chuyển',
     },
@@ -70,7 +70,10 @@ export function BottomCarousel() {
                         <h3 className="mb-2 text-xl font-semibold text-white">
                           {offer.title}
                         </h3>
-                        <Badge variant="secondary" className="w-fit">
+                        <Badge
+                          variant="secondary"
+                          className="w-fit cursor-default"
+                        >
                           {offer.discount}
                         </Badge>
                       </div>

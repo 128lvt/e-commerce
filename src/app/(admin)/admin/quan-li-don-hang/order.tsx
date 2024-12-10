@@ -142,7 +142,9 @@ export function OrderItem({ order }: OrderItemProps) {
             </div>
           ) : (
             <div className="flex items-center space-x-2">
-              <Badge className={`${getStatusColor(order.status)} text-white`}>
+              <Badge
+                className={`${getStatusColor(order.status)} cursor-default text-white`}
+              >
                 {order.status.toUpperCase()}
               </Badge>
               <Button onClick={() => setEditMode(true)}>Sửa trạng thái</Button>

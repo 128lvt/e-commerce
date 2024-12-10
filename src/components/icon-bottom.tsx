@@ -26,7 +26,7 @@ export default function IconBottom() {
   return (
     <div className="container mx-auto mt-14 w-full px-4">
       <motion.h2
-        className="mb-8 text-center text-3xl font-bold text-gray-800"
+        className="mb-8 text-center text-3xl font-bold text-gray-800 dark:text-white"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

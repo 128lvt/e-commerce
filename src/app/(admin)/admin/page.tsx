@@ -44,9 +44,9 @@ export default function DashboardPage() {
     console.log(`Role hợp lệ: ${role}`)
   }
   return (
-    <div className="min-h-screen bg-gradient-to-br py-8">
+    <div className="min-h-screen bg-gradient-to-br p-8">
       <motion.div
-        className="dashboard-container mx-auto max-w-[1600px] px-4"
+        className="mx-auto max-w-[1600px]"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -54,17 +54,14 @@ export default function DashboardPage() {
         <h1 className="mb-8 text-3xl font-bold text-gray-800">
           Thống kê bán hàng
         </h1>
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3">
-          <motion.div
-            variants={itemVariants}
-            className="col-span-1 lg:col-span-2 xl:col-span-3"
-          >
+        <div className="grid grid-cols-12 gap-8">
+          <motion.div variants={itemVariants} className="col-span-5 h-full">
             <MonthlySalesChart data={monthlyChart} />
           </motion.div>
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} className="col-span-4 h-full">
             <CategorySalesChart chartData={categoryChart ?? []} />
           </motion.div>
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} className="col-span-3 h-full">
             <OutOfStockList data={outOfStock} />
           </motion.div>
         </div>

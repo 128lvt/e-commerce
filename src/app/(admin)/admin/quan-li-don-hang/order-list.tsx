@@ -20,7 +20,7 @@ export function OrderList({ orders }: IProps) {
       <h2 className="mb-6 flex items-center text-3xl font-bold">
         <ShoppingBag className="mr-2 h-8 w-8" /> Danh sách đơn hàng
       </h2>
-      <div className="grid-cols-2 gap-3 xl:grid">
+      <div className="grid gap-6 md:grid-cols-2">
         {orders.map((order) => (
           <OrderItem key={order.id} order={order} />
         ))}

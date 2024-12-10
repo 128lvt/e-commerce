@@ -118,18 +118,13 @@ export function OutOfStockList({ data }: { data: OutOfStock[] }) {
                   <div>
                     <h3 className="font-medium">{item.product.name}</h3>
                     <p className="text-sm text-muted-foreground">
-                      {item.product.category.name} | Size:{' '}
-                      {item.productVariant.size} | Color:{' '}
-                      {item.productVariant.color}
+                      Size: {item.productVariant.size}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-medium">
-                    {item.product.price.toLocaleString()}đ
-                  </p>
                   <p className="text-sm text-muted-foreground">
-                    Stock: {item.productVariant.stock}
+                    Số lượng: {item.productVariant.stock}
                   </p>
                 </div>
               </motion.div>

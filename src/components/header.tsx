@@ -3,7 +3,7 @@ import MobileNav from './mobile-nav'
 import Nav from './nav'
 export default function Header() {
   return (
-    <header className="xl:py-12">
+    <header className="bg-[#c2845f] dark:bg-[#59341e] xl:py-12">
       <div className="container mx-auto flex items-center justify-between">
         <Link href="/">
           <h1 className="text-4xl font-semibold">

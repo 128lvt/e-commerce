@@ -7,6 +7,7 @@ import useUser from '@/hooks/use-user'
 import { useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
+import { OrderSkeleton } from './order-skeleton'
 
 export default function AdminOrderPage() {
   const token = useUser((state) => state.getToken())
@@ -15,20 +16,15 @@ export default function AdminOrderPage() {
   const { data, isLoading, error } = useAdminOrder(token ?? '')
   const [searchTerm, setSearchTerm] = useState('')
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-  if (error) {
-    return <div>Error: {error.message}</div>
-  }
-  const orders = data?.data
-
   if (!(role === 'ROLE_DEV' || role === 'ROLE_ADMIN')) {
     console.log(`Role không hợp lệ: ${role}, chuyển hướng...`)
     router.push('/admin/')
-  } else {
-    console.log(`Role hợp lệ: ${role}`)
+    return null
   }
+
+  console.log(`Role hợp lệ: ${role}`)
+
+  const orders = data?.data
 
   const filteredOrders = orders?.filter(
     (order) =>
@@ -51,7 +47,15 @@ export default function AdminOrderPage() {
         />
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
       </div>
-      <OrderList orders={filteredOrders} />
+      {isLoading ? (
+        <OrderSkeleton />
+      ) : error ? (
+        <div className="mt-10 text-center text-red-500">
+          Error: {error.message}
+        </div>
+      ) : (
+        <OrderList orders={filteredOrders} />
+      )}
     </div>
   )
 }

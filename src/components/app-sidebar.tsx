@@ -67,6 +67,26 @@ export function AppSidebar() {
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton className="text-md font-medium">
                       <Package className="mr-2 h-5 w-5" />
+                      Danh mục
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      <SidebarMenuSubItem>
+                        <Link href="/admin/danh-muc/them-danh-muc">Thêm</Link>
+                      </SidebarMenuSubItem>
+                      <SidebarMenuSubItem>
+                        <Link href="/admin/danh-muc/danh-sach">Danh sách</Link>
+                      </SidebarMenuSubItem>
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+              <Collapsible defaultOpen className="group/collapsible">
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton className="text-md font-medium">
+                      <Package className="mr-2 h-5 w-5" />
                       Sản phẩm
                     </SidebarMenuButton>
                   </CollapsibleTrigger>

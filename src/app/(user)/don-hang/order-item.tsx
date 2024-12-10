@@ -67,7 +67,9 @@ function OrderItem({ order }: OrderItemProps) {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="text-2xl font-bold">Đơn hàng #{order.id}</span>
-          <Badge className={`${getStatusColor(order.status)} text-white`}>
+          <Badge
+            className={`${getStatusColor(order.status)} cursor-default text-white`}
+          >
             {order.status.toUpperCase()}
           </Badge>
         </CardTitle>
@@ -106,15 +108,19 @@ function OrderItem({ order }: OrderItemProps) {
               <CreditCard className="mr-2 h-4 w-4" />{' '}
               <strong>Thanh toán:</strong> {order.paymentMethod?.toUpperCase()}
             </p>
-            <p className="flex items-center">
-              <DollarSign className="mr-2 h-4 w-4" />{' '}
-              <strong>Trạng thái thanh toán: </strong>{' '}
-              <span
-                className={getPaymentStatusColor(order.paymentStatus as string)}
-              >
-                {order.paymentStatus}
-              </span>
-            </p>
+            {order.paymentMethod === 'momo' && (
+              <p className="flex items-center">
+                <DollarSign className="mr-2 h-4 w-4" />{' '}
+                <strong>Trạng thái thanh toán: </strong>{' '}
+                <span
+                  className={getPaymentStatusColor(
+                    order.paymentStatus as string,
+                  )}
+                >
+                  {order.paymentStatus}
+                </span>
+              </p>
+            )}
           </div>
         </div>
 
