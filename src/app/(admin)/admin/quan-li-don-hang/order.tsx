@@ -180,9 +180,7 @@ export function OrderItem({ order }: OrderItemProps) {
             <p className="flex items-center">
               <Calendar className="mr-2 h-4 w-4" />{' '}
               <strong>Ngày đặt hàng:</strong>{' '}
-              {order.orderDate
-                ? new Date(order.orderDate).toLocaleString('vi-VN')
-                : 'N/A'}
+              {order.orderDate?.toLocaleString()}
             </p>
             <p className="flex items-center">
               <CreditCard className="mr-2 h-4 w-4" />{' '}
@@ -212,7 +210,7 @@ export function OrderItem({ order }: OrderItemProps) {
                   <div className="flex items-start space-x-4">
                     <Image
                       src={`${API_URL}/products/images/${orderDetail.product.images[0].imageUrl}`}
-                      alt={orderDetail.product.name}
+                      alt={''}
                       width={80}
                       height={80}
                       className="rounded-md object-cover"
@@ -257,7 +255,7 @@ export function OrderItem({ order }: OrderItemProps) {
       <CardFooter className="bg-muted/50">
         <div className="flex w-full items-center justify-between">
           <span className="flex items-center text-muted-foreground">
-            <Truck className="mr-2 h-4 w-4" /> Đang vận chuyển
+            <Truck className="mr-2 h-4 w-4" />
           </span>
           <span className="font-semibold">
             Tổng cộng:{' '}
