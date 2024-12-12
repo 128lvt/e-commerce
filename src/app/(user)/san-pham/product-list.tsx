@@ -12,7 +12,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Snowflake } from 'lucide-react'
 
 export default function EnhancedProductListPage() {
   const [pageIndex, setPageIndex] = useState(0)
@@ -48,14 +48,14 @@ export default function EnhancedProductListPage() {
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-10 w-10 animate-spin text-primary" />
+        <Loader2 className="h-10 w-10 animate-spin text-red-600" />
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="flex h-screen items-center justify-center text-destructive">
+      <div className="flex h-screen items-center justify-center text-red-600">
         Error loading products. Please try again later.
       </div>
     )
@@ -63,8 +63,8 @@ export default function EnhancedProductListPage() {
 
   if (!products || products.length === 0) {
     return (
-      <div className="flex h-screen items-center justify-center text-muted-foreground">
-        No products available
+      <div className="flex h-screen items-center justify-center text-green-600">
+        No Christmas products available
       </div>
     )
   }
@@ -104,8 +104,8 @@ export default function EnhancedProductListPage() {
                   onClick={() => handlePageChange(page - 1)}
                   className={
                     pageIndex === page - 1
-                      ? 'bg-primary text-primary-foreground'
-                      : ''
+                      ? 'bg-red-600 text-white'
+                      : 'bg-green-100 text-green-800 hover:bg-green-200'
                   }
                 >
                   {page}

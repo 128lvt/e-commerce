@@ -14,7 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import useCategory from '@/hooks/use-category'
 import { Category } from 'types/Type'
 import { Button } from '@/components/ui/button'
-import { ChevronDown, FilterIcon } from 'lucide-react'
+import { ChevronDown, Snowflake } from 'lucide-react'
 
 export default function Filter() {
   const { setParams } = useProductParams()
@@ -53,28 +53,38 @@ export default function Filter() {
         <div className="flex items-center space-x-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button>
-                <FilterIcon className="mr-2 h-4 w-4" />
-                Sắp xếp
+              <Button className="bg-red-600 text-white hover:bg-red-700">
+                <Snowflake className="mr-2 h-4 w-4" />
+                Lọc sản phẩm
                 <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel>Sắp xếp theo giá</DropdownMenuLabel>
+            <DropdownMenuContent className="w-56 bg-green-100">
+              <DropdownMenuLabel className="text-red-800">
+                Sắp xếp theo giá
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleFilter('asc')}>
+              <DropdownMenuItem
+                onClick={() => handleFilter('asc')}
+                className="text-green-800 hover:bg-green-200"
+              >
                 Thấp đến cao
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleFilter('desc')}>
+              <DropdownMenuItem
+                onClick={() => handleFilter('desc')}
+                className="text-green-800 hover:bg-green-200"
+              >
                 Cao đến thấp
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuLabel>Danh mục</DropdownMenuLabel>
+              <DropdownMenuLabel className="text-red-800">
+                Danh mục quà tặng
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               {categories?.map((item: Category) => (
                 <DropdownMenuItem
                   key={item.id}
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-2 text-green-800 hover:bg-green-200"
                 >
                   <Checkbox
                     id={item.id.toString()}

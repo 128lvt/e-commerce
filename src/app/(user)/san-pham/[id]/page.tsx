@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, Gift, Snowflake } from 'lucide-react'
 import useProductId from '@/hooks/use-product-id'
 import { useToast } from '@/hooks/use-toast'
 import { useCart } from '@/hooks/use-cart'
 import { v4 as uuidv4 } from 'uuid'
+import { motion } from 'framer-motion'
 
 import { Button } from '@/components/ui/button'
 import { ProductVariant } from '@/components/product-variant'
@@ -26,18 +27,23 @@ export default function ProductDetail({ params }: { params: { id: number } }) {
   if (isLoading)
     return (
       <div className="flex h-screen items-center justify-center">
-        Loading...
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+        >
+          <Snowflake className="h-12 w-12 text-red-600" />
+        </motion.div>
       </div>
     )
   if (error)
     return (
-      <div className="flex h-screen items-center justify-center">
+      <div className="flex h-screen items-center justify-center text-red-600">
         Error loading product
       </div>
     )
   if (!product)
     return (
-      <div className="flex h-screen items-center justify-center">
+      <div className="flex h-screen items-center justify-center text-red-600">
         No product found
       </div>
     )
@@ -91,7 +97,12 @@ export default function ProductDetail({ params }: { params: { id: number } }) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        <div className="relative aspect-square overflow-hidden rounded-lg">
+        <motion.div
+          className="relative aspect-square overflow-hidden rounded-lg"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <Image
             src={`${API_URL}/products/images/${product.images[0].imageUrl}`}
             alt=""
@@ -99,16 +110,21 @@ export default function ProductDetail({ params }: { params: { id: number } }) {
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-        </div>
-        <div className="space-y-6">
+        </motion.div>
+        <motion.div
+          className="space-y-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
-            <p className="mt-2 text-sm text-gray-500">
+            <h1 className="text-3xl font-bold text-red-800">{product.name}</h1>
+            <p className="mt-2 text-sm text-green-700">
               {product.category.name}
             </p>
           </div>
 
-          <p className="text-2xl font-bold text-violet-600">
+          <p className="text-2xl font-bold text-red-600">
             {new Intl.NumberFormat('vi-VN', {
               style: 'currency',
               currency: 'VND',
@@ -130,18 +146,19 @@ export default function ProductDetail({ params }: { params: { id: number } }) {
                   )?.stock || 0,
                 )
               }
-              className="flex-1 bg-violet-600 text-white hover:bg-violet-700"
+              className="flex-1 bg-red-600 text-white transition-all duration-300 hover:bg-red-700"
             >
               <ShoppingCart className="mr-2 h-5 w-5" />
-              Thêm vào giỏ hàng
+              Thêm vào giỏ quà
             </Button>
           </div>
-          <div className="rounded-md bg-violet-50 p-4">
-            <p className="text-sm text-violet-700">
+          <div className="rounded-md border border-green-200 bg-green-50 p-4">
+            <p className="flex items-center text-sm text-green-700">
+              <Snowflake className="mr-2 h-4 w-4" />
               Còn lại: {product.stock} sản phẩm
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   )
