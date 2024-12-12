@@ -8,6 +8,7 @@ import createLinks from './utils/Links'
 import { Category } from '../../types/Type'
 import { useCart } from '@/hooks/use-cart'
 import Search from './search'
+import { motion } from 'framer-motion'
 import Profile from '@/app/(user)/(auth)/profile'
 interface Link {
   name: string
@@ -26,13 +27,19 @@ export default function Nav() {
     <>
       {links.map((link) => {
         return (
-          <Link
-            href={link.href}
+          <motion.div
             key={link.href}
-            className={`${path === link.href ? 'border-b-2 border-[--primary]' : ''} transition ease-in-out`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            {link.name}
-          </Link>
+            <Link
+              href={link.href}
+              key={link.href}
+              className={`${path === link.href ? 'border-b-2 border-[--primary]' : ''} transition ease-in-out`}
+            >
+              {link.name}
+            </Link>
+          </motion.div>
         )
       })}
       <Search padding="" />

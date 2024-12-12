@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Sparkles } from 'lucide-react'
+import { FaSnowflake, FaGift, FaTree } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 
 export function DecorativeHeader() {
@@ -18,7 +18,7 @@ export function DecorativeHeader() {
 
   return (
     <motion.div
-      className="relative overflow-hidden rounded-lg bg-[#805b45] py-16"
+      className="relative overflow-hidden rounded-lg bg-gradient-to-r from-red-700 to-green-700 py-16"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -30,7 +30,7 @@ export function DecorativeHeader() {
           animate={{ y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          Chào mừng bạn đến với 6AE Fashion
+          Chào mừng đến với Giáng Sinh 6AE Fashion
         </motion.h1>
         <motion.p
           className="mb-8 text-xl text-white"
@@ -38,14 +38,17 @@ export function DecorativeHeader() {
           animate={{ y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          Cửa hàng thời trang phong cách
+          Khám phá bộ sưu tập Giáng Sinh độc đáo
         </motion.p>
         <motion.div
+          className="flex justify-center space-x-4"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.6, duration: 0.5 }}
         >
-          <Sparkles className="inline-block h-8 w-8 text-yellow-400" />
+          <FaSnowflake className="h-8 w-8 text-white" />
+          <FaGift className="h-8 w-8 text-yellow-400" />
+          <FaTree className="h-8 w-8 text-green-400" />
         </motion.div>
       </div>
       <div className="absolute inset-0 z-0">

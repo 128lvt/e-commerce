@@ -12,7 +12,7 @@ import { ProductItem } from '@/components/product-item'
 import useProduct from '@/hooks/use-product'
 import { Product } from '../../types/Type'
 import { motion } from 'framer-motion'
-import { Sparkles } from 'lucide-react'
+import { GiftIcon } from 'lucide-react'
 
 export default function ProductCarousel() {
   const { data, isLoading, error } = useProduct()
@@ -32,15 +32,15 @@ export default function ProductCarousel() {
   const products: Product[] = data.data.products
 
   return (
-    <div className="w-full rounded-lg bg-[#805b45] p-6 shadow-lg">
+    <div className="w-full rounded-lg bg-gradient-to-r from-red-700 to-green-700 p-6 shadow-lg">
       <motion.h2
         className="mb-4 flex items-center justify-center text-2xl font-bold text-white"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Sản phẩm nổi bật
-        <Sparkles className="ml-2 h-6 w-6 text-yellow-500" />
+        Sản phẩm chơi Giáng Sinh
+        <GiftIcon className="ml-2 h-6 w-6 text-yellow-400" />
       </motion.h2>
       <Carousel
         opts={{
@@ -74,8 +74,14 @@ export default function ProductCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious variant="secondary" />
-        <CarouselNext variant="secondary" />
+        <CarouselPrevious
+          variant="secondary"
+          className="bg-white text-red-700 hover:bg-red-100"
+        />
+        <CarouselNext
+          variant="secondary"
+          className="bg-white text-green-700 hover:bg-green-100"
+        />
       </Carousel>
     </div>
   )

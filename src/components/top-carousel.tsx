@@ -21,26 +21,26 @@ export function TopCarousel() {
   const carouselItems = [
     {
       image: '/carousels/1.png',
-      title: `Discover Nature's Beauty`,
+      title: `Bộ sưu tập mới`,
       description:
-        'Explore breathtaking landscapes and immerse yourself in the wonders of nature.',
-      buttonText: 'Explore Now',
+        'Khám phá những thiết kế mới nhất, mang đến sự tươi mới và phong cách hiện đại cho bạn.',
+      buttonText: 'Mua ngay',
       buttonLink: '/nature',
     },
     {
       image: '/carousels/2.png',
-      title: 'Urban Adventures Await',
+      title: 'Giảm sốc',
       description:
-        'Experience the vibrant energy of city life with our curated urban experiences.',
-      buttonText: 'Book Adventure',
+        'Nhận ngay những ưu đãi đặc biệt cho các bộ trang phục thời trang không thể bỏ lỡ.',
+      buttonText: 'Mua ngay',
       buttonLink: '/urban',
     },
     {
       image: '/carousels/3.png',
-      title: 'Relax in Luxury',
+      title: 'Phong cách thời thượng',
       description:
-        'Indulge in premium comfort and unwind in our exquisite accommodations.',
-      buttonText: 'Reserve Stay',
+        'Thể hiện cá tính với những thiết kế cao cấp, mang lại sự tự tin và đẳng cấp.',
+      buttonText: 'Mua ngay',
       buttonLink: '/luxury',
     },
   ]
