@@ -17,17 +17,17 @@ import { Snowflake, Sparkles } from 'lucide-react'
 export function BottomCarousel() {
   const offers = [
     {
-      image: '/carousels/2.png',
+      image: '/carousels/13.jpg',
       title: 'Giảm giá Giáng Sinh',
       discount: 'Giảm 30%',
     },
     {
-      image: '/carousels/1.png',
+      image: '/carousels/14.jpg',
       title: 'Sản phẩm mới',
       discount: 'Miễn phí vận chuyển',
     },
     {
-      image: '/carousels/3.png',
+      image: '/carousels/15.jpg',
       title: 'Ưu đãi cuối năm',
       discount: 'Lên tới 50%',
     },
@@ -68,7 +68,7 @@ export function BottomCarousel() {
                         height={400}
                         alt={offer.title}
                         priority
-                        className="h-48 w-full object-cover"
+                        className="h-58 w-full object-cover"
                       />
                       <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-40 p-4">
                         <h3 className="mb-2 text-xl font-semibold text-white">

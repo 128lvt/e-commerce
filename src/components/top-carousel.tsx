@@ -20,7 +20,7 @@ export function TopCarousel() {
 
   const carouselItems = [
     {
-      image: '/carousels/1.png',
+      image: '/carousels/4.jpg',
       title: `Bộ sưu tập mới`,
       description:
         'Khám phá những thiết kế mới nhất, mang đến sự tươi mới và phong cách hiện đại cho bạn.',
@@ -28,7 +28,7 @@ export function TopCarousel() {
       buttonLink: '/nature',
     },
     {
-      image: '/carousels/2.png',
+      image: '/carousels/5.jpg',
       title: 'Giảm sốc',
       description:
         'Nhận ngay những ưu đãi đặc biệt cho các bộ trang phục thời trang không thể bỏ lỡ.',
@@ -36,8 +36,8 @@ export function TopCarousel() {
       buttonLink: '/urban',
     },
     {
-      image: '/carousels/3.png',
-      title: 'Phong cách thời thượng',
+      image: '/carousels/6.jpg',
+      title: 'Đồng hành cùng người nổi tiếng',
       description:
         'Thể hiện cá tính với những thiết kế cao cấp, mang lại sự tự tin và đẳng cấp.',
       buttonText: 'Mua ngay',
