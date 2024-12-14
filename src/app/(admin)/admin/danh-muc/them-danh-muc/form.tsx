@@ -19,7 +19,6 @@ import { useToast } from '@/hooks/use-toast'
 import useUser from '@/hooks/use-user'
 import { categorySchema } from '@/schemas/categorySchema'
 import useCategory from '@/hooks/use-category'
-import { Category } from 'types/Type'
 
 export function CategoryForm() {
   const { toast } = useToast()

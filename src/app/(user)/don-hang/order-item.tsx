@@ -20,7 +20,6 @@ import {
   Package,
   DollarSign,
   Truck,
-  ShoppingBag,
   Palette,
   Ruler,
 } from 'lucide-react'

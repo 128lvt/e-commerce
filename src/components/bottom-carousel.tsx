@@ -12,7 +12,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Snowflake, Sparkles } from 'lucide-react'
+import { Snowflake } from 'lucide-react'
 
 export function BottomCarousel() {
   const offers = [

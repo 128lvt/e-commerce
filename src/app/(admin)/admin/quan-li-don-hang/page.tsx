@@ -17,7 +17,6 @@ export default function AdminOrderPage() {
   const [searchTerm, setSearchTerm] = useState('')
 
   if (!(role === 'ROLE_DEV' || role === 'ROLE_ADMIN')) {
-    console.log(`Role không hợp lệ: ${role}, chuyển hướng...`)
     router.push('/admin/')
     return null
   }

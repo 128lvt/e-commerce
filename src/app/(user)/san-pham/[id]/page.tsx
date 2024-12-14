@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { ShoppingCart, Gift, Snowflake } from 'lucide-react'
+import { ShoppingCart, Snowflake } from 'lucide-react'
 import useProductId from '@/hooks/use-product-id'
 import { useToast } from '@/hooks/use-toast'
 import { useCart } from '@/hooks/use-cart'

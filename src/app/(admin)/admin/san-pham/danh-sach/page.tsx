@@ -36,7 +36,6 @@ export default function Page() {
     }
   }
   if (!(role === 'ROLE_DEV' || role === 'ROLE_ADMIN')) {
-    console.log(`Role không hợp lệ: ${role}, chuyển hướng...`)
     router.push('/admin/')
   } else {
     console.log(`Role hợp lệ: ${role}`)

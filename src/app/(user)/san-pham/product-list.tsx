@@ -12,7 +12,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { Loader2, Snowflake } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
 export default function EnhancedProductListPage() {
   const [pageIndex, setPageIndex] = useState(0)

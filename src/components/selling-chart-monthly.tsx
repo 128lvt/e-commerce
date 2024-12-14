@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { TrendingUp, TrendingDown, Calendar } from 'lucide-react'
+import { TrendingUp, TrendingDown } from 'lucide-react'
 import {
   Bar,
   BarChart,
@@ -18,13 +17,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 
 interface MonthlyData {
   january: number
@@ -81,8 +73,6 @@ const vietnameseMonths: { [key: string]: string } = {
 }
 
 const MonthlySalesChart: React.FC<MonthlySalesChartProps> = ({ data = [] }) => {
-  const [selectedYear, setSelectedYear] = useState<string>('2024')
-
   // Transform the flat data object into an array format that Recharts expects
   const transformedData: ChartDataPoint[] = Object.entries(
     data[0] || defaultData,
@@ -116,8 +106,8 @@ const MonthlySalesChart: React.FC<MonthlySalesChartProps> = ({ data = [] }) => {
           </CardTitle>
         </div>
         <CardDescription className="text-lg">
-          Dữ liệu năm{' '}
-          <span className="font-semibold text-primary">{selectedYear}</span>
+          Dữ liệu năm
+          <span className="font-semibold text-primary">2024</span>
         </CardDescription>
       </CardHeader>
       <CardContent>

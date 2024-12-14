@@ -27,7 +27,7 @@ interface UserState {
   getRole: () => string | null
 }
 
-const useUser = create<UserState>((set, get) => ({
+const useUser = create<UserState>((set) => ({
   user: null,
   token: null,
 

@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -7,6 +6,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Users, Briefcase, Globe } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function IntroductionPage() {
@@ -47,7 +47,7 @@ export default function IntroductionPage() {
               </p>
             </div>
             <div className="aspect-video overflow-hidden rounded-lg bg-muted">
-              <img
+              <Image
                 src="/placeholder.svg?height=400&width=600"
                 alt="Our team working together"
                 className="h-full w-full object-cover"
