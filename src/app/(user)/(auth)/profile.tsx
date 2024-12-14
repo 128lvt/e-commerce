@@ -14,12 +14,12 @@ import useUser from '@/hooks/use-user'
 import UserAvatar from './user-avatar'
 
 export default function Profile() {
-  const { user, setUser, loadUserFromLocalStorage } = useUser()
+  const { user, setUser, loadUserFromCookies } = useUser()
   const router = useRouter()
 
   useEffect(() => {
-    loadUserFromLocalStorage()
-  }, [loadUserFromLocalStorage])
+    loadUserFromCookies()
+  }, [loadUserFromCookies])
 
   const handleLogout = async () => {
     const response = await fetch('/api/logout', {

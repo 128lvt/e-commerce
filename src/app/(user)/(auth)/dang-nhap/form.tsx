@@ -27,7 +27,7 @@ import {
 import { LogIn, KeyRound, Mail } from 'lucide-react'
 
 export default function EnhancedFormLogin() {
-  const { loadUserFromLocalStorage, setUser } = useUser()
+  const { loadUserFromCookies, setUser } = useUser()
   const { toast } = useToast()
   const router = useRouter()
 
@@ -50,10 +50,9 @@ export default function EnhancedFormLogin() {
       })
 
       const data = await response.json()
-      console.log(data)
       if (!response.ok) {
         toast({
-          description: `Đăng nhập thất bại: ${data.data}`,
+          description: `Đăng nhập thất bại: ${data.message}`,
           variant: 'destructive',
         })
         return
@@ -66,7 +65,7 @@ export default function EnhancedFormLogin() {
         description: 'Đăng nhập thành công',
       })
 
-      loadUserFromLocalStorage()
+      loadUserFromCookies()
 
       // Set a timeout to reload and redirect after 3 seconds
       setTimeout(() => {

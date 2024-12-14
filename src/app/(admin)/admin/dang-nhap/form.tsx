@@ -20,7 +20,7 @@ import { LogIn, KeyRound, Mail } from 'lucide-react'
 import { loginSchema } from '@/schemas/loginSchema'
 
 export default function EnhancedFormLogin() {
-  const { loadUserFromLocalStorage, setUser } = useUser()
+  const { loadUserFromCookies, setUser } = useUser()
   const { toast } = useToast()
 
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -57,7 +57,7 @@ export default function EnhancedFormLogin() {
         description: 'Đăng nhập thành công',
       })
 
-      loadUserFromLocalStorage()
+      loadUserFromCookies()
 
       // Set a timeout to reload and redirect after 3 seconds
       setTimeout(() => {

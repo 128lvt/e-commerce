@@ -35,7 +35,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 export default function FormCashout() {
-  const { user, loadUserFromLocalStorage, token } = useUser()
+  const { user, loadUserFromCookies, token } = useUser()
   const { cart, loadCartFromLocalStorage, clearCart } = useCart()
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
@@ -45,8 +45,8 @@ export default function FormCashout() {
 
   useEffect(() => {
     loadCartFromLocalStorage()
-    loadUserFromLocalStorage()
-  }, [loadCartFromLocalStorage, loadUserFromLocalStorage])
+    loadUserFromCookies()
+  }, [loadCartFromLocalStorage, loadUserFromCookies])
 
   const totalMoney = cart.reduce(
     (total, item) => total + item.price * item.quantity,

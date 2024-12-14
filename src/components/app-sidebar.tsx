@@ -29,11 +29,11 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export function AppSidebar() {
-  const { user, setUser, loadUserFromLocalStorage } = useUser()
+  const { user, setUser, loadUserFromCookies } = useUser()
   const router = useRouter()
   useEffect(() => {
-    loadUserFromLocalStorage()
-  }, [loadUserFromLocalStorage])
+    loadUserFromCookies()
+  }, [loadUserFromCookies])
 
   const handleLogout = async () => {
     try {

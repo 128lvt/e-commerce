@@ -17,14 +17,12 @@ export async function POST(req: Request) {
 
   if (!backendResponse.ok) {
     return NextResponse.json(
-      { message: res.message || 'Đăng nhập thất bại' },
+      { message: res.data || 'Đăng nhập thất bại' },
       { status: backendResponse.status },
     )
   }
 
   const user = res.data.user
-
-  console.log(user)
 
   const token = res.data.token
 
@@ -36,7 +34,13 @@ export async function POST(req: Request) {
   cookies().set({
     name: 'token',
     value: token,
-    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: 259200,
+  })
+
+  cookies().set({
+    name: 'user',
+    value: JSON.stringify(user),
     sameSite: 'lax',
     maxAge: 259200,
   })

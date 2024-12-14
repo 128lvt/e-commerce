@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import Cookies from 'js-cookie' // Recommend using js-cookie library for easier cookie management
 
 // Mã hóa Unicode thành Base64
 function encodeBase64(data: string): string {
@@ -21,7 +22,7 @@ interface UserState {
   user: User | null
   token: string | null
   setUser: (user: User | null, token?: string | null) => void
-  loadUserFromLocalStorage: () => void
+  loadUserFromCookies: () => void
   getToken: () => string | null
   getRole: () => string | null
 }
@@ -36,28 +37,27 @@ const useUser = create<UserState>((set, get) => ({
 
     const role = user?.authorities?.[0]?.authority
 
-    // Mã hóa user và token thành Base64 trước khi lưu vào localStorage
+    // Mã hóa user và token thành Base64 trước khi lưu vào cookies
     if (user) {
       const encodedUser = encodeBase64(JSON.stringify(user))
 
-      localStorage.setItem('user', encodedUser)
-      localStorage.setItem('role', role) // Lưu role vào localStorage
+      Cookies.set('user', encodedUser, { expires: 3 }) // Tồn tại trong 3 ngày
+      Cookies.set('role', role, { expires: 3 })
     } else {
-      localStorage.removeItem('user')
-      localStorage.removeItem('role')
+      Cookies.remove('user')
+      Cookies.remove('role')
     }
 
     if (token) {
-      localStorage.setItem('token', token)
+      Cookies.set('token', token, { expires: 3 })
     } else {
-      localStorage.removeItem('token')
+      Cookies.remove('token')
     }
   },
 
-  loadUserFromLocalStorage: () => {
-    const storedUser = localStorage.getItem('user')
-    const storedToken = localStorage.getItem('token')
-    const storedRole = localStorage.getItem('role')
+  loadUserFromCookies: () => {
+    const storedUser = Cookies.get('user')
+    const storedToken = Cookies.get('token')
 
     let decodedUser = null
     if (storedUser) {
@@ -72,25 +72,14 @@ const useUser = create<UserState>((set, get) => ({
       user: decodedUser,
       token: storedToken || null,
     })
-
-    // Nếu không có role trong localStorage, nhưng có trong user, cập nhật localStorage
-    if (!storedRole && decodedUser?.role) {
-      localStorage.setItem('role', decodedUser.role)
-    }
   },
 
   getToken: () => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('token')
-    }
-    return null
+    return Cookies.get('token') || null
   },
 
   getRole: () => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('role')
-    }
-    return null
+    return Cookies.get('role') || null
   },
 }))
 

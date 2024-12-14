@@ -10,7 +10,7 @@ import { API_URL } from '@/configs/apiConfig'
 
 export function MomoCallbackHandler() {
   const searchParams = useSearchParams()
-  const { user, loadUserFromLocalStorage, token } = useUser()
+  const { user, loadUserFromCookies, token } = useUser()
   const [result, setResult] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const { loadCartFromLocalStorage, clearCart } = useCart()
@@ -47,7 +47,7 @@ export function MomoCallbackHandler() {
   }, [
     searchParams,
     loadCartFromLocalStorage,
-    loadUserFromLocalStorage,
+    loadUserFromCookies,
     clearCart,
     reloadProduct,
     mutate,
