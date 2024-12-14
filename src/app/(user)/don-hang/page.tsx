@@ -6,13 +6,13 @@ import OrderList from './order-list'
 import { Breadcrumb } from '@/components/breadcumb'
 
 export default function Page() {
-  const { user, loadUserFromLocalStorage } = useUser()
+  const { user, loadUserFromCookies } = useUser()
   const token = useUser((state) => state.getToken())
   const breadcrumbItems = [{ label: 'Đơn hàng', href: '/don-hang' }]
 
   useEffect(() => {
-    loadUserFromLocalStorage()
-  }, [loadUserFromLocalStorage])
+    loadUserFromCookies()
+  }, [loadUserFromCookies])
 
   const { data, isLoading, error } = useOrder(user?.id ?? 0, token ?? '')
 
