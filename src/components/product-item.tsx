@@ -31,7 +31,7 @@ export function ProductItem(product: Product) {
   const imageUrl =
     product.images && product.images.length > 0
       ? `${API_URL}/products/images/${product.images[0].imageUrl}`
-      : '/default-christmas-image.jpg'
+      : '/default-image.jpg'
 
   return (
     <Card

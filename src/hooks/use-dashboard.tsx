@@ -6,35 +6,10 @@ interface chartData {
   totalSold: number
 }
 
-interface ProductVariant {
-  id: number
-  size: string
-  color: string
-  stock: number
-  p_id: number
-}
-
-interface Product {
-  id: number
-  name: string
-  price: number
-  stock: number
-  description: string
-  category: {
-    id: number
-    name: string
-  }
-  variants: ProductVariant[]
-  images: {
-    id: number
-    imageUrl: string
-    product_id: number
-  }[]
-}
-
-interface OutOfStock {
-  product: Product
-  productVariant: ProductVariant
+interface countData {
+  user: number
+  order: number
+  product: number
 }
 
 const fetcher = (url: string, token: string) => {
@@ -95,10 +70,19 @@ const useCategoriesChart = (token: string) => {
   }
 }
 
-const useOutOfStock = (token: string) => {
+const fetcher1 = (url: string) => {
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then((res) => res.json())
+}
+
+const useCount = () => {
   const { data, error } = useSWR(
-    `${API_URL}/dashboard/out-of-stock`,
-    (url) => fetcher(url, token),
+    `${API_URL}/dashboard/count`,
+    (url) => fetcher1(url),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
@@ -108,14 +92,16 @@ const useOutOfStock = (token: string) => {
 
   const isLoading = !data && !error
 
-  const outOfStock: OutOfStock[] = data
+  console.log('data', data)
+
+  const countData: countData = data
 
   return {
-    outOfStock,
+    countData,
     error,
     isLoading,
-    mutate: () => mutate(`${API_URL}/dashboard/out-of-stock`, token),
+    mutate: () => mutate(`${API_URL}/dashboard/count`),
   }
 }
 
-export { useMonthlyChart, useCategoriesChart, useOutOfStock }
+export { useMonthlyChart, useCategoriesChart, useCount }

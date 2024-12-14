@@ -114,16 +114,6 @@ const MonthlySalesChart: React.FC<MonthlySalesChartProps> = ({ data = [] }) => {
           <CardTitle className="text-2xl font-bold">
             Thống kê bán hàng theo tháng trong năm
           </CardTitle>
-          <Select value={selectedYear} onValueChange={setSelectedYear}>
-            <SelectTrigger className="w-40">
-              <Calendar className="mr-2 h-4 w-4" />
-              <SelectValue placeholder="Select year" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="2024">2024</SelectItem>
-              <SelectItem value="2025">2025</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
         <CardDescription className="text-lg">
           Dữ liệu năm{' '}
