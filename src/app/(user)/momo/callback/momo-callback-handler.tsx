@@ -34,7 +34,13 @@ export function MomoCallbackHandler() {
           reloadProduct()
           mutate()
           setResult('Payment processed successfully')
-          window.location.href = `/don-hang/${searchParams.get('orderId')}`
+          const orderId = searchParams.get('orderId')
+
+          if (orderId && orderId.length > 13) {
+            window.location.href = `/don-hang/${orderId.substring(0, orderId.length - 13)}`
+          } else {
+            console.error('orderId không hợp lệ hoặc không đủ dài.')
+          }
         }
       } catch (err) {
         setError(
