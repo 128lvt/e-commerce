@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get('token')?.value
-  console.log('Token:', token)
-  console.log('Path:', req.nextUrl.pathname)
 
   // Kiểm tra token có tồn tại và có độ dài hợp lệ
   if (!token || token.length < 10) {
