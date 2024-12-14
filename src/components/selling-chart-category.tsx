@@ -14,7 +14,19 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-const COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4']
+const COLORS = [
+  '#FF6B6B', // Màu cũ
+  '#4ECDC4',
+  '#45B7D1',
+  '#96CEB4',
+  '#FFC0CB',
+  '#FFB347', // Màu cam nhạt
+  '#6A0572', // Màu tím đậm
+  '#FF3E4D', // Màu đỏ sáng
+  '#3CDBD3', // Màu xanh ngọc sáng
+  '#FAD02E', // Màu vàng
+  '#FF6B2B', // Màu cũ
+]
 
 const renderActiveShape = (props: any) => {
   const {
@@ -71,6 +83,7 @@ const renderActiveShape = (props: any) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
+        fontSize={13}
       >{`${payload.categoryName}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
@@ -78,6 +91,7 @@ const renderActiveShape = (props: any) => {
         dy={18}
         textAnchor={textAnchor}
         fill="#999"
+        fontSize={12}
       >
         {`${value} (${(percent * 100).toFixed(2)}%)`}
       </text>
