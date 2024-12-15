@@ -15,6 +15,7 @@ import { Button } from './ui/button'
 import { Input } from './ui/input'
 import useProduct from '@/hooks/use-product'
 import { useToast } from '@/hooks/use-toast'
+import useUser from '@/hooks/use-user'
 
 interface IProps {
   images: ProductImage[]
@@ -24,7 +25,7 @@ interface IProps {
 export default function ImageDialog({ images, productId }: IProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [isOpen, setIsOpen] = useState(false) // Trạng thái mở của dialog
-  const token = localStorage.getItem('token')
+  const token = useUser((state) => state.getToken())
   const { toast } = useToast()
   const { reloadProduct } = useProduct()
 

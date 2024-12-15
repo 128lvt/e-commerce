@@ -9,27 +9,27 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import { ProductItem } from '@/components/product-item'
-import useProduct from '@/hooks/use-product'
 import { Product } from '../../types/Type'
 import { motion } from 'framer-motion'
 import { GiftIcon } from 'lucide-react'
+import useSWR from 'swr'
+import { API_URL } from '@/configs/apiConfig'
+
+interface ApiResponse {
+  message: string
+  data: Product[]
+}
 
 export default function ProductCarousel() {
-  const { data, isLoading, error } = useProduct()
+  const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-  if (isLoading) {
-    return <div className="flex justify-center p-8">Loading...</div>
-  }
+  const { data, error } = useSWR<ApiResponse>(`${API_URL}/products`, fetcher, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  })
 
-  if (!data || !data.data || data.data.products.length === 0) {
-    return <div className="flex justify-center p-8">No products available</div>
-  }
-
-  if (error) {
-    return <div className="flex justify-center p-8">Error loading products</div>
-  }
-
-  const products: Product[] = data.data.products
+  const products = data?.data
 
   return (
     <div className="w-full rounded-lg bg-gradient-to-r from-red-700 to-green-700 p-6 shadow-lg">
@@ -50,7 +50,7 @@ export default function ProductCarousel() {
         className="w-full"
       >
         <CarouselContent>
-          {products.slice(0, 10).map((product, index) => (
+          {products?.slice(0, 10).map((product, index) => (
             <CarouselItem
               key={product.id}
               className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"

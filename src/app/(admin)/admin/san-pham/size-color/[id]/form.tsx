@@ -14,6 +14,7 @@ import { API_URL } from '@/configs/apiConfig'
 import useProduct from '@/hooks/use-product'
 import useVariant from '@/hooks/use-product-variant'
 import { useToast } from '@/hooks/use-toast'
+import useUser from '@/hooks/use-user'
 import { variantSchema } from '@/schemas/variantSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -36,7 +37,7 @@ export function VariantForm({
   variantId,
   variant,
 }: IProps) {
-  const token = localStorage.getItem('token')
+  const token = useUser((state) => state.getToken())
   const { mutate } = useVariant(productId)
   const { reloadProduct } = useProduct()
   const { toast } = useToast()

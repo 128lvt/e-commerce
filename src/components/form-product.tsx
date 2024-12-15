@@ -27,6 +27,7 @@ import { API_URL } from '@/configs/apiConfig'
 import { useToast } from '@/hooks/use-toast'
 import { Product } from 'types/Type'
 import useProduct from '@/hooks/use-product'
+import useUser from '@/hooks/use-user'
 
 interface IProps {
   product: Product
@@ -37,7 +38,7 @@ export function ProductForm({ onClose = () => {}, product }: IProps) {
   const { data, isLoading, error } = useCategory()
   const { reloadProduct } = useProduct()
   const { toast } = useToast()
-  const token = localStorage.getItem('token')
+  const token = useUser((state) => state.getToken())
 
   const form = useForm<z.infer<typeof productSchema>>({
     resolver: zodResolver(productSchema),
@@ -243,7 +244,12 @@ export function ProductForm({ onClose = () => {}, product }: IProps) {
         >
           {form.formState.isSubmitting ? 'Đang cập nhật...' : 'Gửi'}
         </Button>
-        <Button onClick={deleteProduct} variant="destructive">
+        <Button
+          type="button"
+          onClick={deleteProduct}
+          variant="destructive"
+          disabled={form.formState.isSubmitting}
+        >
           Xóa sản phẩm
         </Button>
       </form>
