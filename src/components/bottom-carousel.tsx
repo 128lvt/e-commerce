@@ -34,15 +34,15 @@ export function BottomCarousel() {
   ]
 
   return (
-    <div className="w-full rounded-lg bg-gradient-to-r from-red-700 to-green-700 p-6 shadow-lg">
+    <div className="relative w-full rounded-lg bg-gradient-to-br from-red-100 to-green-100 p-6 shadow-2xl dark:bg-none">
       <motion.div
         className="mb-4 flex items-center"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-2xl font-bold text-white">Ưu đãi Giáng Sinh</h2>
-        <Snowflake className="ml-2 h-6 w-6 text-white" />
+        <h2 className="text-2xl font-bold">Ưu đãi Giáng Sinh</h2>
+        <Snowflake className="ml-2 h-6 w-6 text-blue-200" />
       </motion.div>
       <Carousel
         opts={{
@@ -71,7 +71,7 @@ export function BottomCarousel() {
                         className="h-58 w-full object-cover"
                       />
                       <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-40 p-4">
-                        <h3 className="mb-2 text-xl font-semibold text-white">
+                        <h3 className="mb-2 text-xl font-semibold">
                           {offer.title}
                         </h3>
                         <Badge
@@ -90,13 +90,43 @@ export function BottomCarousel() {
         </CarouselContent>
         <CarouselPrevious
           variant="secondary"
-          className="bg-white text-red-700 hover:bg-red-100"
+          className="bg-blue-200 text-blue-900 hover:bg-blue-300"
         />
         <CarouselNext
           variant="secondary"
-          className="bg-white text-green-700 hover:bg-green-100"
+          className="bg-blue-200 text-blue-900 hover:bg-blue-300"
         />
       </Carousel>
+      <div className="absolute inset-0 z-0">
+        {[...Array(50)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute h-1 w-1 rounded-full bg-white"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={
+              i % 3 === 0
+                ? {
+                    scale: [0, 1, 0.5, 1, 0],
+                    opacity: [0, 1, 0.5, 1, 0],
+                  }
+                : {
+                    scale: [0, 1, 0],
+                    opacity: [0, 1, 0],
+                  }
+            }
+            transition={{
+              duration: Math.random() * 3 + 2,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+      </div>
     </div>
   )
 }

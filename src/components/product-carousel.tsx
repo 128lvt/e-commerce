@@ -46,15 +46,15 @@ export default function ProductCarousel() {
   const randomProducts = getRandomProducts(data?.data)
 
   return (
-    <div className="w-full rounded-lg bg-gradient-to-r from-red-700 to-green-700 p-6 shadow-lg">
+    <div className="from- relative w-full rounded-lg bg-gradient-to-br from-red-100 to-green-100 p-6 shadow-lg dark:bg-none">
       <motion.h2
-        className="mb-4 flex items-center justify-center text-2xl font-bold text-white"
+        className="mb-4 flex items-center justify-center text-2xl font-bold"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         Sản phẩm chơi Giáng Sinh
-        <GiftIcon className="ml-2 h-6 w-6 text-yellow-400" />
+        <GiftIcon className="ml-2 h-6 w-6 text-yellow-500" />
       </motion.h2>
       <Carousel
         opts={{
@@ -105,13 +105,43 @@ export default function ProductCarousel() {
         </CarouselContent>
         <CarouselPrevious
           variant="secondary"
-          className="bg-white text-red-700 hover:bg-red-100"
+          className="bg-blue-200 text-blue-900 hover:bg-blue-300"
         />
         <CarouselNext
           variant="secondary"
-          className="bg-white text-green-700 hover:bg-green-100"
+          className="bg-blue-200 text-blue-900 hover:bg-blue-300"
         />
       </Carousel>
+      <div className="absolute inset-0 z-0">
+        {[...Array(50)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute h-1 w-1 rounded-full bg-white"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={
+              i % 3 === 0
+                ? {
+                    scale: [0, 1, 0.5, 1, 0],
+                    opacity: [0, 1, 0.5, 1, 0],
+                  }
+                : {
+                    scale: [0, 1, 0],
+                    opacity: [0, 1, 0],
+                  }
+            }
+            transition={{
+              duration: Math.random() * 3 + 2,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+      </div>
     </div>
   )
 }

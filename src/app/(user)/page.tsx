@@ -18,14 +18,6 @@ export default function HomePage() {
           <ProductCarousel />
         </section>
 
-        {/* <section className="mb-12">
-          <HomePageProducts index={0} title="New Arrivals" />
-        </section>
-
-        <section className="mb-12">
-          <HomePageProducts index={1} title="Sale Items" />
-        </section> */}
-
         <section className="mb-12">
           <BottomCarousel />
         </section>
