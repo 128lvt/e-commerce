@@ -112,7 +112,7 @@ export default function ProductCarousel() {
           className="bg-blue-200 text-blue-900 hover:bg-blue-300"
         />
       </Carousel>
-      <div className="absolute inset-0 z-0">
+      {/* <div className="absolute">
         {[...Array(50)].map((_, i) => (
           <motion.div
             key={i}
@@ -141,7 +141,7 @@ export default function ProductCarousel() {
             }}
           />
         ))}
-      </div>
+      </div> */}
     </div>
   )
 }
