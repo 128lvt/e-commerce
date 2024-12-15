@@ -1,5 +1,4 @@
 'use client'
-
 import React from 'react'
 import {
   Carousel,
@@ -14,6 +13,7 @@ import { motion } from 'framer-motion'
 import { GiftIcon } from 'lucide-react'
 import useSWR from 'swr'
 import { API_URL } from '@/configs/apiConfig'
+import { ProductSkeleton } from '@/components/product-skeleton'
 
 interface ApiResponse {
   message: string
@@ -29,7 +29,21 @@ export default function ProductCarousel() {
     revalidateOnReconnect: false,
   })
 
-  const products = data?.data
+  // Function to get 10 random products
+  const getRandomProducts = (products: Product[] | undefined) => {
+    if (!products || products.length <= 10) return products
+
+    // Fisher-Yates shuffle algorithm
+    const shuffled = [...products]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+
+    return shuffled.slice(0, 10)
+  }
+
+  const randomProducts = getRandomProducts(data?.data)
 
   return (
     <div className="w-full rounded-lg bg-gradient-to-r from-red-700 to-green-700 p-6 shadow-lg">
@@ -50,29 +64,44 @@ export default function ProductCarousel() {
         className="w-full"
       >
         <CarouselContent>
-          {products?.slice(0, 10).map((product, index) => (
-            <CarouselItem
-              key={product.id}
-              className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <ProductItem
-                  description={product.description}
-                  stock={product.stock}
-                  images={product.images}
-                  name={product.name}
-                  price={product.price}
-                  variants={product.variants}
-                  category={product.category}
-                  id={product.id}
-                />
-              </motion.div>
-            </CarouselItem>
-          ))}
+          {!data && !error
+            ? Array.from({ length: 10 }).map((_, index) => (
+                <CarouselItem
+                  key={`skeleton-${index}`}
+                  className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+                >
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <ProductSkeleton />
+                  </motion.div>
+                </CarouselItem>
+              ))
+            : randomProducts?.map((product, index) => (
+                <CarouselItem
+                  key={product.id}
+                  className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+                >
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <ProductItem
+                      description={product.description}
+                      stock={product.stock}
+                      images={product.images}
+                      name={product.name}
+                      price={product.price}
+                      variants={product.variants}
+                      category={product.category}
+                      id={product.id}
+                    />
+                  </motion.div>
+                </CarouselItem>
+              ))}
         </CarouselContent>
         <CarouselPrevious
           variant="secondary"

@@ -25,6 +25,11 @@ export function ProductItem(product: Product) {
     AOS.init({
       duration: 800,
       once: true,
+      offset: 0, // change offset to 0 to start animation as soon as element enters viewport
+      delay: 0, // remove initial delay
+      startEvent: 'DOMContentLoaded', // trigger animations on page load
+      mirror: false, // whether elements should animate out while scrolling past them
+      anchorPlacement: 'top-bottom', // anchor placement to trigger animation
     })
   }, [])
 
@@ -36,6 +41,7 @@ export function ProductItem(product: Product) {
   return (
     <Card
       data-aos="fade-up"
+      data-aos-anchor-placement="top-bottom"
       className="group relative mt-3 w-full overflow-hidden rounded-lg bg-gradient-to-br from-red-50 to-green-100 text-gray-800 shadow-lg transition-all duration-300 hover:shadow-xl sm:mt-4 md:mt-5"
     >
       <CardHeader className="p-3 sm:p-4">

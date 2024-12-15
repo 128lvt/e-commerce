@@ -4,6 +4,7 @@ import { useState } from 'react'
 import useProduct from '@/hooks/use-product'
 import { useProductParams } from '@/hooks/use-param'
 import { ProductItem } from '@/components/product-item'
+import { ProductSkeleton } from '@/components/product-skeleton'
 import {
   Pagination,
   PaginationContent,
@@ -12,7 +13,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { Loader2 } from 'lucide-react'
 
 export default function EnhancedProductListPage() {
   const [pageIndex, setPageIndex] = useState(0)
@@ -45,32 +45,34 @@ export default function EnhancedProductListPage() {
     )
   }
 
-  if (isLoading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-10 w-10 animate-spin text-red-600" />
-      </div>
-    )
-  }
+  const renderProductGrid = () => {
+    if (isLoading) {
+      return (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <ProductSkeleton key={index} />
+          ))}
+        </div>
+      )
+    }
 
-  if (error) {
-    return (
-      <div className="flex h-screen items-center justify-center text-red-600">
-        Error loading products. Please try again later.
-      </div>
-    )
-  }
+    if (error) {
+      return (
+        <div className="flex h-64 items-center justify-center text-red-600">
+          Error loading products. Please try again later.
+        </div>
+      )
+    }
 
-  if (!products || products.length === 0) {
-    return (
-      <div className="flex h-screen items-center justify-center text-green-600">
-        No Christmas products available
-      </div>
-    )
-  }
+    if (!products || products.length === 0) {
+      return (
+        <div className="flex h-64 items-center justify-center text-green-600">
+          Không tìm thấy sản phẩm
+        </div>
+      )
+    }
 
-  return (
-    <div className="container mx-auto px-4 py-8">
+    return (
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
         {products.map((product) => (
           <ProductItem
@@ -86,41 +88,51 @@ export default function EnhancedProductListPage() {
           />
         ))}
       </div>
-      <div className="mt-8">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                href="#"
-                onClick={() =>
-                  handlePageChange(pageIndex === 0 ? pageIndex : pageIndex - 1)
-                }
-              />
-            </PaginationItem>
-            {getPaginationRange().map((page) => (
-              <PaginationItem key={page}>
-                <PaginationLink
+    )
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      {renderProductGrid()}
+      {!isLoading && products && products.length > 0 && (
+        <div className="mt-8">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
                   href="#"
-                  onClick={() => handlePageChange(page - 1)}
-                  className={
-                    pageIndex === page - 1
-                      ? 'bg-red-600 text-white'
-                      : 'bg-green-100 text-green-800 hover:bg-green-200'
+                  onClick={() =>
+                    handlePageChange(
+                      pageIndex === 0 ? pageIndex : pageIndex - 1,
+                    )
                   }
-                >
-                  {page}
-                </PaginationLink>
+                />
               </PaginationItem>
-            ))}
-            <PaginationItem>
-              <PaginationNext
-                href="#"
-                onClick={() => handlePageChange(pageIndex + 1)}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
+              {getPaginationRange().map((page) => (
+                <PaginationItem key={page}>
+                  <PaginationLink
+                    href="#"
+                    onClick={() => handlePageChange(page - 1)}
+                    className={
+                      pageIndex === page - 1
+                        ? 'bg-red-600 text-white'
+                        : 'bg-green-100 text-green-800 hover:bg-green-200'
+                    }
+                  >
+                    {page}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+              <PaginationItem>
+                <PaginationNext
+                  href="#"
+                  onClick={() => handlePageChange(pageIndex + 1)}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </div>
   )
 }
