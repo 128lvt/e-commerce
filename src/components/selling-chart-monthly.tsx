@@ -85,10 +85,12 @@ const MonthlySalesChart: React.FC<MonthlySalesChartProps> = ({ data = [] }) => {
   const currentMonth =
     transformedData[transformedData.length - 1 - 1]?.sales ?? 0
   const previousMonth = transformedData[transformedData.length - 3]?.sales ?? 0
+
   const percentageChange: number =
     previousMonth !== 0
       ? ((currentMonth - previousMonth) / previousMonth) * 100
       : 100
+
   const isIncreasing: boolean = currentMonth >= previousMonth
 
   // Calculate total products

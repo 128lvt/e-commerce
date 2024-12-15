@@ -40,7 +40,7 @@ export function CategoryForm({ onClose = () => {}, category }: IProps) {
 
   const updateCategory = async (values: z.infer<typeof categorySchema>) => {
     const response = await fetch(`${API_URL}/categories/${category.id}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -56,9 +56,11 @@ export function CategoryForm({ onClose = () => {}, category }: IProps) {
           variant: 'error',
         })
       }
+      const res = await response.json()
+
+      console.log(res)
     } else {
       const res = await response.json()
-      console.log(res)
       return res.data.id
     }
   }
@@ -137,7 +139,12 @@ export function CategoryForm({ onClose = () => {}, category }: IProps) {
         >
           {form.formState.isSubmitting ? 'Đang cập nhật...' : 'Gửi'}
         </Button>
-        <Button onClick={deleteCategory} variant="destructive">
+        <Button
+          type="button"
+          onClick={deleteCategory}
+          variant="destructive"
+          disabled={form.formState.isSubmitting}
+        >
           Xóa danh mục
         </Button>
       </form>
