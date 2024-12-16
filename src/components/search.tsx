@@ -29,7 +29,7 @@ export default function SearchInput({ padding }: IProps) {
 
   const handleSearch = () => {
     router.push('/san-pham')
-    setParams({ name: searchTerm })
+    setParams({ name: searchTerm, page: 0 })
   }
 
   return (
