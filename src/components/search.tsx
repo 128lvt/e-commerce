@@ -3,7 +3,7 @@ import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { useProductParams } from '@/hooks/use-param'
 import debounce from 'lodash/debounce'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface IProps {
   padding: string
@@ -13,6 +13,7 @@ export default function SearchInput({ padding }: IProps) {
   const { name, setParams } = useProductParams()
   const router = useRouter()
   const [searchTerm, setSearchTerm] = useState(name)
+  const path = usePathname()
 
   const debouncedSearch = useCallback(
     debounce((term: string) => {
@@ -24,11 +25,16 @@ export default function SearchInput({ padding }: IProps) {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
     setSearchTerm(newValue)
+    setParams({ page: 0 })
     debouncedSearch(newValue)
   }
 
   const handleSearch = () => {
-    router.push('/san-pham')
+    if (path.includes('admin')) {
+      router.push('/admin/san-pham/danh-sach')
+    } else {
+      router.push('/san-pham')
+    }
     setParams({ name: searchTerm, page: 0 })
   }
 
